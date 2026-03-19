@@ -1,0 +1,11 @@
+# 이 파일을 복사해서 application.properties를 만들고 각자 비밀번호 넣어주세요
+
+spring.application.name=server
+server.port=8080
+
+spring.datasource.url=jdbc:mysql://localhost:3306/boxbox_db
+spring.datasource.username=root
+spring.datasource.password=YOUR_PASSWORD_HERE
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
