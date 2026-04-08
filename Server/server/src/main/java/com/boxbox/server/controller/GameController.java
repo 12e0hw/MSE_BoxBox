@@ -1,10 +1,20 @@
 package com.boxbox.server.controller;
 
+import com.boxbox.server.dto.BestScoreResponse;
+import com.boxbox.server.dto.LeaderboardItemResponse;
 import com.boxbox.server.entity.GameRecord;
 import com.boxbox.server.entity.User;
+import com.boxbox.server.global.ApiResponse;
+import com.boxbox.server.service.LeaderboardService;
+
+import lombok.RequiredArgsConstructor;
+
 import com.boxbox.server.repository.GameRecordRepository;
 import com.boxbox.server.repository.UserRepository;
+import com.boxbox.server.service.LeaderboardService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -12,8 +22,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/game")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class GameController {
+
+    private final LeaderboardService leaderboardService;
 
     @Autowired
     private GameRecordRepository gameRecordRepository;
@@ -23,43 +36,35 @@ public class GameController {
 
     // 전체 리더보드 조회 
     @GetMapping("/rank")
-    public List<Map<String, Object>> getGlobalRank() {
-        List<GameRecord> records = gameRecordRepository.findAllByOrderByPointsDesc();
-        return convertToRankList(records);
+    public ResponseEntity<ApiResponse<List<LeaderboardItemResponse>>> getLeaderboard() {
+        List<LeaderboardItemResponse> response = leaderboardService.getLeaderboard();
+        // 성공 메시지와 함께 JSON 형태로 반환
+        return ResponseEntity.ok(
+                ApiResponse.success("리더보드 조회 성공", response)
+        );
     }
 
     // 스테이지별 리더보드 조회 
     @GetMapping("/rank/{stageId}")
-    public List<Map<String, Object>> getStageRank(@PathVariable int stageId) {
-        List<GameRecord> records = gameRecordRepository.findByStageIdOrderByPointsDesc(stageId);
-        return convertToRankList(records);
+    public ResponseEntity<ApiResponse<List<LeaderboardItemResponse>>> getStageLeaderboard(@PathVariable Integer stageId) {
+        List<LeaderboardItemResponse> response = leaderboardService.getStageLeaderboard(stageId);
+        return ResponseEntity.ok(
+                ApiResponse.success("스테이지 리더보드 조회 성공", response)
+        );
     }
 
     // 내 최고 점수 조회 (GET /api/game/rank/user/{userId})
-    // @GetMapping("/rank/user/{userId}")
-    // public Map<String, Object> getUserBestScore(@PathVariable Long userId) {
-    //     User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-    //     GameRecord best = gameRecordRepository.findFirstByUserOrderByPointsDesc(user)
-    //             .orElse(null);
-
-    //     Map<String, Object> response = new HashMap<>();
-    //     response.put("userId", userId);
-    //     response.put("username", user.getUsername());
-    //     response.put("bestScore", (best != null) ? best.getPoints() : 0);
-    //     return response;
-    // }
-
-    // DB 데이터를 명세서의 [rank, username, score] 형식으로 변환
-    private List<Map<String, Object>> convertToRankList(List<GameRecord> records) {
-        List<Map<String, Object>> rankList = new ArrayList<>();
-        for (int i = 0; i < records.size(); i++) {
-            GameRecord r = records.get(i);
-            Map<String, Object> map = new HashMap<>();
-            map.put("rank", i + 1); // 리스트 순서대로 순위
-            map.put("username", r.getUser().getUsername());
-            map.put("score", r.getPoints());
-            rankList.add(map);
+    @GetMapping("rank/user/{userId}")
+    public ResponseEntity<ApiResponse<BestScoreResponse>> getUserBestScore(@PathVariable Long userId) {
+        try {
+            BestScoreResponse response = leaderboardService.getUserBestScore(userId);
+            return ResponseEntity.ok(
+                    ApiResponse.success("최고 점수 조회 성공", response)
+            );
+        } catch (IllegalArgumentException e) {
+            // 유저가 존재하지 않으면 404 응답 반환
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.fail(e.getMessage()));
         }
-        return rankList;
     }
 }
