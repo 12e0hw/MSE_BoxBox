@@ -8,6 +8,13 @@ import java.util.List;
 
 public interface GameRecordRepository extends JpaRepository<GameRecord, Long> {
     
+    // 리더보드 테스트용
+    List<GameRecord> findByUserUserId(Long userId);
+
+    List<GameRecord> findByStageId(Integer stageId);
+
+    List<GameRecord> findByUserUserIdAndStageId(Long userId, Integer stageId);
+
     // 점수 높은 순으로 전체 조회
     List<GameRecord> findAllByOrderByPointsDesc();
 
