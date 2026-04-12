@@ -1,0 +1,503 @@
+fileFormatVersion: 2
+guid: b59747f4de39a444ab4da7476aa30868
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5287190132853476390
+    second: Woman_Idle-removebg-preview_0
+  - first:
+      213: 5358457538067576891
+    second: Woman_Idle-removebg-preview_1
+  - first:
+      213: 1627123982060506430
+    second: Woman_Idle-removebg-preview_2
+  - first:
+      213: 649726868331859918
+    second: Woman_Idle-removebg-preview_3
+  - first:
+      213: 1892891203494176338
+    second: Woman_Idle-removebg-preview_4
+  - first:
+      213: 7168386163954322828
+    second: Woman_Idle-removebg-preview_5
+  - first:
+      213: -414146916634868116
+    second: Woman_Idle-removebg-preview_6
+  - first:
+      213: -6174445536891444247
+    second: Woman_Idle-removebg-preview_7
+  - first:
+      213: 2823792963539981574
+    second: Woman_Idle-removebg-preview_8
+  - first:
+      213: -4446719521837424242
+    second: Woman_Idle-removebg-preview_9
+  - first:
+      213: -3614877545335658148
+    second: Woman_Idle-removebg-preview_10
+  - first:
+      213: -3251649348562999746
+    second: Woman_Idle-removebg-preview_11
+  - first:
+      213: -4203419331176303123
+    second: Woman_Idle-removebg-preview_12
+  - first:
+      213: 9065522187884986933
+    second: Woman_Idle-removebg-preview_13
+  - first:
+      213: 1927163317883978407
+    second: Woman_Idle-removebg-preview_14
+  - first:
+      213: -4952891140268089267
+    second: Woman_Idle-removebg-preview_15
+  - first:
+      213: -5664166858129109371
+    second: Woman_Idle-removebg-preview_16
+  - first:
+      213: 1347303752192373824
+    second: Woman_Idle-removebg-preview_17
+  - first:
+      213: 4622334596954089927
+    second: Woman_Idle-removebg-preview_18
+  - first:
+      213: 5192591538848722559
+    second: Woman_Idle-removebg-preview_19
+  - first:
+      213: -6899599688695792159
+    second: Woman_Idle-removebg-preview_20
+  - first:
+      213: -985896663949048216
+    second: Woman_Idle-removebg-preview_21
+  - first:
+      213: -4078283894301289422
+    second: Woman_Idle-removebg-preview_22
+  - first:
+      213: -9038432652436494539
+    second: Woman_Idle-removebg-preview_23
+  - first:
+      213: -5890690977257215683
+    second: Woman_Idle-removebg-preview_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 301
+        width: 34
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62c8ea0c96fdf5940800000000000000
+      internalID: 5287190132853476390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 166
+        width: 29
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3838849db01d5a40800000000000000
+      internalID: 5358457538067576891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 232
+        width: 37
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3d4c3c04a4b49610800000000000000
+      internalID: 1627123982060506430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 232
+        width: 38
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2566bb64586e44a10800000000000000
+      internalID: 1892891203494176338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 97
+        width: 33
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e81e51597241a42c0800000000000000
+      internalID: -4446719521837424242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 96
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e36a5cc3522dfd2d0800000000000000
+      internalID: -3251649348562999746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 96
+        width: 31
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de5f93393647aa5c0800000000000000
+      internalID: -4203419331176303123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 96
+        width: 33
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5328e4016643fcd70800000000000000
+      internalID: 9065522187884986933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 96
+        width: 32
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a243aab3d8aeba10800000000000000
+      internalID: 1927163317883978407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_15
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 8
+        width: 36
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d40242ddfbbc34bb0800000000000000
+      internalID: -4952891140268089267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_16
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 10
+        width: 36
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58e8ca8a046d461b0800000000000000
+      internalID: -5664166858129109371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_21
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 10
+        width: 38
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 866031825346152f0800000000000000
+      internalID: -985896663949048216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Woman_Idle-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 96
+        width: 31
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f39d9c8f62367f64c9e2d8a3e2f1891b
+      internalID: 649726868331859918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ae6d189717c0fe8458a0f1d8efde9790
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Woman_Idle-removebg-preview_0: 5287190132853476390
+      Woman_Idle-removebg-preview_1: 5358457538067576891
+      Woman_Idle-removebg-preview_10: -3614877545335658148
+      Woman_Idle-removebg-preview_11: -3251649348562999746
+      Woman_Idle-removebg-preview_12: -4203419331176303123
+      Woman_Idle-removebg-preview_13: 9065522187884986933
+      Woman_Idle-removebg-preview_14: 1927163317883978407
+      Woman_Idle-removebg-preview_15: -4952891140268089267
+      Woman_Idle-removebg-preview_16: -5664166858129109371
+      Woman_Idle-removebg-preview_17: 1347303752192373824
+      Woman_Idle-removebg-preview_18: 4622334596954089927
+      Woman_Idle-removebg-preview_19: 5192591538848722559
+      Woman_Idle-removebg-preview_2: 1627123982060506430
+      Woman_Idle-removebg-preview_20: -6899599688695792159
+      Woman_Idle-removebg-preview_21: -985896663949048216
+      Woman_Idle-removebg-preview_22: -4078283894301289422
+      Woman_Idle-removebg-preview_23: -9038432652436494539
+      Woman_Idle-removebg-preview_24: -5890690977257215683
+      Woman_Idle-removebg-preview_3: 649726868331859918
+      Woman_Idle-removebg-preview_4: 1892891203494176338
+      Woman_Idle-removebg-preview_5: 7168386163954322828
+      Woman_Idle-removebg-preview_6: -414146916634868116
+      Woman_Idle-removebg-preview_7: -6174445536891444247
+      Woman_Idle-removebg-preview_8: 2823792963539981574
+      Woman_Idle-removebg-preview_9: -4446719521837424242
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,425 @@
+fileFormatVersion: 2
+guid: 67688d6c55e82ec4cba62bac3baf5d96
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5200703849961853528
+    second: Man_Carrying-removebg_0
+  - first:
+      213: -2495843374605430286
+    second: Man_Carrying-removebg_1
+  - first:
+      213: 9049700895557293224
+    second: Man_Carrying-removebg_2
+  - first:
+      213: 847254095680586333
+    second: Man_Carrying-removebg_3
+  - first:
+      213: 741391433690107783
+    second: Man_Carrying-removebg_4
+  - first:
+      213: 3244969091810903313
+    second: Man_Carrying-removebg_5
+  - first:
+      213: -5692405567336882668
+    second: Man_Carrying-removebg_6
+  - first:
+      213: 6057097690237282876
+    second: Man_Carrying-removebg_7
+  - first:
+      213: 1384087074895255989
+    second: Man_Carrying-removebg_8
+  - first:
+      213: 8422652423336200721
+    second: Man_Carrying-removebg_9
+  - first:
+      213: 7905634556094847938
+    second: Man_Carrying-removebg_10
+  - first:
+      213: 2481329789085649803
+    second: Man_Carrying-removebg_11
+  - first:
+      213: -2614190732955330118
+    second: Man_Carrying-removebg_12
+  - first:
+      213: 4339118937928665379
+    second: Man_Carrying-removebg_13
+  - first:
+      213: -230582283657071063
+    second: Man_Carrying-removebg_14
+  - first:
+      213: -4830431224091067126
+    second: Man_Carrying-removebg_15
+  - first:
+      213: -4271012175161769014
+    second: Man_Carrying-removebg_16
+  - first:
+      213: -5741215643660313506
+    second: Man_Carrying-removebg_17
+  - first:
+      213: 5344011187152776418
+    second: Man_Carrying-removebg_18
+  - first:
+      213: -6458160197905479628
+    second: Man_Carrying-removebg_19
+  - first:
+      213: -5328540674252035924
+    second: Man_Carrying-removebg_20
+  - first:
+      213: 6011520258053439908
+    second: Man_Carrying-removebg_21
+  - first:
+      213: -333611640028655790
+    second: Man_Carrying-removebg_22
+  - first:
+      213: 3532311011789303972
+    second: Man_Carrying-removebg_23
+  - first:
+      213: -7288558728116657252
+    second: Man_Carrying-removebg_24
+  - first:
+      213: -7435630802385590870
+    second: Man_Carrying-removebg_25
+  - first:
+      213: -7433394062358337096
+    second: Man_Carrying-removebg_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 299
+        width: 30
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad6409276363d7b0800000000000000
+      internalID: -5200703849961853528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_2
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 231
+        width: 30
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a41a33640ff69d70800000000000000
+      internalID: 9049700895557293224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_3
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 232
+        width: 30
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d52498f6c1d02cb00800000000000000
+      internalID: 847254095680586333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_8
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 93
+        width: 32
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b957558cd3453310800000000000000
+      internalID: 1384087074895255989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_9
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 94
+        width: 33
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11a898ff0c543e470800000000000000
+      internalID: 8422652423336200721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_14
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 95
+        width: 34
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9263f1b72aeccccf0800000000000000
+      internalID: -230582283657071063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_17
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 6
+        width: 33
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5c16b45aca1350b0800000000000000
+      internalID: -5741215643660313506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_18
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 7
+        width: 33
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ec64f56cddb92a40800000000000000
+      internalID: 5344011187152776418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Carrying-removebg_23
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 7
+        width: 32
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a0f6e5762a450130800000000000000
+      internalID: 3532311011789303972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0804788114d03d14fa4cfdf743866544
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Man_Carrying-removebg_0: -5200703849961853528
+      Man_Carrying-removebg_1: -2495843374605430286
+      Man_Carrying-removebg_10: 7905634556094847938
+      Man_Carrying-removebg_11: 2481329789085649803
+      Man_Carrying-removebg_12: -2614190732955330118
+      Man_Carrying-removebg_13: 4339118937928665379
+      Man_Carrying-removebg_14: -230582283657071063
+      Man_Carrying-removebg_15: -4830431224091067126
+      Man_Carrying-removebg_16: -4271012175161769014
+      Man_Carrying-removebg_17: -5741215643660313506
+      Man_Carrying-removebg_18: 5344011187152776418
+      Man_Carrying-removebg_19: -6458160197905479628
+      Man_Carrying-removebg_2: 9049700895557293224
+      Man_Carrying-removebg_20: -5328540674252035924
+      Man_Carrying-removebg_21: 6011520258053439908
+      Man_Carrying-removebg_22: -333611640028655790
+      Man_Carrying-removebg_23: 3532311011789303972
+      Man_Carrying-removebg_24: -7288558728116657252
+      Man_Carrying-removebg_25: -7435630802385590870
+      Man_Carrying-removebg_26: -7433394062358337096
+      Man_Carrying-removebg_3: 847254095680586333
+      Man_Carrying-removebg_4: 741391433690107783
+      Man_Carrying-removebg_5: 3244969091810903313
+      Man_Carrying-removebg_6: -5692405567336882668
+      Man_Carrying-removebg_7: 6057097690237282876
+      Man_Carrying-removebg_8: 1384087074895255989
+      Man_Carrying-removebg_9: 8422652423336200721
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
