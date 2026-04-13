@@ -2,23 +2,12 @@ package com.boxbox.server.controller;
 
 import com.boxbox.server.dto.BestScoreResponse;
 import com.boxbox.server.dto.LeaderboardItemResponse;
-import com.boxbox.server.entity.GameRecord;
-import com.boxbox.server.entity.User;
 import com.boxbox.server.global.ApiResponse;
 import com.boxbox.server.service.LeaderboardService;
-
 import lombok.RequiredArgsConstructor;
-
-import com.boxbox.server.repository.GameRecordRepository;
-import com.boxbox.server.repository.UserRepository;
-import com.boxbox.server.service.LeaderboardService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/game")
@@ -27,12 +16,6 @@ import java.util.stream.Collectors;
 public class GameController {
 
     private final LeaderboardService leaderboardService;
-
-    @Autowired
-    private GameRecordRepository gameRecordRepository;
-    
-    @Autowired
-    private UserRepository userRepository;
 
     // 전체 리더보드 조회 
     @GetMapping("/rank")
@@ -53,8 +36,8 @@ public class GameController {
         );
     }
 
-    // 내 최고 점수 조회 (GET /api/game/rank/user/{userId})
-    @GetMapping("rank/user/{userId}")
+    // 내 최고 점수 조회
+    @GetMapping("/rank/user/{userId}")
     public ResponseEntity<ApiResponse<BestScoreResponse>> getUserBestScore(@PathVariable Long userId) {
         try {
             BestScoreResponse response = leaderboardService.getUserBestScore(userId);
