@@ -22,9 +22,13 @@ public class GameRecord {
     @JoinColumn(name = "user_id")
     private User user; 
 
+    @Column(name = "stage_id", nullable = false)
     private int stageId;
+
+    @Column(name = "points", nullable = false)
     private int points;
 
     @CreationTimestamp // 데이터가 쌓일 때 현재 시간이 자동으로 들어감
+    @Column(name = "achieved_at")
     private LocalDateTime achievedAt;
 }
