@@ -67,14 +67,18 @@ public class LeaderboardService {
             // 저장된 최고 기록과 비교
             GameRecord currentBest = bestRecordByUser.get(userId);
             
-            // 현재 기록이 높으면 교체
+            // 현재 기록이 높으면 교체, 점수가 같은 경우 achievedAt이 더 빠른 기록으로 교체
             if (record.getPoints() > currentBest.getPoints()) {
+                bestRecordByUser.put(userId, record);
+            } else if (record.getPoints() == currentBest.getPoints()
+                    && record.getAchievedAt().isBefore(currentBest.getAchievedAt())) {
                 bestRecordByUser.put(userId, record);
             }
         }
 
         List<GameRecord> sortedBestRecords = new ArrayList<>(bestRecordByUser.values());
-        sortedBestRecords.sort(Comparator.comparing(GameRecord::getPoints).reversed());
+        sortedBestRecords.sort(Comparator.comparing(GameRecord::getPoints).reversed()
+                                .thenComparing(GameRecord::getAchievedAt));
 
         List<LeaderboardItemResponse> result = new ArrayList<>();
         int rank = 1;
