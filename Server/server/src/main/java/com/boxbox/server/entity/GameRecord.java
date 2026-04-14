@@ -3,6 +3,7 @@ package com.boxbox.server.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp; // 생성 시간 자동 기록용
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter 
 @Setter
+@NoArgsConstructor
 @Table(name = "game_records")
 public class GameRecord {
 

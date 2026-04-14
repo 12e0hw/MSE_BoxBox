@@ -2,7 +2,6 @@
 
 package com.boxbox.server.entity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter 
 @Setter
-//JPA가 엔티티를 생성할 수 있게 기본 생성자를 만들고 protected로 빈 객체 생성을 제한함
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Table(name = "users") 
 public class User {
     
