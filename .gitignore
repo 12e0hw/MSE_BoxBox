@@ -103,3 +103,6 @@ InitTestScene*.unity*
 *.mv.db
 *.lock.db
 *.trace.db
+
+# Environment variables
+.env
