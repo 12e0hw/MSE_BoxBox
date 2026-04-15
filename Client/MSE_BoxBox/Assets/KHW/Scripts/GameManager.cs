@@ -64,8 +64,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-
-    // 트럭에서 호출할 점수 추가 함수
+    
     public void AddScore(int amount)
     {
         if (state != GameState.Playing) return;
@@ -78,7 +77,7 @@ public class GameManager : MonoBehaviour
             SetState(GameState.Clear);
         }
     }
-
+    
     private void ShowClearUI()
     {
         if (clearUI) clearUI.SetActive(true);

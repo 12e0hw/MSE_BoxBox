@@ -5,15 +5,27 @@ public enum BoxSize { Small, Big }
 
 public class BoxController : MonoBehaviour
 {
-    public BoxColor boxColor;
-    public BoxSize boxSize;
-    public int scoreValue;
+    [SerializeField] private BoxColor boxColor;
+    [SerializeField] private BoxSize boxSize;
 
-    private void Start()
+
+    public BoxSize Size => boxSize;
+    public BoxColor Color => boxColor;
+    public int scoreValue => Size ==  BoxSize.Big ? 5 : 2;
+    public bool IsDelivered { get; private set; }
+    
+    // 박스 크기에 따라 몇 명의 플레이어가 들어야 하는지 인원 수 할당
+    //public int CarriedPlayer => Size == BoxSize.Big ? 2 : 1;
+
+    public bool IsCorrectTruck(BoxColor truckColor)
     {
-        scoreValue = (boxSize == BoxSize.Big) ? 5 : 2;
+        return Color == truckColor;
     }
 
+    public void MarkDelivered()
+    {
+        IsDelivered = true;
+    }
     // 박스 에셋 색 구분 어려울 때 사용
     // private void ApplyVisualColor()
     // {
