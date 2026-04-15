@@ -1,0 +1,693 @@
+fileFormatVersion: 2
+guid: 2aad34eed8da2aa4d90fd64188626d9b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3126566139632324939
+    second: realinterNPC-Photoroom_0
+  - first:
+      213: 7900506137498198817
+    second: realinterNPC-Photoroom_1
+  - first:
+      213: 7748149935951848362
+    second: realinterNPC-Photoroom_2
+  - first:
+      213: 5397526928582808493
+    second: realinterNPC-Photoroom_3
+  - first:
+      213: -605245054992672034
+    second: realinterNPC-Photoroom_4
+  - first:
+      213: 7549791665313806821
+    second: realinterNPC-Photoroom_5
+  - first:
+      213: -4584088743208797388
+    second: realinterNPC-Photoroom_6
+  - first:
+      213: 5846556979074114521
+    second: realinterNPC-Photoroom_7
+  - first:
+      213: -748023876953881870
+    second: realinterNPC-Photoroom_8
+  - first:
+      213: 8351946817930231839
+    second: realinterNPC-Photoroom_9
+  - first:
+      213: -761412669359619348
+    second: realinterNPC-Photoroom_10
+  - first:
+      213: -2950349246366591762
+    second: realinterNPC-Photoroom_11
+  - first:
+      213: 4078641608541690321
+    second: realinterNPC-Photoroom_12
+  - first:
+      213: 1866399699867389729
+    second: realinterNPC-Photoroom_13
+  - first:
+      213: 395659301658987810
+    second: realinterNPC-Photoroom_14
+  - first:
+      213: 4054841645420994670
+    second: realinterNPC-Photoroom_15
+  - first:
+      213: 5746614285244479125
+    second: realinterNPC-Photoroom_16
+  - first:
+      213: -3863165913491373308
+    second: realinterNPC-Photoroom_17
+  - first:
+      213: 1860875136564003909
+    second: realinterNPC-Photoroom_18
+  - first:
+      213: 3384489998652472783
+    second: realinterNPC-Photoroom_19
+  - first:
+      213: 6840715196479100269
+    second: realinterNPC-Photoroom_20
+  - first:
+      213: 8818119160957783973
+    second: realinterNPC-Photoroom_21
+  - first:
+      213: -2971826877969913358
+    second: realinterNPC-Photoroom_22
+  - first:
+      213: 7017901646808852268
+    second: realinterNPC-Photoroom_23
+  - first:
+      213: -4817119323955494601
+    second: realinterNPC-Photoroom_24
+  - first:
+      213: -182983388338921905
+    second: realinterNPC-Photoroom_25
+  - first:
+      213: 1549763663148547441
+    second: realinterNPC-Photoroom_26
+  - first:
+      213: -5047340523595066177
+    second: realinterNPC-Photoroom_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_0
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 616
+        width: 75
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5be637849a43c94d0800000000000000
+      internalID: -3126566139632324939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_2
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 471
+        width: 75
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa320e6b055f68b60800000000000000
+      internalID: 7748149935951848362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_3
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 472
+        width: 75
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da398cbe42ed7ea40800000000000000
+      internalID: 5397526928582808493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_4
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 473
+        width: 75
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda991744dcb997f0800000000000000
+      internalID: -605245054992672034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_6
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 474
+        width: 75
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43b3c2a539b0260c0800000000000000
+      internalID: -4584088743208797388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_7
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 472
+        width: 75
+        height: 141
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d32bc89894232150800000000000000
+      internalID: 5846556979074114521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_8
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 327
+        width: 59
+        height: 143
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f247a24f3c7e95f0800000000000000
+      internalID: -748023876953881870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_9
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 179
+        width: 59
+        height: 149
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f108fa1616318e370800000000000000
+      internalID: 8351946817930231839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_10
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 178
+        width: 62
+        height: 150
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce2865b163bee65f0800000000000000
+      internalID: -761412669359619348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_11
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 178
+        width: 61
+        height: 150
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee45af6fdf04e07d0800000000000000
+      internalID: -2950349246366591762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_13
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 178
+        width: 60
+        height: 150
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12fcd7f63a8c6e910800000000000000
+      internalID: 1866399699867389729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_14
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 178
+        width: 68
+        height: 149
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22d867fd90aad7500800000000000000
+      internalID: 395659301658987810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_15
+      rect:
+        serializedVersion: 2
+        x: 1207
+        y: 178
+        width: 69
+        height: 149
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6067c73ef0b54830800000000000000
+      internalID: 4054841645420994670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_16
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 178
+        width: 60
+        height: 146
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596be2dde3310cf40800000000000000
+      internalID: 5746614285244479125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_18
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 75
+        height: 154
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 544014ec31823d910800000000000000
+      internalID: 1860875136564003909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_19
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 70
+        height: 154
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcdfa83d8bf18fe20800000000000000
+      internalID: 3384489998652472783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_20
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 0
+        width: 69
+        height: 154
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d65d0cf3a3a1fee50800000000000000
+      internalID: 6840715196479100269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_22
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 0
+        width: 68
+        height: 153
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f925ac2333f1c6d0800000000000000
+      internalID: -2971826877969913358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_23
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 0
+        width: 66
+        height: 154
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c27aba68d58946160800000000000000
+      internalID: 7017901646808852268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_24
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 0
+        width: 67
+        height: 154
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73186fe3f77262db0800000000000000
+      internalID: -4817119323955494601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realinterNPC-Photoroom_26
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 0
+        width: 66
+        height: 154
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17df6c337ddd18510800000000000000
+      internalID: 1549763663148547441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ade9a7a9c0a71b24c9d1857cc149441c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      realinterNPC-Photoroom_0: -3126566139632324939
+      realinterNPC-Photoroom_1: 7900506137498198817
+      realinterNPC-Photoroom_10: -761412669359619348
+      realinterNPC-Photoroom_11: -2950349246366591762
+      realinterNPC-Photoroom_12: 4078641608541690321
+      realinterNPC-Photoroom_13: 1866399699867389729
+      realinterNPC-Photoroom_14: 395659301658987810
+      realinterNPC-Photoroom_15: 4054841645420994670
+      realinterNPC-Photoroom_16: 5746614285244479125
+      realinterNPC-Photoroom_17: -3863165913491373308
+      realinterNPC-Photoroom_18: 1860875136564003909
+      realinterNPC-Photoroom_19: 3384489998652472783
+      realinterNPC-Photoroom_2: 7748149935951848362
+      realinterNPC-Photoroom_20: 6840715196479100269
+      realinterNPC-Photoroom_21: 8818119160957783973
+      realinterNPC-Photoroom_22: -2971826877969913358
+      realinterNPC-Photoroom_23: 7017901646808852268
+      realinterNPC-Photoroom_24: -4817119323955494601
+      realinterNPC-Photoroom_25: -182983388338921905
+      realinterNPC-Photoroom_26: 1549763663148547441
+      realinterNPC-Photoroom_27: -5047340523595066177
+      realinterNPC-Photoroom_3: 5397526928582808493
+      realinterNPC-Photoroom_4: -605245054992672034
+      realinterNPC-Photoroom_5: 7549791665313806821
+      realinterNPC-Photoroom_6: -4584088743208797388
+      realinterNPC-Photoroom_7: 5846556979074114521
+      realinterNPC-Photoroom_8: -748023876953881870
+      realinterNPC-Photoroom_9: 8351946817930231839
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
