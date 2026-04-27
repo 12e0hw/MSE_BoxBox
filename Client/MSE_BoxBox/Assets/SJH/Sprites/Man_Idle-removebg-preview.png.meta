@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 37e77554b5bdc32499f541ff40281696
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -396863830899409073
+    second: Man_Idle-removebg-preview_0
+  - first:
+      213: -885044535840559649
+    second: Man_Idle-removebg-preview_1
+  - first:
+      213: -179375942218929723
+    second: Man_Idle-removebg-preview_2
+  - first:
+      213: -5422451836924800395
+    second: Man_Idle-removebg-preview_3
+  - first:
+      213: 1237800368596121923
+    second: Man_Idle-removebg-preview_4
+  - first:
+      213: 2081731807002637864
+    second: Man_Idle-removebg-preview_5
+  - first:
+      213: -5778761126475884869
+    second: Man_Idle-removebg-preview_6
+  - first:
+      213: 7889280644938126582
+    second: Man_Idle-removebg-preview_7
+  - first:
+      213: -5979879163047170892
+    second: Man_Idle-removebg-preview_8
+  - first:
+      213: 6499416175273385725
+    second: Man_Idle-removebg-preview_9
+  - first:
+      213: 3424525656955054696
+    second: Man_Idle-removebg-preview_10
+  - first:
+      213: -2383894401978362676
+    second: Man_Idle-removebg-preview_11
+  - first:
+      213: -7062744398063969557
+    second: Man_Idle-removebg-preview_12
+  - first:
+      213: -90615281953421928
+    second: Man_Idle-removebg-preview_13
+  - first:
+      213: 3454126520283329866
+    second: Man_Idle-removebg-preview_14
+  - first:
+      213: -592643570395736115
+    second: Man_Idle-removebg-preview_15
+  - first:
+      213: -5646708622332471612
+    second: Man_Idle-removebg-preview_16
+  - first:
+      213: -4354178043213365868
+    second: Man_Idle-removebg-preview_17
+  - first:
+      213: 4430759940734705877
+    second: Man_Idle-removebg-preview_18
+  - first:
+      213: -8904800660238486758
+    second: Man_Idle-removebg-preview_19
+  - first:
+      213: 7878805040175806131
+    second: Man_Idle-removebg-preview_20
+  - first:
+      213: 1682303327703859764
+    second: Man_Idle-removebg-preview_21
+  - first:
+      213: 1664983238758175014
+    second: Man_Idle-removebg-preview_22
+  - first:
+      213: -3478841006493925935
+    second: Man_Idle-removebg-preview_23
+  - first:
+      213: 8561754307887156528
+    second: Man_Idle-removebg-preview_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Man_Idle
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 298
+        width: 31
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4f3a0fc27e0e7af0800000000000000
+      internalID: -396863830899409073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Left
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 230
+        width: 35
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdda2de0fa0b7b3f0800000000000000
+      internalID: -885044535840559649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_walk_Right
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 230
+        width: 35
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c92acae78ab28df0800000000000000
+      internalID: -179375942218929723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Idle-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 230
+        width: 30
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 826360a8c0cc3ec10800000000000000
+      internalID: 2081731807002637864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Idle_Side2
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 91
+        width: 27
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb691966f57bdcfa0800000000000000
+      internalID: -5778761126475884869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Side1
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 91
+        width: 29
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f4d6e682fa5c7d60800000000000000
+      internalID: 7889280644938126582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Side2
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 91
+        width: 28
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bc20de7593330da0800000000000000
+      internalID: -5979879163047170892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Side3
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 92
+        width: 28
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc4990cfba4baeed0800000000000000
+      internalID: -2383894401978362676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Side4
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 92
+        width: 31
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bea5406d3671cfd90800000000000000
+      internalID: -7062744398063969557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Idle_Back
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 2
+        width: 33
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc7942c00d186c7f0800000000000000
+      internalID: -592643570395736115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Back1
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 4
+        width: 33
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6dcbfec6cd2a1b0800000000000000
+      internalID: -5646708622332471612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Walk_Back2
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 4
+        width: 33
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4320f3c96fdb85710800000000000000
+      internalID: 1682303327703859764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Man_Idle_Side
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 162
+        width: 31
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1975393893547b4c816fa15564a43db
+      internalID: 798907586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1c20a5971e01f514eabac1e49df59f6a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":51.0,"y":64.0},"gridSpriteOffset":{"x":40.0,"y":8.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Man_Idle: -396863830899409073
+      Man_Idle-removebg-preview_10: 3424525656955054696
+      Man_Idle-removebg-preview_13: -90615281953421928
+      Man_Idle-removebg-preview_14: 3454126520283329866
+      Man_Idle-removebg-preview_17: -4354178043213365868
+      Man_Idle-removebg-preview_18: 4430759940734705877
+      Man_Idle-removebg-preview_19: -8904800660238486758
+      Man_Idle-removebg-preview_20: 7878805040175806131
+      Man_Idle-removebg-preview_22: 1664983238758175014
+      Man_Idle-removebg-preview_23: -3478841006493925935
+      Man_Idle-removebg-preview_24: 8561754307887156528
+      Man_Idle-removebg-preview_25: -928648740
+      Man_Idle-removebg-preview_3: -5422451836924800395
+      Man_Idle-removebg-preview_4: 1237800368596121923
+      Man_Idle-removebg-preview_5: 2081731807002637864
+      Man_Idle-removebg-preview_9: 6499416175273385725
+      Man_Idle_Back: -592643570395736115
+      Man_Idle_Side: 798907586
+      Man_Idle_Side2: -5778761126475884869
+      Man_Walk_Back1: -5646708622332471612
+      Man_Walk_Back2: 1682303327703859764
+      Man_Walk_Left: -885044535840559649
+      Man_Walk_Side1: 7889280644938126582
+      Man_Walk_Side2: -5979879163047170892
+      Man_Walk_Side3: -2383894401978362676
+      Man_Walk_Side4: -7062744398063969557
+      Man_walk_Right: -179375942218929723
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
