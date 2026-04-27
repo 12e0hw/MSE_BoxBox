@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run BoxBox Server",
+      "request": "launch",
+      "mainClass": "com.boxbox.server.ServerApplication",
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    }
+  ]
+}

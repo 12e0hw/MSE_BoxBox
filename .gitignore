@@ -97,3 +97,12 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# H2 local database
+/Server/server/data/
+*.mv.db
+*.lock.db
+*.trace.db
+
+# Environment variables
+.envClient/MSE_BoxBox/.idea/
