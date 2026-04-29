@@ -105,4 +105,4 @@ InitTestScene*.unity*
 *.trace.db
 
 # Environment variables
-.env
+.envClient/MSE_BoxBox/.idea/

@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class TruckController : MonoBehaviour
 {
-    public BoxColor truckColor; 
+    [SerializeField] private BoxColor truckColor;
 
+    public BoxColor TruckColor => truckColor;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         BoxController incomingBox = other.GetComponent<BoxController>();
 
         if (incomingBox != null)
         {
-            if (incomingBox.boxColor == truckColor)
+            if (incomingBox.IsCorrectTruck(truckColor))
             {
                 Debug.Log($"+{incomingBox.scoreValue}점");
                 

@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags:
-  - Box
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -12,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Box
   - 
   - 
   - 
@@ -44,15 +43,6 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Object
-    uniqueID: 3737554829
-    locked: 0
-  - name: Effect
-    uniqueID: 773805285
-    locked: 0
-  - name: UI
-    uniqueID: 4110331299
     locked: 0
   m_RenderingLayers:
   - Default
