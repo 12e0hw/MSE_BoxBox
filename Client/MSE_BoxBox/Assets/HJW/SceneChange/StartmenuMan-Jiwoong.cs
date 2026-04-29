@@ -5,7 +5,7 @@ public class StartmenuMan : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("StageSelect");
     }
 
     public void Login()
@@ -16,5 +16,11 @@ public class StartmenuMan : MonoBehaviour
     public void OpenSettings()
     {
         Debug.Log("setting");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+        Debug.Log("Exit game");
     }
 }
