@@ -12,23 +12,11 @@ public class TruckController : MonoBehaviour
 
         if (incomingBox != null)
         {
-            if (incomingBox.IsCorrectTruck(truckColor))
-            {
-                Debug.Log($"+{incomingBox.scoreValue}점");
-                
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.AddScore(incomingBox.scoreValue);
-                }
-                
-                Destroy(other.gameObject);
-            }
-            else
-            {
-                Debug.Log($"오배송");
-                // 필요하다면 여기서 감점 로직 추가
-                // GameManager.Instance.AddScore(-1);
-            }
+            // DeliveryManager 필요
+            // DeliveryManager.Instance.CheckDelivery(incomingBox, this);
+            
+            // 박스 파괴는 여기서 해도 되고, 매니저가 해도 ㅇㅋㅇㅋ
+            Destroy(other.gameObject);
         }
     }
 }
