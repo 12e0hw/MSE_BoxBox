@@ -6,7 +6,7 @@ public class StaminaManager : MonoBehaviour
 {
     public Slider staminaGauage;
 
-    [Header("Settings")]
+    public Key runKey = Key.B;
     public float maxStamina = 10f;
     public float minusStamina = 2f;
     public float plusStamina = 2f;
@@ -25,7 +25,7 @@ public class StaminaManager : MonoBehaviour
     {
        if(Keyboard.current != null)
         {
-            running = Keyboard.current.bKey.isPressed;
+            running = Keyboard.current[runKey].isPressed;
         }
 
         if (running)
@@ -39,6 +39,10 @@ public class StaminaManager : MonoBehaviour
 
         currentStamina = Mathf.Clamp(currentStamina, 0 , maxStamina);
 
-        staminaGauage.value = currentStamina;
+        if(staminaGauage != null)
+        {
+             staminaGauage.value = currentStamina;
+        }
+        
     }
 }

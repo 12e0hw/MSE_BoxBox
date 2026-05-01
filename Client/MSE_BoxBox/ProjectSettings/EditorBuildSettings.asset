@@ -6,23 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/HJW/NPC/NPCassets.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/HJW/Scenes/Startmenu-Jiwoong.unity
+    guid: 409df853c6e706d40b49ed530b8b466d
   - enabled: 1
     path: Assets/HJW/Scenes/StageSelect.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/HJW/Scenes/Stage2.unity
-    guid: 2935da351121cf84197f1ec31a91190e
+    path: Assets/HJW/Scenes/LeaderboardMenu.unity
+    guid: 24e731111e661ce40881f99f0e335863
   - enabled: 1
     path: Assets/HJW/Scenes/Stage1.unity
-    guid: 7a7090f105b84c74490f3eeb9bf3692f
+    guid: 7a25a45c65952234595a9f5c3f50ebdb
   - enabled: 1
-    path: Assets/HJW/Scenes/Startmenu.unity
-    guid: a8e02d932c2ec434bac62bfee12a9458
+    path: Assets/HJW/NPC/NPCassets.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/HJW/Scenes/Startmenu-Jiwoong.unity
-    guid: 409df853c6e706d40b49ed530b8b466d
+    path: Assets/HJW/Scenes/ResultScene.unity
+    guid: 78cedbf86e17fbc4485049df1c5ea708
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
