@@ -41,4 +41,5 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Game Clear");
         }
     }
+
 }
