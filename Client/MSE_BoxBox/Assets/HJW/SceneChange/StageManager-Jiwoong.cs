@@ -56,7 +56,7 @@ public class StageManager1 : MonoBehaviour
 
     public void SelectLeaderboard()
     {
-        SceneManager.LoadScene("Leaderboard");
+        SceneManager.LoadScene("LeaderboardMenu");
         Debug.Log("Leaderboard");
     }
 
