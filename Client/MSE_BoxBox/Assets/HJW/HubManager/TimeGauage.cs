@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimeGauage : MonoBehaviour
 {
+    
     public Slider timeGuage;
-    public float maxTime = 120f;
+    public float maxTime = 12f;
     public float currentTime;
     public bool timeOver = false;
     void Start()
@@ -22,10 +24,12 @@ public class TimeGauage : MonoBehaviour
         if(timeOver) return;
         currentTime -= Time.deltaTime;
 
-        if(currentTime == 0)
+        if(currentTime <= 0)
         {
             timeOver = true;
             Debug.Log("Game Over");
+            SceneManager.LoadScene("ResultScene");
+            
         }
 
         if(timeGuage != null)
