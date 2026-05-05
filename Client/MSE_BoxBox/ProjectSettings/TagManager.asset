@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -43,6 +44,15 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Conveyor1
+    uniqueID: 674333107
+    locked: 0
+  - name: Conveyor2
+    uniqueID: 2219540273
+    locked: 0
+  - name: Box
+    uniqueID: 556551103
     locked: 0
   m_RenderingLayers:
   - Default
