@@ -17,10 +17,10 @@ public class BoxController : MonoBehaviour
     // 박스 크기에 따라 몇 명의 플레이어가 들어야 하는지 인원 수 할당
     //public int CarriedPlayer => Size == BoxSize.Big ? 2 : 1;
 
-    public bool IsCorrectTruck(BoxColor truckColor)
-    {
-        return Color == truckColor;
-    }
+    // public bool IsCorrectTruck(BoxColor truckColor)
+    // {
+    //     return Color == truckColor;
+    // }
 
     public void MarkDelivered()
     {
