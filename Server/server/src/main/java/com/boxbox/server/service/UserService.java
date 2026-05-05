@@ -14,27 +14,22 @@ public class UserService {
 
     // Signup
     public void signup(SignupRequest dto) {
-        if (userRepository.findByLoginId(dto.getLoginId()).isPresent()) {
-            throw new IllegalArgumentException("Duplicate ID");
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            throw new IllegalArgumentException("Duplicate Username");
         }
 
-        User user = new User();
-        user.setLoginId(dto.getLoginId());
-        user.setPassword(dto.getPassword());  
-        user.setUsername(dto.getUsername());
-
+        User user = new User(dto.getPassword(), dto.getUsername());
         userRepository.save(user);
     }
 
     // Login
     public User login(LoginRequest dto) {
-        User user = userRepository.findByLoginId(dto.getLoginId())
-                .orElseThrow(() -> new IllegalArgumentException("ID does not exist"));
+        User user = userRepository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("Username does not exist"));
 
         if (!user.getPassword().equals(dto.getPassword())) {
             throw new IllegalArgumentException("Password Mismatch");
         }
-
         return user;
     }
 }
