@@ -9,7 +9,7 @@ public class TruckController : MonoBehaviour
 
     private void Awake()
     {
-        deliveryManager = FindObjectOfType<DeliveryManager>();
+        deliveryManager = Object.FindFirstObjectByType<DeliveryManager>();
     }
     
     private void OnTriggerEnter2D(Collider2D other)
