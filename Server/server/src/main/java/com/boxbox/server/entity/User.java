@@ -2,9 +2,7 @@
 
 package com.boxbox.server.entity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter 
@@ -18,8 +16,8 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "login_id", nullable = false, unique = true, length = 50)
-    private String loginId;
+    // @Column(name = "login_id", nullable = false, unique = true, length = 50)
+    // private String loginId;
 
     @Column(name = "password", nullable = false, length = 255)
     private String password;
@@ -27,8 +25,7 @@ public class User {
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    public User(String loginId, String password, String username){
-        this.loginId = loginId;
+    public User(String password, String username){
         this.password = password;
         this.username = username;
     }
