@@ -488,6 +488,9 @@ MonoBehaviour:
   recoverPerSecond: 18
   minStaminaToDash: 5
   recoverWhileCarryingIdle: 1
+  showStaminaBar: 1
+  staminaGuiPosition: {x: 20, y: 20}
+  staminaGuiSize: {x: 120, y: 12}
   extinguisherRange: 1.2
   fireLayer:
     serializedVersion: 2
@@ -724,6 +727,9 @@ MonoBehaviour:
   recoverPerSecond: 18
   minStaminaToDash: 5
   recoverWhileCarryingIdle: 1
+  showStaminaBar: 1
+  staminaGuiPosition: {x: 20, y: 20}
+  staminaGuiSize: {x: 120, y: 12}
   extinguisherRange: 1.2
   fireLayer:
     serializedVersion: 2
