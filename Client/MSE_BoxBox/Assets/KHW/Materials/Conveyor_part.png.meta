@@ -1,25 +1,19 @@
 fileFormatVersion: 2
-guid: fcc302a0f09021e43bc8fd2b8179ac9e
+guid: d625430129bec2c4f826a6973cd84eec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4727633781103762509
-    second: Box_0
+      213: -4454674335854377688
+    second: Conveyor_part_0
   - first:
-      213: -7871530612760024436
-    second: Box_1
+      213: -7207204101409503324
+    second: Conveyor_part_1
   - first:
-      213: 8441712382528523809
-    second: Box_2
+      213: -5320844427941429534
+    second: Conveyor_part_2
   - first:
-      213: -6281331817050215206
-    second: Box_3
-  - first:
-      213: -2996856382578545496
-    second: Box_4
-  - first:
-      213: 8440063894332084662
-    second: Box_5
+      213: 2662275644051247928
+    second: Conveyor_part_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Box_0
+      name: Conveyor_part_0
       rect:
         serializedVersion: 2
-        x: 293
-        y: 674
-        width: 209
-        height: 271
+        x: 1077
+        y: 931
+        width: 152
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d4c93d630edeb9140800000000000000
-      internalID: 4727633781103762509
+      spriteID: 825c95d1b41dd22c0800000000000000
+      internalID: -4454674335854377688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Box_1
+      name: Conveyor_part_1
       rect:
         serializedVersion: 2
-        x: 881
-        y: 765
-        width: 210
-        height: 277
+        x: 1044
+        y: 786
+        width: 525
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +146,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c8a63d3ec94b2c290800000000000000
-      internalID: -7871530612760024436
+      spriteID: 4a78fbf1e0edafb90800000000000000
+      internalID: -7207204101409503324
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Box_2
+      name: Conveyor_part_2
       rect:
         serializedVersion: 2
-        x: 1481
-        y: 672
-        width: 210
-        height: 273
+        x: 457
+        y: 593
+        width: 234
+        height: 169
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 12e01a09facf62570800000000000000
-      internalID: 8441712382528523809
+      spriteID: 2ee3f6f0f209826b0800000000000000
+      internalID: -5320844427941429534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Box_3
+      name: Conveyor_part_3
       rect:
         serializedVersion: 2
-        x: 296
-        y: 76
-        width: 388
-        height: 396
+        x: 1068
+        y: 289
+        width: 153
+        height: 202
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,52 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: adcec580ef934d8a0800000000000000
-      internalID: -6281331817050215206
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Box_4
-      rect:
-        serializedVersion: 2
-        x: 854
-        y: 93
-        width: 398
-        height: 395
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8ac2b818ff60966d0800000000000000
-      internalID: -2996856382578545496
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Box_5
-      rect:
-        serializedVersion: 2
-        x: 1391
-        y: 129
-        width: 398
-        height: 398
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6b1934ff461212570800000000000000
-      internalID: 8440063894332084662
+      spriteID: 83359d9c79d42f420800000000000000
+      internalID: 2662275644051247928
       vertices: []
       indices: 
       edges: []
@@ -260,12 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Box_0: 4727633781103762509
-      Box_1: -7871530612760024436
-      Box_2: 8441712382528523809
-      Box_3: -6281331817050215206
-      Box_4: -2996856382578545496
-      Box_5: 8440063894332084662
+      Conveyor_part_0: -4454674335854377688
+      Conveyor_part_1: -7207204101409503324
+      Conveyor_part_2: -5320844427941429534
+      Conveyor_part_3: 2662275644051247928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

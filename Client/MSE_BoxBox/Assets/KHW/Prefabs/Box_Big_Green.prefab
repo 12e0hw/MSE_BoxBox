@@ -80,6 +80,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.24186869
       objectReference: {fileID: 0}
+    - target: {fileID: 8227081807455555434, guid: 9b97e80d14bb21248ac694db46ffcc03, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8227081807455555434, guid: 9b97e80d14bb21248ac694db46ffcc03, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 556551103
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,22 +1,29 @@
 using UnityEngine;
+using LJC;
 
 public class TruckController : MonoBehaviour
 {
     [SerializeField] private BoxColor truckColor;
-
     public BoxColor TruckColor => truckColor;
+    private DeliveryManager deliveryManager;
+
+    private void Awake()
+    {
+        deliveryManager = FindObjectOfType<DeliveryManager>();
+    }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        BoxController incomingBox = other.GetComponent<BoxController>();
+        BoxController box = other.GetComponent<BoxController>();
 
-        if (incomingBox != null)
+        if (box != null && !box.IsDelivered)
         {
-            // DeliveryManager 필요
-            // DeliveryManager.Instance.CheckDelivery(incomingBox, this);
+            // bool isSuccess = deliveryManager.TryDeliver(box, truckColor);
             
-            // 박스 파괴는 여기서 해도 되고, 매니저가 해도 ㅇㅋㅇㅋ
-            Destroy(other.gameObject);
+            // if (isSuccess)
+            // {
+            //     Destroy(other.gameObject);
+            // }
         }
     }
 }
