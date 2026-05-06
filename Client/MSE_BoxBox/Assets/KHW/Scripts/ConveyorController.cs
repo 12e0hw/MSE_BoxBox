@@ -10,7 +10,9 @@ public class ConveyorController : MonoBehaviour
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
+            Debug.Log("dkjasdb");
             rb.linearVelocity = direction.normalized * speed;
+
         }
     }
 }
