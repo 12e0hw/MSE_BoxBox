@@ -1,0 +1,845 @@
+fileFormatVersion: 2
+guid: 96feb5656108d6b4fb62053013b40ba1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 558722637418272493
+    second: interNPC_0
+  - first:
+      213: -6155529528448082518
+    second: interNPC_1
+  - first:
+      213: -4830893637402463048
+    second: interNPC_2
+  - first:
+      213: 1500924850364205842
+    second: interNPC_3
+  - first:
+      213: -7669841986470584398
+    second: interNPC_4
+  - first:
+      213: 6561059244417362033
+    second: interNPC_5
+  - first:
+      213: 4755806514972489762
+    second: interNPC_6
+  - first:
+      213: 8381287818221462026
+    second: interNPC_7
+  - first:
+      213: -4366274994119368928
+    second: interNPC_8
+  - first:
+      213: 6418167389711426067
+    second: interNPC_9
+  - first:
+      213: -760281213048884571
+    second: interNPC_10
+  - first:
+      213: 6382044871336644754
+    second: interNPC_11
+  - first:
+      213: 6049534412845152554
+    second: interNPC_12
+  - first:
+      213: 1048806712636970756
+    second: interNPC_13
+  - first:
+      213: -1512836337786914307
+    second: interNPC_14
+  - first:
+      213: -3227067375979938869
+    second: interNPC_15
+  - first:
+      213: 6576798441218340214
+    second: interNPC_16
+  - first:
+      213: -4651163667172514595
+    second: interNPC_17
+  - first:
+      213: -387074910875260173
+    second: interNPC_18
+  - first:
+      213: -297277149612180747
+    second: interNPC_19
+  - first:
+      213: -8501239021888662411
+    second: interNPC_20
+  - first:
+      213: -994966891450644436
+    second: interNPC_21
+  - first:
+      213: -8439116277166836665
+    second: interNPC_22
+  - first:
+      213: -6141175552533339520
+    second: interNPC_23
+  - first:
+      213: -4018869273308376703
+    second: interNPC_24
+  - first:
+      213: -4504033639085522223
+    second: interNPC_25
+  - first:
+      213: -4766824880668356071
+    second: interNPC_26
+  - first:
+      213: -8460449958416872228
+    second: interNPC_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: interNPC_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1066
+        width: 258
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de6194b474bf0c700800000000000000
+      internalID: 558722637418272493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_1
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 819
+        width: 120
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aad9c6cd18a239aa0800000000000000
+      internalID: -6155529528448082518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_2
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 819
+        width: 113
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b47eeaf4d735fcb0800000000000000
+      internalID: -4830893637402463048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_3
+      rect:
+        serializedVersion: 2
+        x: 2297
+        y: 312
+        width: 103
+        height: 996
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21bc38cf23b54d410800000000000000
+      internalID: 1500924850364205842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_4
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 819
+        width: 114
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf5b01995f3f8590800000000000000
+      internalID: -7669841986470584398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_5
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 568
+        width: 106
+        height: 252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1782acdee909d0b50800000000000000
+      internalID: 6561059244417362033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_6
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 819
+        width: 130
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2287c69f3d4000240800000000000000
+      internalID: 4755806514972489762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_7
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 818
+        width: 129
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a02266d5dd0505470800000000000000
+      internalID: 8381287818221462026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_8
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 819
+        width: 131
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02f18dfb600e763c0800000000000000
+      internalID: -4366274994119368928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 313
+        width: 108
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 312eebc6c39e11950800000000000000
+      internalID: 6418167389711426067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_10
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 313
+        width: 107
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a271dec340f275f0800000000000000
+      internalID: -760281213048884571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_11
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 312
+        width: 111
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 290df983ff3919850800000000000000
+      internalID: 6382044871336644754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_12
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 312
+        width: 110
+        height: 263
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a29f2262f7344f350800000000000000
+      internalID: 6049534412845152554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_13
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 313
+        width: 114
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40795c8f52c1e8e00800000000000000
+      internalID: 1048806712636970756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_14
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 313
+        width: 108
+        height: 261
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df978eabd53510be0800000000000000
+      internalID: -1512836337786914307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_15
+      rect:
+        serializedVersion: 2
+        x: 1608
+        y: 313
+        width: 106
+        height: 261
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcbb67cb1572733d0800000000000000
+      internalID: -3227067375979938869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_16
+      rect:
+        serializedVersion: 2
+        x: 1844
+        y: 312
+        width: 122
+        height: 261
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6757920465b754b50800000000000000
+      internalID: 6576798441218340214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_17
+      rect:
+        serializedVersion: 2
+        x: 2074
+        y: 313
+        width: 123
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd4aaf1a94fb37fb0800000000000000
+      internalID: -4651163667172514595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 261
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fa60db5b65d0aaf0800000000000000
+      internalID: -387074910875260173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_19
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 0
+        width: 124
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fa7689e10cdfdbf0800000000000000
+      internalID: -297277149612180747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_20
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 0
+        width: 122
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57413ada628850a80800000000000000
+      internalID: -8501239021888662411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_21
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 0
+        width: 122
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c284fcf32ea2132f0800000000000000
+      internalID: -994966891450644436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_22
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 121
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 744f041557c32ea80800000000000000
+      internalID: -8439116277166836665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_23
+      rect:
+        serializedVersion: 2
+        x: 1385
+        y: 0
+        width: 119
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082efef4f5926caa0800000000000000
+      internalID: -6141175552533339520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_24
+      rect:
+        serializedVersion: 2
+        x: 1611
+        y: 0
+        width: 119
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 181d8b550bb1a38c0800000000000000
+      internalID: -4018869273308376703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_25
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 0
+        width: 116
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d2c5e5c4457e71c0800000000000000
+      internalID: -4504033639085522223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_26
+      rect:
+        serializedVersion: 2
+        x: 2084
+        y: 0
+        width: 123
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912d449d606d8ddb0800000000000000
+      internalID: -4766824880668356071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interNPC_27
+      rect:
+        serializedVersion: 2
+        x: 2313
+        y: 0
+        width: 87
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdc08949691769a80800000000000000
+      internalID: -8460449958416872228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      interNPC_0: 558722637418272493
+      interNPC_1: -6155529528448082518
+      interNPC_10: -760281213048884571
+      interNPC_11: 6382044871336644754
+      interNPC_12: 6049534412845152554
+      interNPC_13: 1048806712636970756
+      interNPC_14: -1512836337786914307
+      interNPC_15: -3227067375979938869
+      interNPC_16: 6576798441218340214
+      interNPC_17: -4651163667172514595
+      interNPC_18: -387074910875260173
+      interNPC_19: -297277149612180747
+      interNPC_2: -4830893637402463048
+      interNPC_20: -8501239021888662411
+      interNPC_21: -994966891450644436
+      interNPC_22: -8439116277166836665
+      interNPC_23: -6141175552533339520
+      interNPC_24: -4018869273308376703
+      interNPC_25: -4504033639085522223
+      interNPC_26: -4766824880668356071
+      interNPC_27: -8460449958416872228
+      interNPC_3: 1500924850364205842
+      interNPC_4: -7669841986470584398
+      interNPC_5: 6561059244417362033
+      interNPC_6: 4755806514972489762
+      interNPC_7: 8381287818221462026
+      interNPC_8: -4366274994119368928
+      interNPC_9: 6418167389711426067
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

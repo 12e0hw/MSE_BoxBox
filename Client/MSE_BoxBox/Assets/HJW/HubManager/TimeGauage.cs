@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class TimeGauage : MonoBehaviour
 {
@@ -8,9 +7,10 @@ public class TimeGauage : MonoBehaviour
     public Slider timeGuage;
     public float maxTime = 12f;
     public float currentTime;
-    public bool timeOver = false;
+    public static bool timeOver = false;
     void Start()
     {
+        timeOver = false;
         currentTime = maxTime;
         if(timeGuage != null)
         {
@@ -28,8 +28,6 @@ public class TimeGauage : MonoBehaviour
         {
             timeOver = true;
             Debug.Log("Game Over");
-            SceneManager.LoadScene("ResultScene");
-            
         }
 
         if(timeGuage != null)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LeaderScene : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class LeaderScene : MonoBehaviour
     {
         if(Leaderboard1Panel != null) Leaderboard1Panel.SetActive(false);
         if(Leaderboard2Panel != null) Leaderboard2Panel.SetActive(false);
+
     }
 
     public void Leaderboard1Select()
@@ -24,11 +24,6 @@ public class LeaderScene : MonoBehaviour
         bool isLeaderboard2PanelActive = Leaderboard2Panel.activeSelf;
         Leaderboard2Panel.SetActive(!isLeaderboard2PanelActive);
         Leaderboard1Panel.SetActive(false);
-    }
-
-    public void BacktoStage()
-    {
-        SceneManager.LoadScene("StageSelect");
     }
 
     public void ExitGame()
