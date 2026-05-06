@@ -16,14 +16,32 @@ public class TruckController : MonoBehaviour
     {
         BoxController box = other.GetComponent<BoxController>();
 
-        if (box != null && !box.IsDelivered)
+        if (box == null)
         {
-            // bool isSuccess = deliveryManager.TryDeliver(box, truckColor);
-            
-            // if (isSuccess)
-            // {
-            //     Destroy(other.gameObject);
-            // }
+            box = other.GetComponentInParent<BoxController>();
+        }
+
+        if (box == null)
+        {
+            return;
+        }
+
+        if (box.IsDelivered)
+        {
+            return;
+        }
+
+        if (deliveryManager == null)
+        {
+            Debug.LogError("[TruckController] DeliveryManager를 찾지 못했습니다.");
+            return;
+        }
+
+        bool isSuccess = deliveryManager.TryDeliver(box, this);
+
+        if (isSuccess)
+        {
+            Destroy(box.gameObject);
         }
     }
 }
