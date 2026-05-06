@@ -17,10 +17,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/HJW/Scenes/Stage1.unity
     guid: 7a25a45c65952234595a9f5c3f50ebdb
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: 910532c1dc28f8046b7d3012396eaea6
+  - enabled: 1
     path: Assets/HJW/Scenes/Stage2.unity
     guid: d0e6b30f66c9d8c4c91570661fb5b0cf
-  - enabled: 0
+  - enabled: 1
     path: Assets/HJW/NPC/NPCassets.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 0
@@ -29,15 +32,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HJW/Scenes/ChangeScene.unity
     guid: 83032fd55e536e142a6f34a0249ff5dc
-  - enabled: 1
-    path: Assets/Scenes/MainScene.unity
-    guid: f43dc33d6927e3d4c8fd28bc4ef44af9
-  - enabled: 1
-    path: Assets/Scenes/Stage1.unity
-    guid: 910532c1dc28f8046b7d3012396eaea6
-  - enabled: 1
-    path: Assets/Scenes/Stage2.unity
-    guid: 76b415988237648479a566906cc5cc04
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

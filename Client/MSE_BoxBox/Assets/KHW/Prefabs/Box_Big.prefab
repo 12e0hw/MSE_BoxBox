@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1038075537576658559}
   - component: {fileID: 5765656234252132884}
   - component: {fileID: 3074413937906785380}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box_Big
   m_TagString: Box
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.15574177}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -79,7 +79,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.3114835}
   m_EdgeRadius: 0
 --- !u!50 &5765656234252132884
 Rigidbody2D:
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22f33b6bd870eb46a945aea69055099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxController
-  boxColor: 1
+  boxColor: 2
   boxSize: 1
 --- !u!1 &5220103935398567431
 GameObject:

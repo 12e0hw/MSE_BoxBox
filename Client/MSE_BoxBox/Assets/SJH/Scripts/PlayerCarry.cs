@@ -66,6 +66,8 @@ public class PlayerCarry
         GameObject target = null;
         Collider2D targetCollider = null;
         Rigidbody2D targetRigidbody = null;
+        
+        int boxLayerIndex = LayerMask.NameToLayer("Box");
 
         foreach (RaycastHit2D hit in hits)
         {
@@ -95,10 +97,20 @@ public class PlayerCarry
             {
                 continue;
             }
+            
+            // 모든 물체를 들 수 있는 버그가 생겨 들 수 있는 물체를 box와 extinguisher로 제한
+            bool isBoxLayer =
+                candidate.layer == boxLayerIndex ||
+                hit.collider.gameObject.layer == boxLayerIndex;
 
+            bool isExtinguisher =
+                IsExtinguisher(candidate) ||
+                IsExtinguisher(hit.collider.gameObject);
+
+            /*
             bool isBoxLayer = IsInLayerMask(hit.collider.gameObject.layer, boxLayer);
             bool isExtinguisher = IsExtinguisher(candidate);
-
+            */
             if (!isBoxLayer && !isExtinguisher)
             {
                 continue;
@@ -246,12 +258,12 @@ public class PlayerCarry
 
         return PlayerFacingDirection.Front;
     }
-
+/*
     bool IsInLayerMask(int layer, LayerMask layerMask)
     {
         return (layerMask.value & (1 << layer)) != 0;
     }
-
+*/
     bool IsExtinguisher(GameObject target)
     {
         if (target == null)

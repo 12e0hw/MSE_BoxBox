@@ -2,7 +2,10 @@ package com.boxbox.server.controller;
 
 import com.boxbox.server.dto.BestScoreResponse;
 import com.boxbox.server.dto.LeaderboardItemResponse;
+import com.boxbox.server.dto.score.ScoreSaveRequest;
+import com.boxbox.server.dto.score.ScoreSaveResponse;
 import com.boxbox.server.global.ApiResponse;
+import com.boxbox.server.service.GameScoreService;
 import com.boxbox.server.service.LeaderboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,20 @@ import java.util.List;
 public class GameController {
 
     private final LeaderboardService leaderboardService;
+    private final GameScoreService gameScoreService;
+
+    // 점수 저장
+    @PostMapping("/score")
+    public ResponseEntity<ApiResponse<ScoreSaveResponse>> saveScore(@RequestBody ScoreSaveRequest request) {
+        try {
+            ScoreSaveResponse response = gameScoreService.saveScore(request);
+            return ResponseEntity.status(201)
+                    .body(ApiResponse.success("점수 저장 성공", response));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.fail(e.getMessage()));
+        }
+    }
 
     // 전체 리더보드 조회 
     @GetMapping("/rank")

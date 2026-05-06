@@ -1,38 +1,76 @@
+using System;
 using UnityEngine;
-using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public TextMeshProUGUI score;
-    private int currentScore = 0;
-    private int maxScore = 99999;
-    private bool maxClear = false;
+    [Header("Score Settings")]
+    [SerializeField] private int maxScore = 99999;
+    
+    public int CurrentScore { get; private set; }
+    public bool MaxClear { get; private set; }
+    
+    public event Action<int> OnScoreChanged; // 점수가 바뀔 때마다 알려주는 역할
+    public event Action OnMaxScoreReached;
+    
     void Start()
     {
-        UpdateScore();
+        ResetScore();
+    }
+    
+    public void SetTargetScore(int targetScore)
+    {
+        maxScore = targetScore;
     }
 
+    public void ResetScore()
+    {
+        CurrentScore = 0;
+        MaxClear = false;
+        
+        OnScoreChanged?.Invoke(CurrentScore);
+    }
+    
+    //
+    public void AddScore(int points)
+    {
+        if (points <= 0)
+        {
+            return;
+        }
+
+        CurrentScore += points;
+        
+        OnScoreChanged?.Invoke(CurrentScore);
+        CheckMaxScore();
+    }
+    
     public void AddSmallBoxScore()
     {
-        currentScore += 2;
-        UpdateScore();
+        AddScore(2);
     }
     public void AddBigBoxScore()
     {
-        currentScore += 5;
-        UpdateScore();
+        AddScore(5);
     }
 
-    private void UpdateScore()
+    //이전 Update() 함수에서 이름을 직관적으로 수정하고 클리어 점수 도달 이벤트 알림
+    private void CheckMaxScore()
     {
-        if(score != null)
+        if (MaxClear)
         {
-            score.text = currentScore.ToString("D5");
+            return;
+        }
+
+        if (CurrentScore >= maxScore)
+        {
+            MaxClear = true;
+            Debug.Log("Game Clear");
+
+            OnMaxScoreReached?.Invoke();
         }
     }
 
-
-
+    /*
     void Update()
     {
         if(maxClear == false && maxScore <= currentScore)
@@ -41,5 +79,5 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Game Clear");
         }
     }
-
+    */
 }
