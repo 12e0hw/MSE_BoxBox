@@ -1702,6 +1702,7 @@ GameObject:
   - component: {fileID: 572750614}
   - component: {fileID: 572750617}
   - component: {fileID: 572750618}
+  - component: {fileID: 572750619}
   m_Layer: 0
   m_Name: SceneChangeManager
   m_TagString: Untagged
@@ -1750,7 +1751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50fcd4b519751734d9c23706842f4c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeManager
-  LoginPanel: {fileID: 688159292}
+  LoginPanel: {fileID: 2131671933}
   SettingPanel: {fileID: 1102733737}
   SignupPanel: {fileID: 913964481}
   StageSelectPanel: {fileID: 1766228827}
@@ -1758,6 +1759,23 @@ MonoBehaviour:
   loadingPanel: {fileID: 86396283}
   loadingSlider: {fileID: 472830560}
   loadingTime: 3
+--- !u!114 &572750619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572750613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf94e1cb7b7c4464487c1900d25c9e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AuthManager
+  usernameInput: {fileID: 2131671936}
+  passwordInput: {fileID: 2131671935}
+  loginPanel: {fileID: 2131671933}
+  signupSuccessPanel: {fileID: 0}
+  failPanel: {fileID: 0}
 --- !u!1 &597674531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,7 +2057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &688159293
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3253,6 +3271,7 @@ RectTransform:
   - {fileID: 1766228828}
   - {fileID: 86396284}
   - {fileID: 171788929}
+  - {fileID: 2131671934}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4499,6 +4518,147 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108630819}
   m_CullTransparentMesh: 1
+--- !u!1001 &2131671932
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1164644852}
+    m_Modifications:
+    - target: {fileID: 721202648075683925, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.770401
+      objectReference: {fileID: 0}
+    - target: {fileID: 721202648075683925, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.6154003
+      objectReference: {fileID: 0}
+    - target: {fileID: 5925935412660415510, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_Name
+      value: LoginPanel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5925935412660415510, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 831.6587
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 828.00244
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10625.722
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+--- !u!1 &2131671933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5925935412660415510, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+  m_PrefabInstance: {fileID: 2131671932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2131671934 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8282213788863789484, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+  m_PrefabInstance: {fileID: 2131671932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2131671935 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1473049748575601156, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+  m_PrefabInstance: {fileID: 2131671932}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &2131671936 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6689010629940815885, guid: 48b0988d57bc33e4f8acdbdf4d83db99, type: 3}
+  m_PrefabInstance: {fileID: 2131671932}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
