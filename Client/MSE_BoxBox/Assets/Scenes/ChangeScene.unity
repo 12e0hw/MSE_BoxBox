@@ -950,7 +950,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 572750618}
         m_TargetAssemblyTypeName: ChangeManager, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Signup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

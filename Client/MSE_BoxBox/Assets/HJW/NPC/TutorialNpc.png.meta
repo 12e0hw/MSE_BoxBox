@@ -1,22 +1,40 @@
 fileFormatVersion: 2
-guid: a8a8b4b78c965af4bb568118771c5e76
+guid: 5868c14d2e308764e891821538ba579c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1373134365048205835
-    second: NpcTutirail-Photoroom_0
+      213: -7497260009556009305
+    second: TutorialNpc_0
   - first:
-      213: 360432336642386035
-    second: NpcTutirail-Photoroom_1
+      213: 6705384691433480196
+    second: TutorialNpc_1
   - first:
-      213: 4365489334355492661
-    second: NpcTutirail-Photoroom_2
+      213: 6441186732833873966
+    second: TutorialNpc_2
   - first:
-      213: 7097581959109885985
-    second: NpcTutirail-Photoroom_3
+      213: -853115219589757602
+    second: TutorialNpc_3
   - first:
-      213: 635204883801843732
-    second: NpcTutirail-Photoroom_4
+      213: 5796032632077753215
+    second: TutorialNpc_4
+  - first:
+      213: -4529695430428274467
+    second: TutorialNpc_5
+  - first:
+      213: -7316333611920046308
+    second: TutorialNpc_6
+  - first:
+      213: 1830572605025308112
+    second: TutorialNpc_7
+  - first:
+      213: 6041001780801382737
+    second: TutorialNpc_8
+  - first:
+      213: 4709971426894846830
+    second: TutorialNpc_9
+  - first:
+      213: 4131014475317503118
+    second: TutorialNpc_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +67,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -87,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -112,111 +130,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NpcTutirail-Photoroom_0
+      name: TutorialNpc_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1165
-        width: 398
-        height: 1235
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 28
+        y: 1174
+        width: 172
+        height: 368
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5fd8b66f195a1fce0800000000000000
-      internalID: -1373134365048205835
+      spriteID: 7ae1ca55eb164f790800000000000000
+      internalID: -7497260009556009305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NpcTutirail-Photoroom_1
+      name: TutorialNpc_1
       rect:
         serializedVersion: 2
-        x: 464
-        y: 1164
-        width: 464
-        height: 957
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 262
+        y: 1172
+        width: 172
+        height: 368
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 378222fec43800500800000000000000
-      internalID: 360432336642386035
+      spriteID: 4002c37a9df4e0d50800000000000000
+      internalID: 6705384691433480196
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NpcTutirail-Photoroom_2
+      name: TutorialNpc_2
       rect:
         serializedVersion: 2
-        x: 967
-        y: 1165
-        width: 434
-        height: 1235
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 489
+        y: 1172
+        width: 172
+        height: 368
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53ff3059b65559c30800000000000000
-      internalID: 4365489334355492661
+      spriteID: e20a586e431b36950800000000000000
+      internalID: 6441186732833873966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NpcTutirail-Photoroom_3
+      name: TutorialNpc_
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 657
-        height: 1007
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 28
+        y: 789
+        width: 172
+        height: 368
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 12047fcef2daf7260800000000000000
-      internalID: 7097581959109885985
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: NpcTutirail-Photoroom_4
-      rect:
-        serializedVersion: 2
-        x: 819
-        y: 0
-        width: 582
-        height: 1007
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4182a92f973b0d800800000000000000
-      internalID: 635204883801843732
+      spriteID: e558fdf4a302924f0800000000000000
+      internalID: -853115219589757602
       vertices: []
       indices: 
       edges: []
@@ -225,7 +221,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 824ac58af8b68bb4797e48621841e7d8
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +231,17 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NpcTutirail-Photoroom_0: -1373134365048205835
-      NpcTutirail-Photoroom_1: 360432336642386035
-      NpcTutirail-Photoroom_2: 4365489334355492661
-      NpcTutirail-Photoroom_3: 7097581959109885985
-      NpcTutirail-Photoroom_4: 635204883801843732
+      TutorialNpc_: -853115219589757602
+      TutorialNpc_1: 6705384691433480196
+      TutorialNpc_10: 4131014475317503118
+      TutorialNpc_2: 6441186732833873966
+      TutorialNpc_3: -7497260009556009305
+      TutorialNpc_4: 5796032632077753215
+      TutorialNpc_5: -4529695430428274467
+      TutorialNpc_6: -7316333611920046308
+      TutorialNpc_7: 1830572605025308112
+      TutorialNpc_8: 6041001780801382737
+      TutorialNpc_9: 4709971426894846830
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
