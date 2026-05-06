@@ -3,237 +3,173 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [Header("State")]
-    private bool isCarrying = false;
-
     [Header("Components")]
     public Rigidbody2D rb;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
     [Header("Animation")]
-    public string characterPrefix = "Man"; // Man 또는 Woman
+    public string characterPrefix = "Man";
 
     [Header("Move")]
     public float moveSpeed = 3f;
+    public float carryMoveSpeed = 2f;
+    public float dashMoveSpeed = 5f;
+    public float exhaustedMoveSpeed = 1.5f;
 
     [Header("Keys")]
     public Key upKey;
     public Key downKey;
     public Key leftKey;
     public Key rightKey;
-    public Key pickKey;
+    public Key interactKey;
+    public Key extinguisherKey;
+    public Key dashKey;
 
     [Header("Carry Settings")]
-    public Transform carryPoint;     // 박스를 붙일 위치
-    public float pickDistance = 0.8f; // Raycast 길이
-    public LayerMask boxLayer;        // Box 레이어만 검사
+    public Transform carryPoint;
+    public float pickDistance = 0.8f;
+    public LayerMask boxLayer;
 
     [Header("Carry Position")]
     public Vector3 frontCarryLocalPos = new Vector3(0f, 0.2f, 0f);
     public Vector3 backCarryLocalPos = new Vector3(0f, 0.35f, 0f);
     public Vector3 sideCarryLocalPos = new Vector3(0.2f, 0.25f, 0f);
 
-    private Vector2 moveInput;
-    private Vector2 lastMoveDir = Vector2.down;
-    private string currentAnim;
-    private GameObject currentBox;
+    [Header("Stamina")]
+    public float maxStamina = 100f;
+    public float dashDrainPerSecond = 25f;
+    public float carryDrainPerSecond = 8f;
+    public float recoverPerSecond = 18f;
+    public float minStaminaToDash = 5f;
+    public bool recoverWhileCarryingIdle = true;
+
+    [Header("Stamina UI")]
+    public bool showStaminaBar = true;
+    public Vector2 staminaGuiPosition = new Vector2(20f, 20f);
+    public Vector2 staminaGuiSize = new Vector2(120f, 12f);
+
+    [Header("Extinguisher")]
+    public float extinguisherRange = 1.2f;
+    public LayerMask fireLayer;
+
+    public Vector2 MoveInput => inputHandler != null ? inputHandler.MoveInput : Vector2.zero;
+    public Vector2 LastMoveDir => inputHandler != null ? inputHandler.LastMoveDir : Vector2.down;
+    public bool IsCarrying => carry != null && carry.IsCarrying;
+    public float CurrentStamina => stamina != null ? stamina.CurrentStamina : maxStamina;
+    public float MaxStamina => stamina != null ? stamina.MaxStamina : maxStamina;
+
+    private PlayerInputHandler inputHandler;
+    private PlayerMovement movement;
+    private PlayerCarry carry;
+    private PlayerStamina stamina;
+    private PlayerAnimationController animationController;
+    private FireExtinguisherUser extinguisherUser;
+
+    void Awake()
+    {
+        FindComponents();
+        SyncSettingsToComponents();
+    }
 
     void Update()
     {
-        HandleInput();
-        UpdateCarryPointPosition();
-        HandleCarryInput();
-        UpdateAnimation();
+        inputHandler.ReadInput();
+
+        if (inputHandler.InteractPressed)
+        {
+            carry.ToggleCarry(inputHandler.LastMoveDir);
+        }
+
+        if (inputHandler.ExtinguisherPressed && carry.IsCarryingExtinguisher)
+        {
+            if (extinguisherUser.TryUse(inputHandler.LastMoveDir))
+            {
+                carry.DestroyCarriedObject();
+            }
+        }
+
+        bool isMoving = inputHandler.MoveInput != Vector2.zero;
+        bool wantsDash = inputHandler.DashHeld && isMoving;
+        stamina.Tick(Time.deltaTime, isMoving, carry.IsCarrying, wantsDash);
+
+        bool isDashing = wantsDash && stamina.CanDash;
+        carry.UpdateCarryPointPosition(inputHandler.LastMoveDir);
+        movement.Move(inputHandler.MoveInput, carry.IsCarrying, isDashing, stamina.IsExhausted);
+        animationController.UpdateAnimation(inputHandler.MoveInput, inputHandler.LastMoveDir, carry.IsCarrying);
     }
 
     void FixedUpdate()
     {
-        rb.linearVelocity = moveInput * moveSpeed;
+        movement.ApplyVelocity();
     }
 
-    void HandleInput()
+    void SyncSettingsToComponents()
     {
-        if (Keyboard.current == null) return;
-
-        float x = 0f;
-        float y = 0f;
-
-        if (Keyboard.current[leftKey].isPressed) x = -1f;
-        if (Keyboard.current[rightKey].isPressed) x = 1f;
-        if (Keyboard.current[upKey].isPressed) y = 1f;
-        if (Keyboard.current[downKey].isPressed) y = -1f;
-
-        moveInput = new Vector2(x, y).normalized;
-
-        if (moveInput != Vector2.zero)
-        {
-            lastMoveDir = moveInput;
-        }
+        inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
+        movement.Configure(rb, moveSpeed, carryMoveSpeed, dashMoveSpeed, exhaustedMoveSpeed);
+        carry.Configure(transform, carryPoint, spriteRenderer, pickDistance, boxLayer, frontCarryLocalPos, backCarryLocalPos, sideCarryLocalPos);
+        stamina.Configure(maxStamina, dashDrainPerSecond, carryDrainPerSecond, recoverPerSecond, minStaminaToDash, recoverWhileCarryingIdle);
+        stamina.showDebugBar = showStaminaBar;
+        stamina.guiPosition = GetStaminaGuiPosition();
+        stamina.guiSize = staminaGuiSize;
+        animationController.Configure(animator, spriteRenderer, characterPrefix);
+        extinguisherUser.Configure(transform, extinguisherRange, fireLayer);
     }
 
-    void HandleCarryInput()
+    void FindComponents()
     {
-        if (Keyboard.current == null) return;
-
-        if (Keyboard.current[pickKey].wasPressedThisFrame)
+        if (rb == null)
         {
-            if (!isCarrying)
-                TryPickUpBox();
-            else
-                DropBox();
+            rb = GetComponent<Rigidbody2D>();
         }
+
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        inputHandler = new PlayerInputHandler();
+        movement = new PlayerMovement();
+        carry = new PlayerCarry();
+        stamina = new PlayerStamina();
+        animationController = new PlayerAnimationController();
+        extinguisherUser = new FireExtinguisherUser();
     }
 
-    void TryPickUpBox()
+    Vector2 GetStaminaGuiPosition()
     {
-        Vector2 direction = lastMoveDir.normalized;
-        Vector2 origin = (Vector2)transform.position + direction * 0.6f;
-
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, pickDistance, boxLayer);
-
-        Debug.DrawRay(origin, direction * pickDistance, Color.red, 1f);
-
-        if (hit.collider == null)
+        if (characterPrefix == "Woman")
         {
-            Debug.Log("박스 못 찾음");
-            return;
+            return new Vector2(staminaGuiPosition.x, staminaGuiPosition.y + 20f);
         }
 
-
-        Rigidbody2D hitRb = hit.collider.attachedRigidbody;
-         
-         if (hitRb.gameObject == gameObject)
-        {
-            Debug.Log("자기 자신을 맞아서 무시");
-            return;
-        }
-
-        currentBox = hitRb.gameObject;
-
-        Collider2D boxCol = currentBox.GetComponent<Collider2D>();
-        if (boxCol != null)
-        {
-            boxCol.enabled = false;
-        }
-
-        hitRb.linearVelocity = Vector2.zero;
-        hitRb.angularVelocity = 0f;
-
-        currentBox.transform.SetParent(carryPoint);
-        currentBox.transform.localPosition = Vector3.zero;
-
-        isCarrying = true;
-
-        Debug.Log("집은 박스: " + currentBox.name);
+        return staminaGuiPosition;
     }
 
-    void DropBox()
+    void OnGUI()
     {
-        if (currentBox == null) return;
-
-        currentBox.transform.SetParent(null);
-
-  
-        Vector3 dropOffset = (Vector3)lastMoveDir.normalized * 0.8f;
-        currentBox.transform.position = transform.position + dropOffset;
-
-        Collider2D boxCol = currentBox.GetComponent<Collider2D>();
-
-        if (boxCol != null)
+        if (stamina != null)
         {
-            boxCol.enabled = true;
+            stamina.DrawGUI();
         }
-
-        currentBox = null;
-        isCarrying = false;
-    }
-
-    void UpdateCarryPointPosition()
-    {
-        if (carryPoint == null) return;
-
-        string direction = GetDirection();
-
-        if (direction == "Front")
-        {
-            carryPoint.localPosition = frontCarryLocalPos;
-        }
-        else if (direction == "Back")
-        {
-            carryPoint.localPosition = backCarryLocalPos;
-        }
-        else
-        {
-            Vector3 pos = sideCarryLocalPos;
-
-            if (lastMoveDir.x < 0)
-                pos.x = -Mathf.Abs(sideCarryLocalPos.x);
-            else
-                pos.x = Mathf.Abs(sideCarryLocalPos.x);
-
-            carryPoint.localPosition = pos;
-        }
-    }
-
-    void UpdateAnimation()
-    {
-        string direction = GetDirection();
-        string state;
-
-        if (direction == "Side")
-        {
-            if (lastMoveDir.x < 0)
-                spriteRenderer.flipX = true;
-            else if (lastMoveDir.x > 0)
-                spriteRenderer.flipX = false;
-        }
-
-        if (isCarrying)
-        {
-            state = moveInput == Vector2.zero ? "CarryingIdle" : "CarryingWalk";
-        }
-        else
-        {
-            state = moveInput == Vector2.zero ? "Idle" : "Walk";
-        }
-
-        string animName = characterPrefix + "_" + direction + "_" + state;
-        PlayAnimation(animName);
-    }
-
-    string GetDirection()
-    {
-        if (Mathf.Abs(lastMoveDir.x) > Mathf.Abs(lastMoveDir.y))
-        {
-            return "Side";
-        }
-        else
-        {
-            if (lastMoveDir.y > 0)
-                return "Back";
-            else
-                return "Front";
-        }
-    }
-
-    void PlayAnimation(string animName)
-    {
-        if (currentAnim == animName) return;
-
-        currentAnim = animName;
-        animator.Play(animName);
     }
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-
-        Vector2 dir = Application.isPlaying ? lastMoveDir.normalized : Vector2.down;
+        Vector2 dir = Application.isPlaying && inputHandler != null ? inputHandler.LastMoveDir.normalized : Vector2.down;
         Vector2 origin = transform.position;
-        Vector2 end = origin + dir * pickDistance;
 
-        Gizmos.DrawLine(origin, end);
-        Gizmos.DrawWireSphere(end, 0.05f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(origin, origin + dir * pickDistance);
+        Gizmos.DrawWireSphere(origin + dir * pickDistance, 0.05f);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(origin, origin + dir * extinguisherRange);
     }
 }

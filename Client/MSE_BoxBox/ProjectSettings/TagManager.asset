@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Box
+  - Extinguisher
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Fire
   - Water
   - UI
   - Box
