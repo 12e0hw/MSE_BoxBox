@@ -1,3 +1,4 @@
+using LJC.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,8 @@ public class TimeGauage : MonoBehaviour
         {
             timeOver = true;
             Debug.Log("Game Over");
+            //SceneManager.LoadScene("ResultScene");
+ 
         }
 
         if(timeGuage != null)

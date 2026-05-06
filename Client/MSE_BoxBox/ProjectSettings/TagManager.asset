@@ -16,8 +16,8 @@ TagManager:
   - Box
   - Npc
   - IndisibleWall
-  - 
-  - 
+  - Player
+  - Wall
   - 
   - 
   - 

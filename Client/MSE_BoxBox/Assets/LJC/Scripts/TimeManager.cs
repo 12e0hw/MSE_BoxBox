@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    [SerializeField] private float startTime = 120f;
+    [SerializeField] private float startTime = 10f;
 
+    public float StartTime => startTime;
     public float RemainingTime { get; private set; }
     public bool IsRunning { get; private set; }
 
@@ -35,6 +36,7 @@ public class TimeManager : MonoBehaviour
         if (RemainingTime <= 0f)
         {
             IsRunning = false;
+            Debug.Log("[TimeManager] Time Over 이벤트 발생");
             OnTimeOver?.Invoke();
         }
     }
@@ -42,6 +44,7 @@ public class TimeManager : MonoBehaviour
     public void StartTimer()
     {
         IsRunning = true;
+        OnTimeChanged?.Invoke(RemainingTime);
     }
 
     public void StopTimer()
