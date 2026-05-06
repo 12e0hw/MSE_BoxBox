@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace HJW.scripts
 {
-    public class ResultManager : MonoBehaviour
+    public class ResultChangeManager : MonoBehaviour
     {
         [Header("Panels")]
         public GameObject successPanel; 

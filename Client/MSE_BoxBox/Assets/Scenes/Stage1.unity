@@ -1223,9 +1223,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
-        m_MethodName: Stage
+      - m_Target: {fileID: 1620370297}
+        m_TargetAssemblyTypeName: LJC.scripts.ResultManager, Assembly-CSharp
+        m_MethodName: GoToStageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5072,6 +5072,77 @@ MonoBehaviour:
   scoreManager: {fileID: 1156376101}
   addScoreAmount: 20
   onlyInPlayingState: 1
+--- !u!1 &1288844782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1288844783}
+  - component: {fileID: 1288844786}
+  - component: {fileID: 1288844785}
+  m_Layer: 0
+  m_Name: PanelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1288844783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288844782}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.64649, y: 0.45231003, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1622799913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288844785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288844782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c556cc5b2a92ed469dbabf86b631a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaManager
+  staminaGauage: {fileID: 111703646}
+  runKey: 30
+  maxStamina: 10
+  minusStamina: 2
+  plusStamina: 2
+  currentStamina: 0
+  running: 0
+--- !u!114 &1288844786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288844782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c556cc5b2a92ed469dbabf86b631a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaManager
+  staminaGauage: {fileID: 1500254770}
+  runKey: 16
+  maxStamina: 10
+  minusStamina: 2
+  plusStamina: 2
+  currentStamina: 0
+  running: 0
 --- !u!1 &1307986786
 GameObject:
   m_ObjectHideFlags: 0
@@ -5503,9 +5574,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
-        m_MethodName: LeaderBoard
+      - m_Target: {fileID: 1620370297}
+        m_TargetAssemblyTypeName: LJC.scripts.ResultManager, Assembly-CSharp
+        m_MethodName: GoToLeaderboard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6443,6 +6514,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LJC.scripts.ResultManager
   userId: 1
   stageId: 1
+  successPanel: {fileID: 1549318958}
+  failPanel: {fileID: 1770752952}
+  dimCanvasGroup: {fileID: 1791840032}
+  delayTime: 3
 --- !u!1 &1622799912
 GameObject:
   m_ObjectHideFlags: 0
@@ -6479,6 +6554,7 @@ Transform:
   - {fileID: 1045609367}
   - {fileID: 725495788}
   - {fileID: 1384939507}
+  - {fileID: 1288844783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1634261584
@@ -6847,9 +6923,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
-        m_MethodName: LeaderBoard
+      - m_Target: {fileID: 1620370297}
+        m_TargetAssemblyTypeName: LJC.scripts.ResultManager, Assembly-CSharp
+        m_MethodName: GoToLeaderboard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7497,8 +7573,8 @@ RectTransform:
   - {fileID: 2094588457}
   - {fileID: 1170520209}
   - {fileID: 789442750}
-  - {fileID: 1549318959}
   - {fileID: 1791840031}
+  - {fileID: 1549318959}
   - {fileID: 1770752953}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8573,9 +8649,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
-        m_MethodName: Stage
+      - m_Target: {fileID: 1620370297}
+        m_TargetAssemblyTypeName: LJC.scripts.ResultManager, Assembly-CSharp
+        m_MethodName: GoToStageSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
