@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -557412467
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8440063894332084662, guid: 712dc4097b627e248a7d60044141adfc, type: 3}
@@ -102,6 +102,10 @@ PrefabInstance:
     - target: {fileID: 742535993307686614, guid: 9b97e80d14bb21248ac694db46ffcc03, type: 3}
       propertyPath: m_Name
       value: Box_Big_Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 742535993307686614, guid: 9b97e80d14bb21248ac694db46ffcc03, type: 3}
+      propertyPath: m_TagString
+      value: Box
       objectReference: {fileID: 0}
     - target: {fileID: 804193118207019749, guid: 9b97e80d14bb21248ac694db46ffcc03, type: 3}
       propertyPath: m_Color.a
