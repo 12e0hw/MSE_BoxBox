@@ -65,14 +65,14 @@ public class ResultManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         ChangeManager.stageSelectMemo = true;
-        SceneManager.LoadScene("ChangeScene");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void LeaderBoard()
     {
         ChangeManager.leaderboardMemo = true;
         Time.timeScale = 1f;
-        SceneManager.LoadScene("ChangeScene"); 
+        SceneManager.LoadScene("MainScene"); 
     }
 }
 
