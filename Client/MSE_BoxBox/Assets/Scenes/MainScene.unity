@@ -2848,6 +2848,7 @@ MonoBehaviour:
   loginPanel: {fileID: 2131671933}
   signupSuccessPanel: {fileID: 19009748}
   failPanel: {fileID: 183290982}
+  checkPanel: {fileID: 644183815}
 --- !u!1 &597674531
 GameObject:
   m_ObjectHideFlags: 0
@@ -6812,7 +6813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9037057190432415556, guid: 9d35cdc836a3dd74faba5a82bfe7d820, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SuccessLogin
+      value: BacktoLogin
       objectReference: {fileID: 0}
     - target: {fileID: 9037057190432415556, guid: 9d35cdc836a3dd74faba5a82bfe7d820, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

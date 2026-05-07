@@ -140,6 +140,12 @@ public class ChangeManager : MonoBehaviour
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
     }
 
+    public void BacktoLogin()
+    {
+        if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
+        if (LoginPanel != null) LoginPanel.SetActive(true);
+    }
+    
     public void SuccessLogin()
     {
         if (LoginPanel != null) LoginPanel.SetActive(false);
@@ -147,6 +153,7 @@ public class ChangeManager : MonoBehaviour
         if (SignupPanel != null) SignupPanel.SetActive(false);
         if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
+        if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
         if (CheckPanel!=null) CheckPanel.SetActive(true);
     }
 

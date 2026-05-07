@@ -14,7 +14,8 @@ public class AuthManager : MonoBehaviour
     [Header("Panels")]
     public GameObject loginPanel;        
     public GameObject signupSuccessPanel;
-    public GameObject failPanel;          
+    public GameObject failPanel;  
+    public GameObject checkPanel;        
 
     private readonly string baseUrl = "http://localhost:8080/api/users"; 
 
@@ -112,7 +113,7 @@ public class AuthManager : MonoBehaviour
                 {
                     Debug.Log("login success");
                     loginPanel.SetActive(false);
-                    // 메인씬으로 이동 로직 추가 (SceneManager.LoadScene("MainScene");)?
+                    checkPanel.SetActive(true);
                 }
                 else
                 {
