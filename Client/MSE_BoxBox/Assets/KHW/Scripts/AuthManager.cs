@@ -14,9 +14,8 @@ public class AuthManager : MonoBehaviour
     [Header("Panels")]
     public GameObject loginPanel;        
     public GameObject signupSuccessPanel;
-    public GameObject signupFailPanel;  
+    public GameObject failPanel;  
     public GameObject checkPanel;        
-    public GameObject loginFailPanel;
 
     private readonly string baseUrl = "http://localhost:8080/api/users"; 
 
@@ -82,8 +81,7 @@ public class AuthManager : MonoBehaviour
                 else
                 {
                     Debug.Log(response.message);
-                    signupFailPanel.SetActive(true);
-
+                    ShowFailPanel(response.message); 
                 }
             }
                 if (request.downloadHandler != null)
@@ -120,7 +118,7 @@ public class AuthManager : MonoBehaviour
                 else
                 {
                     Debug.Log(response.message);
-                    loginFailPanel.SetActive(true);
+                    ShowFailPanel(response.message);
                 }
             }
         }
@@ -128,6 +126,6 @@ public class AuthManager : MonoBehaviour
 
     private void ShowFailPanel(string message)
     {
-        if (signupFailPanel != null) signupFailPanel.SetActive(true);
+        if (failPanel != null) failPanel.SetActive(true);
     }
 }

@@ -13,8 +13,8 @@ public class ChangeManager : MonoBehaviour
     public GameObject loadingPanel;
     public GameObject BacktoLoginPanel;
     public GameObject TryAgainPanel;
+
     public GameObject CheckPanel;
-    public GameObject LoginFailPanel;
 
     [Header("Memo")]
     public static bool stageSelectMemo = false;
@@ -38,7 +38,6 @@ public class ChangeManager : MonoBehaviour
         if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
         if (TryAgainPanel!= null) TryAgainPanel.SetActive(false);
         if (CheckPanel!= null) CheckPanel.SetActive(false);
-        if (LoginFailPanel != null) LoginFailPanel.SetActive(false);
 
         if (stageSelectMemo)
         {
@@ -144,7 +143,6 @@ public class ChangeManager : MonoBehaviour
     public void BacktoLogin()
     {
         if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
-        if (LoginFailPanel != null) LoginFailPanel.SetActive(false);
         if (LoginPanel != null) LoginPanel.SetActive(true);
     }
     
