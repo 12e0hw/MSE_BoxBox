@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
         //SetState(GameState.StartMenu);
         
         // play화면에서 실행
-        Debug.Log("[GameManager] Start 호출됨");
         SetState(GameState.Playing, true);
     }
     
@@ -265,10 +264,6 @@ public class GameManager : MonoBehaviour
         {
             resultManager.SetStageId(selectStage);
             resultManager.ProcessGameResult();
-        }
-        else
-        {
-            Debug.LogError("[GameManager] ResultManager가 연결되지 않았습니다.");
         }
     }
 }

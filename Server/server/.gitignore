@@ -39,3 +39,6 @@ build/
 .vscode/
 build/
 
+application.properties
+data.sql
+
