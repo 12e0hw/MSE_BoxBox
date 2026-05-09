@@ -98,7 +98,7 @@ public class PlayerCarry
                 continue;
             }
             
-            // 모든 물체를 들 수 있는 버그가 생겨 들 수 있는 물체를 box와 extinguisher로 제한
+            // 들 수 있는 물체를 box와 extinguisher로 제한
             bool isBoxLayer =
                 candidate.layer == boxLayerIndex ||
                 hit.collider.gameObject.layer == boxLayerIndex;
@@ -129,63 +129,75 @@ public class PlayerCarry
         }
 
         currentBox = target;
-        currentBoxCollider = targetCollider;
-        currentBoxRigidbody = targetRigidbody;
+    currentBoxCollider = targetCollider;
+    currentBoxRigidbody = targetRigidbody;
 
-        if (currentBoxCollider != null)
-        {
-            currentBoxCollider.enabled = false;
-        }
-
-        currentBoxSpriteRenderer = currentBox.GetComponent<SpriteRenderer>();
-        if (currentBoxSpriteRenderer != null)
-        {
-            originalBoxSortingOrder = currentBoxSpriteRenderer.sortingOrder;
-            hasOriginalBoxSortingOrder = true;
-        }
-
-        if (currentBoxRigidbody != null)
-        {
-            currentBoxRigidbody.linearVelocity = Vector2.zero;
-            currentBoxRigidbody.angularVelocity = 0f;
-        }
-
-        currentBox.transform.SetParent(carryPoint);
-        currentBox.transform.localPosition = Vector3.zero;
-
-        IsCarrying = true;
-        UpdateCarryPointPosition(lastMoveDir);
-
-        Debug.Log("Picked up: " + currentBox.name);
-    }
-
-    public void DropBox(Vector2 lastMoveDir)
+    if (currentBoxCollider != null)
     {
-        if (currentBox == null) return;
-
-        currentBox.transform.SetParent(null);
-
-        Vector3 dropOffset = (Vector3)lastMoveDir.normalized * 0.8f;
-        currentBox.transform.position = playerTransform.position + dropOffset;
-
-        if (currentBoxCollider != null)
-        {
-            currentBoxCollider.enabled = true;
-        }
-
-        if (currentBoxSpriteRenderer != null && hasOriginalBoxSortingOrder)
-        {
-            currentBoxSpriteRenderer.sortingOrder = originalBoxSortingOrder;
-        }
-
-        currentBox = null;
-        currentBoxCollider = null;
-        currentBoxRigidbody = null;
-        currentBoxSpriteRenderer = null;
-        hasOriginalBoxSortingOrder = false;
-        IsCarrying = false;
+        currentBoxCollider.enabled = false;
     }
 
+    // 자식 오브젝트에서 SpriteRenderer를 찾도록 변경
+    currentBoxSpriteRenderer = currentBox.GetComponentInChildren<SpriteRenderer>();
+    
+    if (currentBoxSpriteRenderer != null)
+    {
+        originalBoxSortingOrder = currentBoxSpriteRenderer.sortingOrder;
+        hasOriginalBoxSortingOrder = true;
+    }
+
+    // isKinematic을 true로 변경
+    if (currentBoxRigidbody != null)
+    {
+        currentBoxRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        currentBoxRigidbody.linearVelocity = Vector2.zero;
+        currentBoxRigidbody.angularVelocity = 0f;
+    }
+
+    currentBox.transform.SetParent(carryPoint);
+    currentBox.transform.localPosition = Vector3.zero;
+    
+    // 회전값도 초기화
+    currentBox.transform.localRotation = Quaternion.identity; 
+
+    IsCarrying = true;
+    UpdateCarryPointPosition(lastMoveDir);
+
+    Debug.Log("Picked up: " + currentBox.name);
+}
+
+public void DropBox(Vector2 lastMoveDir)
+{
+    if (currentBox == null) return;
+
+    currentBox.transform.SetParent(null);
+
+    Vector3 dropOffset = (Vector3)lastMoveDir.normalized * 0.8f;
+    currentBox.transform.position = playerTransform.position + dropOffset;
+
+    if (currentBoxCollider != null)
+    {
+        currentBoxCollider.enabled = true;
+    }
+
+    // 내려놓을 때 물리 엔진이 다시 작동하도록 복구
+    if (currentBoxRigidbody != null)
+    {
+        currentBoxRigidbody.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    if (currentBoxSpriteRenderer != null && hasOriginalBoxSortingOrder)
+    {
+        currentBoxSpriteRenderer.sortingOrder = originalBoxSortingOrder;
+    }
+
+    currentBox = null;
+    currentBoxCollider = null;
+    currentBoxRigidbody = null;
+    currentBoxSpriteRenderer = null;
+    hasOriginalBoxSortingOrder = false;
+    IsCarrying = false;
+}
     public void DestroyCarriedObject()
     {
         if (currentBox == null) return;
