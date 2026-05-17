@@ -2,13 +2,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using LJC.Scripts;
+using UnityEngine.InputSystem;
 
 public enum GameState
 {
     StartMenu,      
     StageSelect,   
     Loading,
-    Playing,  
+    Playing, 
+    Paused, 
     Clear,     
     Gameover    
 }
@@ -37,12 +39,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LeaderboardApiClient leaderboardApiClient;
 
     [Header("UI")]
-    [SerializeField] private GameObject startMenuUI;
-    [SerializeField] private GameObject stageSelectUI;
-    [SerializeField] private GameObject loadingUI;
-    [SerializeField] private GameObject hudUI;
-    [SerializeField] private GameObject clearUI;
-    [SerializeField] private GameObject gameoverUI;
+    // [SerializeField] private GameObject startMenuUI;
+    // [SerializeField] private GameObject stageSelectUI;
+    // [SerializeField] private GameObject loadingUI;
+    // [SerializeField] private GameObject hudUI;
+    // [SerializeField] private GameObject clearUI;
+    // [SerializeField] private GameObject gameoverUI;
+    [SerializeField] private GameObject settingUI;
 
     // 게임 끝났을 때 Ture로 변경
     private bool isGameEnded;
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
         {
             uiManager.InitializeTimer(timeManager.StartTime);
         }
+    
     }
 
     
@@ -87,6 +91,17 @@ public class GameManager : MonoBehaviour
         
         // play화면에서 실행
         SetState(GameState.Playing, true);
+    }
+
+    private void Update()
+    {
+        if (state == GameState.Playing || state == GameState.Paused)
+        {
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TogglePause();
+        }
+        }
     }
     
     public void SelectStage(int stageNum)
@@ -137,9 +152,11 @@ public class GameManager : MonoBehaviour
     {
         if (!force && state == newState)
         {
-            Debug.Log("[GameManager] 같은 State라서 return됨");
-            return;
+            return;  // 같은 State라서 return
         }
+
+        GameState previousState = state;
+
         //if (state == newState) return;
         state = newState;
 
@@ -147,41 +164,52 @@ public class GameManager : MonoBehaviour
 
         switch (newState)
         {
-            case GameState.StartMenu:
-                Time.timeScale = 1f;
-                if (startMenuUI) startMenuUI.SetActive(true);
-                break;
-            case GameState.StageSelect:
-                if (stageSelectUI) stageSelectUI.SetActive(true);
-                break;
-            case GameState.Loading:
-                if (loadingUI) loadingUI.SetActive(true);
-                break;
+            // case GameState.StartMenu:
+            //     Time.timeScale = 1f;
+            //     if (startMenuUI) startMenuUI.SetActive(true);
+            //     break;
+            // case GameState.StageSelect:
+            //     if (stageSelectUI) stageSelectUI.SetActive(true);
+            //     break;
+            // case GameState.Loading:
+            //     if (loadingUI) loadingUI.SetActive(true);
+            //     break;
             case GameState.Playing:
                 Time.timeScale = 1f;
-                isGameEnded = false;
-                if (scoreManager != null) scoreManager.ResetScore();
-                // 배송 상자 개수 초기화
-                if (deliveryManager != null) deliveryManager.ResetDeliveryCounts();
-                // 타이머 초기화
-                if (timeManager != null)
+                if (previousState != GameState.Paused)
                 {
-                    timeManager.ResetTimer();
-                    timeManager.StartTimer();
+                    isGameEnded = false;
+                    if (scoreManager != null) scoreManager.ResetScore();
+                    // 배송 상자 개수 초기화
+                    if (deliveryManager != null) deliveryManager.ResetDeliveryCounts();
+                    // 타이머 초기화
+                    if (timeManager != null)
+                    {
+                        timeManager.ResetTimer();
+                        timeManager.StartTimer();
+                    }
+                    if (uiManager != null) uiManager.HideResultPanel();
                 }
-                // UI 숨기기
-                if (uiManager != null) uiManager.HideResultPanel();
-                if (hudUI) hudUI.SetActive(true);
+                else
+                {
+                    settingUI.SetActive(false);
+                }
+                if (timeManager != null) timeManager.StartTimer();
+                // if (hudUI) hudUI.SetActive(true);
+                break;
+            case GameState.Paused:
+                Time.timeScale = 0f; 
+                if (settingUI) settingUI.SetActive(true); 
                 break;
             case GameState.Clear:
                 Time.timeScale = 1f;
                 if (timeManager) timeManager.StopTimer();
-                if (clearUI) clearUI.SetActive(true);
+                // if (clearUI) clearUI.SetActive(true);
                 break;
             case GameState.Gameover:
                 Time.timeScale = 1f;
                 if (timeManager) timeManager.StopTimer();
-                if (gameoverUI) gameoverUI.SetActive(true);
+                // if (gameoverUI) gameoverUI.SetActive(true);
                 break;
         }
     }
@@ -224,12 +252,13 @@ public class GameManager : MonoBehaviour
 
     private void HideAllUI()
     {
-        if (startMenuUI) startMenuUI.SetActive(false);
-        if (stageSelectUI) stageSelectUI.SetActive(false);
-        if (loadingUI) loadingUI.SetActive(false);
-        if (hudUI) hudUI.SetActive(false);
-        if (clearUI) clearUI.SetActive(false);
-        if (gameoverUI) gameoverUI.SetActive(false);
+        // if (startMenuUI) startMenuUI.SetActive(false);
+        // if (stageSelectUI) stageSelectUI.SetActive(false);
+        // if (loadingUI) loadingUI.SetActive(false);
+        // if (hudUI) hudUI.SetActive(false);
+        // if (clearUI) clearUI.SetActive(false);
+        // if (gameoverUI) gameoverUI.SetActive(false);
+        if (settingUI) settingUI.SetActive(false);
     }
     
     private void HandleMaxScoreReached()
@@ -264,6 +293,18 @@ public class GameManager : MonoBehaviour
         {
             resultManager.SetStageId(selectStage);
             resultManager.ProcessGameResult();
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (state == GameState.Playing)
+        {
+            SetState(GameState.Paused);
+        }
+        else if (state == GameState.Paused)
+        {
+            SetState(GameState.Playing);
         }
     }
 }
