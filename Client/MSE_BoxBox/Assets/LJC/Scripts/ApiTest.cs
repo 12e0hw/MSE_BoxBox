@@ -35,6 +35,7 @@ public class ApiTest : MonoBehaviour
             yield break;
         }
 
+
         Debug.Log("[ApiTest] 점수 저장 테스트 시작");
 
         bool saveSuccess = false;
