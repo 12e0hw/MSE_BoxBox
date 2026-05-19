@@ -98,8 +98,17 @@ namespace LJC.scripts
         {
             bool saveSuccess = false;
 
+            int currentUserId = AuthManager.LoginUserId;
+
+            if (currentUserId == 0)
+            {
+                Debug.LogWarning("[ResultManager] 로그인 필요");
+                currentUserId = this.userId;
+                // yield break; 이용해서 로그인 안되면 실행 불가하게
+            }
+
             yield return StartCoroutine(
-                leaderboardApiClient.SaveScore(userId, stageId, finalScore, success => { saveSuccess = success; })
+                leaderboardApiClient.SaveScore(currentUserId, stageId, finalScore, success => { saveSuccess = success; })
             );
 
             if (!saveSuccess)
