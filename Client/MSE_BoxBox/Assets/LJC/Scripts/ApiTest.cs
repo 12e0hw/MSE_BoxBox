@@ -1,6 +1,4 @@
-using LJC.scripts;
 using System.Collections;
-using LJC.Scripts;
 using UnityEngine;
 
 public class ApiTest : MonoBehaviour

@@ -1,5 +1,4 @@
 using System.Collections;
-using LJC.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +13,7 @@ namespace LJC.scripts
 
         private int targetScore;
         private ScoreManager scoreManager;
+        private DeliveryManager deliveryManager;
         private UIManager uiManager;
         private LeaderboardApiClient leaderboardApiClient;
 
@@ -27,16 +27,19 @@ namespace LJC.scripts
         public void Initialize(
             ScoreManager scoreManager,
             UIManager uiManager,
+            DeliveryManager deliveryManager,
             LeaderboardApiClient leaderboardApiClient,
             int targetScore)
         {
             this.scoreManager = scoreManager;
             this.uiManager = uiManager;
+            this.deliveryManager = deliveryManager;
             this.leaderboardApiClient = leaderboardApiClient;
             this.targetScore = targetScore;
 
             if (successPanel) successPanel.SetActive(false);
             if (failPanel) failPanel.SetActive(false);
+            
             if (dimCanvasGroup)
             {
                 dimCanvasGroup.gameObject.SetActive(false);
@@ -65,10 +68,36 @@ namespace LJC.scripts
             int finalScore = scoreManager.CurrentScore;
             bool isClear = finalScore >= targetScore;
 
-            StartCoroutine(ResultSequence(isClear, finalScore));
+            int totalBoxCount = 0;
+            int smallBoxCount = 0;
+            int bigBoxCount = 0;
+
+            if (deliveryManager != null)
+            {
+                totalBoxCount = deliveryManager.TotalDeliveredCount;
+                smallBoxCount = deliveryManager.SmallBoxDeliveredCount;
+                bigBoxCount = deliveryManager.BigBoxDeliveredCount;
+            }
+            else
+            {
+                Debug.LogWarning("[ResultManager] DeliveryManager가 연결되지 않았습니다.");
+            }
+            
+            StartCoroutine(ResultSequence(
+                isClear,
+                finalScore,
+                totalBoxCount,
+                smallBoxCount,
+                bigBoxCount
+            ));
         }
 
-        private IEnumerator ResultSequence(bool isClear, int finalScore)
+        private IEnumerator ResultSequence(
+            bool isClear,
+            int finalScore,
+            int totalBoxCount,
+            int smallBoxCount,
+            int bigBoxCount)
         {
             // 화면 암전 연출
             if (dimCanvasGroup != null)
@@ -82,10 +111,28 @@ namespace LJC.scripts
                     yield return null;
                 }
             }
+            
+            // 결과창에 점수 띄우기
+            if (uiManager != null)
+            {
+                uiManager.ShowResultPanel(
+                    isClear,
+                    finalScore,
+                    smallBoxCount,
+                    bigBoxCount
+                );
+            }
 
-            // 결과 패널 활성화
-            if (isClear) successPanel.SetActive(true);
-            else failPanel.SetActive(true);
+            // 결과 패널 활성화 + 결과창 연결여부 확인
+            if (successPanel != null)
+            {
+                successPanel.SetActive(isClear);
+            }
+
+            if (failPanel != null)
+            {
+                failPanel.SetActive(!isClear);
+            }
 
             // 게임 일시정지
             Time.timeScale = 0f;

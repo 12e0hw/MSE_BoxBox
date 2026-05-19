@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using LJC.Scripts;
 using UnityEngine.InputSystem;
 
 public enum GameState
@@ -29,6 +28,9 @@ public class GameManager : MonoBehaviour
     public GameState State => state;
     public int TargetScore => targetScore;
     
+    // Stage마다 Manager 연결을 담당
+    private StageConfig currentStageConfig;
+    
     [Header("Managers")]
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private TimeManager timeManager;
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
 
     // 게임 끝났을 때 Ture로 변경
     private bool isGameEnded;
+    // 게임 성공/실패 판단
+    private bool isCleared;
     
     private void Awake()
     {
@@ -60,27 +64,8 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        // 클리어 점수 설정
-        if (scoreManager != null)
-        {
-            scoreManager.SetTargetScore(targetScore);
-        }
-        
-        if (deliveryManager != null)
-        {
-            deliveryManager.Initialize(scoreManager);
-        }
-        
-        if (resultManager != null)
-        {
-            resultManager.Initialize(scoreManager, uiManager, leaderboardApiClient, targetScore);
-        }
 
-        if (uiManager != null && timeManager != null)
-        {
-            uiManager.InitializeTimer(timeManager.StartTime);
-        }
+        // Manager 연결은 StageSceneBootstrap에서 연결 담당
     
     }
 
@@ -112,7 +97,79 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (scoreManager != null  && uiManager != null)
+        //RegisterStageEvents가 이벤트 연결을 담당
+    }
+
+    private void OnDisable()
+    {
+        //UnregisterStageEvents가 이벤트 해제를 담당
+    }
+    
+    // Manager 연결 함수
+    public void InitializeStage(StageSceneBootstrap bootstrap)
+    {
+        UnregisterStageEvents();
+
+        currentStageConfig = bootstrap.StageConfig;
+
+        if (currentStageConfig != null)
+        {
+            selectStage = currentStageConfig.StageId;
+            targetScore = currentStageConfig.TargetScore;
+        }
+
+        scoreManager = bootstrap.ScoreManager;
+        timeManager = bootstrap.TimeManager;
+        deliveryManager = bootstrap.DeliveryManager;
+        boxSpawnManager = bootstrap.BoxSpawnManager;
+        uiManager = bootstrap.UIManager;
+        resultManager = bootstrap.ResultManager;
+        leaderboardApiClient = bootstrap.LeaderboardApiClient;
+
+        hudUI = bootstrap.HudUI;
+        clearUI = bootstrap.ClearUI;
+        gameoverUI = bootstrap.GameoverUI;
+
+        if (scoreManager != null)
+        {
+            scoreManager.SetTargetScore(targetScore);
+        }
+
+        if (deliveryManager != null)
+        {
+            deliveryManager.Initialize(scoreManager);
+        }
+
+        if (resultManager != null)
+        {
+            resultManager.Initialize(
+                scoreManager,
+                uiManager,
+                deliveryManager,
+                leaderboardApiClient,
+                targetScore
+            );
+        }
+
+        if (timeManager != null && currentStageConfig != null)
+        {
+            timeManager.SetStartTime(currentStageConfig.TimeLimit);
+        }
+
+        if (uiManager != null && timeManager != null)
+        {
+            uiManager.InitializeTimer(timeManager.StartTime);
+        }
+
+        RegisterStageEvents();
+
+        SetState(GameState.Playing, true);
+    }
+    
+    // 스테이지마다 이벤트 연결을 담당
+    private void RegisterStageEvents()
+    {
+        if (scoreManager != null && uiManager != null)
         {
             scoreManager.OnScoreChanged += uiManager.UpdateScore;
             scoreManager.OnMaxScoreReached += HandleMaxScoreReached;
@@ -129,7 +186,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    // 스테이지마다 이벤트 해체를 담당
+    private void UnregisterStageEvents()
     {
         if (scoreManager != null && uiManager != null)
         {
@@ -147,6 +205,15 @@ public class GameManager : MonoBehaviour
             timeManager.OnTimeOver -= HandleTimeOver;
         }
     }
+    
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            UnregisterStageEvents();
+        }
+    }
+    
     //테스트용으로 playing 화면에서 실행하게 바꿈
     public void SetState(GameState newState, bool force = false)
     {
@@ -176,25 +243,45 @@ public class GameManager : MonoBehaviour
             //     break;
             case GameState.Playing:
                 Time.timeScale = 1f;
-                if (previousState != GameState.Paused)
+
+                if (previousState == GameState.Paused)
                 {
-                    isGameEnded = false;
-                    if (scoreManager != null) scoreManager.ResetScore();
-                    // 배송 상자 개수 초기화
-                    if (deliveryManager != null) deliveryManager.ResetDeliveryCounts();
-                    // 타이머 초기화
-                    if (timeManager != null)
+                    if (settingUI != null)
                     {
-                        timeManager.ResetTimer();
-                        timeManager.StartTimer();
+                        settingUI.SetActive(false);
                     }
-                    if (uiManager != null) uiManager.HideResultPanel();
+
+                    break;
                 }
-                else
+
+                isGameEnded = false;
+                isCleared = false;
+
+                // 스코어 초기화
+                if (scoreManager != null)
                 {
-                    settingUI.SetActive(false);
+                    scoreManager.SetTargetScore(targetScore);
+                    scoreManager.ResetScore();
                 }
-                if (timeManager != null) timeManager.StartTimer();
+
+                // 박스 결과 초기화
+                if (deliveryManager != null)
+                {
+                    deliveryManager.ResetDeliveryCounts();
+                }
+
+                //타이머 초기화
+                if (timeManager != null)
+                {
+                    timeManager.ResetTimer();
+                    timeManager.StartTimer();
+                }
+
+                // UI 점수 초기화
+                if (uiManager != null)
+                {
+                    uiManager.HideResultPanel();
+                }
                 // if (hudUI) hudUI.SetActive(true);
                 break;
             case GameState.Paused:
@@ -234,7 +321,8 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        SetState(GameState.Playing);
+        // StageSceneBootstrap이 InitializeStage()를 호출함
+        //SetState(GameState.Playing);
     }
 
     public void RestartStage()
@@ -263,13 +351,23 @@ public class GameManager : MonoBehaviour
     
     private void HandleMaxScoreReached()
     {
-        EndGame(GameState.Clear);
+        isCleared = true;
     }
     
     // 게임 종료 이벤트용 함수
     private void HandleTimeOver()
     {
-        EndGame(GameState.Gameover);
+        // 점수를 직접 확인하여 게임 종료 여부를 확인하는 방식으로 변환
+        bool reachedTargetScore = scoreManager != null && scoreManager.CurrentScore >= targetScore;
+
+        if (reachedTargetScore)
+        {
+            EndGame(GameState.Clear);
+        }
+        else
+        {
+            EndGame(GameState.Gameover);
+        }
     }
     
     // 게임 종료 시 관련 기능
