@@ -1,6 +1,6 @@
 -- 기존 테스트 데이터 초기화
-DELETE FROM game_records;
-DELETE FROM users;
+-- DELETE FROM game_records;
+-- DELETE FROM users;
 
 -- 테스트용 유저 데이터
 INSERT INTO users (password, username) VALUES

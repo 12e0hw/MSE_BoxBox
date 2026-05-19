@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class AuthManager : MonoBehaviour
 {
+    public static int LoginUserId { get; private set; }
+
     [Header("UI References")]
     public TMP_InputField usernameInput; 
     public TMP_InputField passwordInput; 
@@ -20,7 +22,6 @@ public class AuthManager : MonoBehaviour
 
     private readonly string baseUrl = "http://localhost:8080/api/users"; 
 
-    // 유니티에서 보낼 데이터 형식
     [System.Serializable]
     public class AuthRequest
     {
@@ -28,12 +29,35 @@ public class AuthManager : MonoBehaviour
         public string password;
     }
 
-    // 서버에서 받을 데이터 형식
     [System.Serializable]
     public class AuthResponse
     {
         public bool success;
         public string message;
+        public UserData data;
+    }
+
+    [System.Serializable]
+    public class UserData
+    {
+        public int userId;
+        public string username;
+        public string password;
+    }
+
+    [System.Serializable]
+    public class SignupResponse
+    {
+        public bool success;
+        public string message;
+    }
+
+    [System.Serializable]
+    public class LoginResponse
+    {
+        public UserData data;
+        public string message;
+        public bool success;
     }
 
     void Update()
@@ -71,8 +95,7 @@ public class AuthManager : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                // 서버가 준 JSON을 파싱
-                AuthResponse response = JsonUtility.FromJson<AuthResponse>(request.downloadHandler.text);
+                SignupResponse response = JsonUtility.FromJson<SignupResponse>(request.downloadHandler.text);
                 
                 if (response.success)
                 {
@@ -109,10 +132,12 @@ public class AuthManager : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                AuthResponse response = JsonUtility.FromJson<AuthResponse>(request.downloadHandler.text);
+                LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
                 
-                if (response.success)
+                if (response.success && response.data != null)
                 {
+                    LoginUserId = response.data.userId;
+                    Debug.Log($"[AuthManager] 파싱된 유저 ID 변수값: {LoginUserId}");
                     Debug.Log("login success");
                     loginPanel.SetActive(false);
                     checkPanel.SetActive(true);
