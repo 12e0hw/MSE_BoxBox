@@ -14,7 +14,9 @@ public class AuthManager : MonoBehaviour
     [Header("Panels")]
     public GameObject loginPanel;        
     public GameObject signupSuccessPanel;
-    public GameObject failPanel;          
+    public GameObject signupFailPanel;  
+    public GameObject checkPanel;        
+    public GameObject loginFailPanel;
 
     private readonly string baseUrl = "http://localhost:8080/api/users"; 
 
@@ -80,7 +82,8 @@ public class AuthManager : MonoBehaviour
                 else
                 {
                     Debug.Log(response.message);
-                    ShowFailPanel(response.message); 
+                    signupFailPanel.SetActive(true);
+
                 }
             }
                 if (request.downloadHandler != null)
@@ -112,12 +115,12 @@ public class AuthManager : MonoBehaviour
                 {
                     Debug.Log("login success");
                     loginPanel.SetActive(false);
-                    // 메인씬으로 이동 로직 추가 (SceneManager.LoadScene("MainScene");)?
+                    checkPanel.SetActive(true);
                 }
                 else
                 {
                     Debug.Log(response.message);
-                    ShowFailPanel(response.message);
+                    loginFailPanel.SetActive(true);
                 }
             }
         }
@@ -125,7 +128,7 @@ public class AuthManager : MonoBehaviour
 
     private void ShowFailPanel(string message)
     {
-        if (failPanel != null) failPanel.SetActive(true);
+        if (signupFailPanel != null) signupFailPanel.SetActive(true);
     }
     
 }

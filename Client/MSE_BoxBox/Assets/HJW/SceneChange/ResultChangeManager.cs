@@ -49,6 +49,7 @@ namespace HJW.scripts
         // 씬 전환 버튼
         public void Stage()
         {
+            
             Time.timeScale = 1f;
             ChangeManager.stageSelectMemo = true;
             SceneManager.LoadScene("MainScene");

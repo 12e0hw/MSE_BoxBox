@@ -11,6 +11,10 @@ public class ChangeManager : MonoBehaviour
     public GameObject StageSelectPanel;
     public GameObject LeaderboardPanel;
     public GameObject loadingPanel;
+    public GameObject BacktoLoginPanel;
+    public GameObject TryAgainPanel;
+    public GameObject CheckPanel;
+    public GameObject LoginFailPanel;
 
     [Header("Memo")]
     public static bool stageSelectMemo = false;
@@ -31,6 +35,10 @@ public class ChangeManager : MonoBehaviour
         if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
         if (loadingPanel != null) loadingPanel.SetActive(false);
+        if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
+        if (TryAgainPanel!= null) TryAgainPanel.SetActive(false);
+        if (CheckPanel!= null) CheckPanel.SetActive(false);
+        if (LoginFailPanel != null) LoginFailPanel.SetActive(false);
 
         if (stageSelectMemo)
         {
@@ -71,6 +79,7 @@ public class ChangeManager : MonoBehaviour
         if (SettingPanel != null) SettingPanel.SetActive(false);
         if (SignupPanel != null) SignupPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
+        if (CheckPanel != null) CheckPanel.SetActive(false);
     }
 
     public void Login()
@@ -81,6 +90,7 @@ public class ChangeManager : MonoBehaviour
         if (SignupPanel != null) SignupPanel.SetActive(false);
         if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
+        if (TryAgainPanel != null) TryAgainPanel.SetActive(false);
     }
 
     public void Signup()
@@ -129,6 +139,24 @@ public class ChangeManager : MonoBehaviour
         if (SignupPanel != null) SignupPanel.SetActive(false);
         if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
+    }
+
+    public void BacktoLogin()
+    {
+        if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
+        if (LoginFailPanel != null) LoginFailPanel.SetActive(false);
+        if (LoginPanel != null) LoginPanel.SetActive(true);
+    }
+    
+    public void SuccessLogin()
+    {
+        if (LoginPanel != null) LoginPanel.SetActive(false);
+        if (SettingPanel != null) SettingPanel.SetActive(false);
+        if (SignupPanel != null) SignupPanel.SetActive(false);
+        if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
+        if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
+        if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
+        if (CheckPanel!=null) CheckPanel.SetActive(true);
     }
 
     private void Loading(string newScene)
