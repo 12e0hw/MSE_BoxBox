@@ -127,4 +127,5 @@ public class AuthManager : MonoBehaviour
     {
         if (failPanel != null) failPanel.SetActive(true);
     }
+    
 }

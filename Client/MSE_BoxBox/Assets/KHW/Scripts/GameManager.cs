@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
 
     // 게임 끝났을 때 Ture로 변경
     private bool isGameEnded;
+    // 게임 성공/실패 판단
+    private bool isCleared;
     
     private void Awake()
     {
@@ -235,13 +237,20 @@ public class GameManager : MonoBehaviour
     
     private void HandleMaxScoreReached()
     {
-        EndGame(GameState.Clear);
+        isCleared = true;
     }
     
     // 게임 종료 이벤트용 함수
     private void HandleTimeOver()
     {
-        EndGame(GameState.Gameover);
+        if (isCleared)
+        {
+            EndGame(GameState.Clear);
+        }
+        else
+        {
+            EndGame(GameState.Gameover);
+        }
     }
     
     // 게임 종료 시 관련 기능

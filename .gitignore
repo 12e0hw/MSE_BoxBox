@@ -106,3 +106,5 @@ InitTestScene*.unity*
 
 # Environment variables
 .envClient/MSE_BoxBox/.idea/
+
+.env
