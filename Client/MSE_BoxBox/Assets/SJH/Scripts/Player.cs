@@ -104,6 +104,27 @@ public class Player : MonoBehaviour
         movement.ApplyVelocity();
     }
 
+    // PlayerMovement는 private으로 설정했으므로 외부 오브젝트에서 접근하기 위한 함수
+    public void SetExternalVelocity(Vector2 velocity)
+    {
+        if (movement == null)
+        {
+            return;
+        }
+
+        movement.SetExternalVelocity(velocity);
+    }
+
+    public void ClearExternalVelocity()
+    {
+        if (movement == null)
+        {
+            return;
+        }
+
+        movement.ClearExternalVelocity();
+    }
+    
     void SyncSettingsToComponents()
     {
         inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
