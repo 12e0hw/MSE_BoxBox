@@ -7,11 +7,15 @@ public class SettingChangeManager : MonoBehaviour
     public GameObject SettingPanel;
     public GameObject ControlKey1Panel;
     public GameObject ControlKey2Panel;
+    public GameObject NameFailPanel;
+    public GameObject NameSuccessPanel;
 
     void Start()
     {
         if(ControlKey1Panel != null) ControlKey1Panel.SetActive(false);
         if(ControlKey2Panel != null) ControlKey2Panel.SetActive(false);
+        if(NameSuccessPanel != null) NameSuccessPanel.SetActive(false);
+        if(NameFailPanel != null) NameFailPanel.SetActive(false);
     }
 
     public void Back()
@@ -25,6 +29,8 @@ public class SettingChangeManager : MonoBehaviour
     {
         if(ControlKey1Panel != null) ControlKey1Panel.SetActive(false);
         if(ControlKey2Panel != null) ControlKey2Panel.SetActive(false);
+        if(NameSuccessPanel != null) NameSuccessPanel.SetActive(false);
+        if(NameFailPanel != null) NameFailPanel.SetActive(false);
     }
 
     public void ControlKey1()
