@@ -1,0 +1,71 @@
+using UnityEngine;
+
+public class MovingWalkway : MonoBehaviour
+{
+    public enum WalkwayDirection
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
+    [Header("Move Setting")]
+    [SerializeField] private WalkwayDirection direction = WalkwayDirection.Right;
+    [SerializeField] private float moveSpeed = 1f;
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        ApplyMove(other);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        ApplyMove(other);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Player player = other.GetComponentInParent<Player>();
+
+        if (player == null)
+        {
+            return;
+        }
+
+        player.ClearExternalVelocity();
+    }
+
+    private void ApplyMove(Collider2D other)
+    {
+        Player player = other.GetComponentInParent<Player>();
+
+        if (player == null)
+        {
+            return;
+        }
+
+        player.SetExternalVelocity(GetDirectionVector() * moveSpeed);
+    }
+
+    private Vector2 GetDirectionVector()
+    {
+        switch (direction)
+        {
+            case WalkwayDirection.Up:
+                return Vector2.up;
+
+            case WalkwayDirection.Down:
+                return Vector2.down;
+
+            case WalkwayDirection.Left:
+                return Vector2.left;
+
+            case WalkwayDirection.Right:
+                return Vector2.right;
+
+            default:
+                return Vector2.zero;
+        }
+    }
+}

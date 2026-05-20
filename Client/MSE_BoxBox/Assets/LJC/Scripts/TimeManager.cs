@@ -57,4 +57,9 @@ public class TimeManager : MonoBehaviour
         RemainingTime = startTime;
         OnTimeChanged?.Invoke(RemainingTime);
     }
+    
+    public void SetStartTime(float timeLimit)
+    {
+        startTime = timeLimit;
+    }
 }
