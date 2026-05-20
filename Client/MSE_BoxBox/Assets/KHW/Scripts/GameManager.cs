@@ -126,9 +126,9 @@ public class GameManager : MonoBehaviour
         resultManager = bootstrap.ResultManager;
         leaderboardApiClient = bootstrap.LeaderboardApiClient;
 
-        hudUI = bootstrap.HudUI;
-        clearUI = bootstrap.ClearUI;
-        gameoverUI = bootstrap.GameoverUI;
+        // hudUI = bootstrap.HudUI;
+        // clearUI = bootstrap.ClearUI;
+        // gameoverUI = bootstrap.GameoverUI;
 
         if (scoreManager != null)
         {
