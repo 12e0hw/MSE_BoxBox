@@ -3,154 +3,185 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LJC.Scripts
+public class UIManager : MonoBehaviour
 {
-    public class UIManager : MonoBehaviour
+    [Header("In-Game UI")] [SerializeField]
+    private TMP_Text timerText;
+
+    [SerializeField] private Slider timeGauge;
+    [SerializeField] private TMP_Text scoreText;
+
+    [Header("Result UI")] [SerializeField] private GameObject resultPanel;
+    [SerializeField] private TMP_Text resultTitleText;
+    [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text smallBoxCountText;
+    [SerializeField] private TMP_Text bigBoxCountText;
+    
+    [Header("Leaderboard UI")] [SerializeField]
+    private TMP_Text[] leaderboardSlots;
+
+    public void InitializeTimer(float maxTime)
     {
-        [Header("In-Game UI")] 
-        [SerializeField] private TMP_Text timerText;
-        [SerializeField] private Slider timeGauge;
-        [SerializeField] private TMP_Text scoreText;
-
-        [Header("Result UI")] 
-        [SerializeField] private GameObject resultPanel;
-        [SerializeField] private TMP_Text resultTitleText;
-        [SerializeField] private TMP_Text finalScoreText;
-        
-        [Header("Leaderboard UI")]
-        [SerializeField] private TMP_Text[] leaderboardSlots;
-
-        public void InitializeTimer(float maxTime)
+        if (timeGauge != null)
         {
-            if (timeGauge != null)
-            {
-                timeGauge.minValue = 0f;    
-                timeGauge.maxValue = maxTime;
-                timeGauge.value = maxTime;
-            }
+            timeGauge.minValue = 0f;
+            timeGauge.maxValue = maxTime;
+            timeGauge.value = maxTime;
+        }
 
-            UpdateTimer(maxTime);
+        UpdateTimer(maxTime);
+    }
+
+    public void UpdateTimer(float remainingTime)
+    {
+        if (timerText != null)
+        {
+            int seconds = Mathf.CeilToInt(remainingTime);
+            timerText.text = $"{seconds}";
+        }
+
+        if (timeGauge != null)
+        {
+            timeGauge.value = remainingTime;
+        }
+    }
+
+    public void UpdateScore(int score)
+    {
+        if (scoreText == null)
+        {
+            return;
+        }
+
+        scoreText.text = $"{score}";
+    }
+
+    public void HideResultPanel()
+    {
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(false);
         }
         
-        public void UpdateTimer(float remainingTime)
+        if (finalScoreText != null)
         {
-            if (timerText != null)
-            {
-                int seconds = Mathf.CeilToInt(remainingTime);
-                timerText.text = $"{seconds}";
-            }
-
-            if (timeGauge != null)
-            {
-                timeGauge.value = remainingTime;
-            }
+            finalScoreText.gameObject.SetActive(false);
         }
 
-        public void UpdateScore(int score)
+        if (smallBoxCountText != null)
         {
-            if (scoreText == null)
-            {
-                return;
-            }
-
-            scoreText.text = $"{score}";
+            smallBoxCountText.gameObject.SetActive(false);
         }
 
-        public void HideResultPanel()
+        if (bigBoxCountText != null)
         {
-            if (resultPanel != null)
-            {
-                resultPanel.SetActive(false);
-            }
+            bigBoxCountText.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowResultPanel(
+        bool isClear,
+        int finalScore,
+        int smallBoxCount,
+        int bigBoxCount)
+    {
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(true);
         }
 
-        public void ShowResultPanel(bool isClear, int finalScore)
+        if (resultTitleText != null)
         {
-            if (resultPanel != null)
-            {
-                resultPanel.SetActive(true);
-            }
-
-            if (resultTitleText != null)
-            {
-                resultTitleText.text = isClear ? "Stage Clear" : "Stage Failed";
-            }
-
-            if (finalScoreText != null)
-            {
-                finalScoreText.text = $"Final Score: {finalScore}";
-            }
-
-            ShowLeaderboardLoading();
+            resultTitleText.text = isClear ? "Stage Clear" : "Stage Failed";
         }
 
-        public void ShowLeaderboardLoading()
+        if (finalScoreText != null)
         {
-            ClearLeaderboardSlots();
-
-            if (leaderboardSlots != null && leaderboardSlots.Length > 0 && leaderboardSlots[0] != null)
-            {
-                leaderboardSlots[0].text = "Loading leaderboard...";
-            }
+            finalScoreText.gameObject.SetActive(true);
+            finalScoreText.text = $"Final Score: {finalScore}";
         }
 
-        public void ShowLeaderboard(LeaderboardItem[] items)
+        if (smallBoxCountText != null)
         {
-            ClearLeaderboardSlots();
-
-            if (leaderboardSlots == null || leaderboardSlots.Length == 0)
-            {
-                return;
-            }
-
-            if (items == null || items.Length == 0)
-            {
-                leaderboardSlots[0].text = "No leaderboard data.";
-                return;
-            }
-
-            int count = Mathf.Min(10, leaderboardSlots.Length, items.Length);
-
-            for (int i = 0; i < count; i++)
-            {
-                LeaderboardItem item = items[i];
-                leaderboardSlots[i].text = $"{item.rank}. {item.username} - {item.score}";
-            }
+            smallBoxCountText.gameObject.SetActive(true);
+            smallBoxCountText.text = $"{smallBoxCount}";
         }
 
-        public void ShowLeaderboardError()
+        if (bigBoxCountText != null)
         {
-            ClearLeaderboardSlots();
-
-            if (leaderboardSlots != null && leaderboardSlots.Length > 0 && leaderboardSlots[0] != null)
-            {
-                leaderboardSlots[0].text = "Failed to load leaderboard.";
-            }
+            bigBoxCountText.gameObject.SetActive(true);
+            bigBoxCountText.text = $"{bigBoxCount}";
         }
 
-        public void ShowScoreSaveError()
-        {
-            ClearLeaderboardSlots();
+        ShowLeaderboardLoading();
+    }
 
-            if (leaderboardSlots != null && leaderboardSlots.Length > 0 && leaderboardSlots[0] != null)
-            {
-                leaderboardSlots[0].text = "Failed to save score.";
-            }
+    public void ShowLeaderboardLoading()
+    {
+        ClearLeaderboardSlots();
+
+        if (leaderboardSlots != null && leaderboardSlots.Length > 0 && leaderboardSlots[0] != null)
+        {
+            leaderboardSlots[0].text = "Loading leaderboard...";
         }
-        
-        private void ClearLeaderboardSlots()
-        {
-            if (leaderboardSlots == null)
-            {
-                return;
-            }
+    }
 
-            for (int i = 0; i < leaderboardSlots.Length; i++)
+    public void ShowLeaderboard(LeaderboardItem[] items)
+    {
+        ClearLeaderboardSlots();
+
+        if (leaderboardSlots == null || leaderboardSlots.Length == 0)
+        {
+            return;
+        }
+
+        if (items == null || items.Length == 0)
+        {
+            leaderboardSlots[0].text = "No leaderboard data.";
+            return;
+        }
+
+        int count = Mathf.Min(10, leaderboardSlots.Length, items.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            LeaderboardItem item = items[i];
+            leaderboardSlots[i].text = $"{item.rank}. {item.username} - {item.score}";
+        }
+    }
+
+    public void ShowLeaderboardError()
+    {
+        ClearLeaderboardSlots();
+
+        if (leaderboardSlots != null && leaderboardSlots.Length > 0 && leaderboardSlots[0] != null)
+        {
+            leaderboardSlots[0].text = "Failed to load leaderboard.";
+        }
+    }
+
+    public void ShowScoreSaveError()
+    {
+        ClearLeaderboardSlots();
+
+        if (leaderboardSlots != null && leaderboardSlots.Length > 0 && leaderboardSlots[0] != null)
+        {
+            leaderboardSlots[0].text = "Failed to save score.";
+        }
+    }
+
+    private void ClearLeaderboardSlots()
+    {
+        if (leaderboardSlots == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < leaderboardSlots.Length; i++)
+        {
+            if (leaderboardSlots[i] != null)
             {
-                if (leaderboardSlots[i] != null)
-                {
-                    leaderboardSlots[i].text = "";
-                }
+                leaderboardSlots[i].text = "";
             }
         }
     }

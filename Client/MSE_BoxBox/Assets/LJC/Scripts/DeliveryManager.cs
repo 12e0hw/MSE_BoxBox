@@ -18,6 +18,7 @@ public class DeliveryManager : MonoBehaviour
     public void Initialize(ScoreManager scoreManager)
     {
         this.scoreManager = scoreManager;
+        ResetDeliveryCounts();
     }
 
     public void ResetDeliveryCounts()

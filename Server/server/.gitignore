@@ -42,3 +42,4 @@ build/
 application.properties
 data.sql
 
+.env

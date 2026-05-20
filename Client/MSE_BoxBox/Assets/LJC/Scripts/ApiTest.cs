@@ -1,6 +1,4 @@
-using LJC.scripts;
 using System.Collections;
-using LJC.Scripts;
 using UnityEngine;
 
 public class ApiTest : MonoBehaviour
@@ -34,6 +32,7 @@ public class ApiTest : MonoBehaviour
             Debug.LogError("[ApiTest] LeaderboardApiClient가 연결되지 않았습니다.");
             yield break;
         }
+
 
         Debug.Log("[ApiTest] 점수 저장 테스트 시작");
 
