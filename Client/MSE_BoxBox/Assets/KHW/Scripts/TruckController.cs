@@ -16,6 +16,7 @@ public class TruckController : MonoBehaviour
     {
         BoxController box = other.GetComponent<BoxController>();
 
+
         if (box == null)
         {
             box = other.GetComponentInParent<BoxController>();

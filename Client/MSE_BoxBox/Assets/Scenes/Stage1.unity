@@ -767,6 +767,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageTruck
       objectReference: {fileID: 0}
+    - target: {fileID: 2422419031872710051, guid: 05db7414c4800ac469f044668e122b62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8599815006215712986, guid: 05db7414c4800ac469f044668e122b62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.26664
@@ -1687,7 +1691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &481139591
 Transform:
   m_ObjectHideFlags: 0
@@ -7087,6 +7091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageConveyor
       objectReference: {fileID: 0}
+    - target: {fileID: 4932133725960275964, guid: 87f55bd7ce413964ebc8a2758015447f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9029467128748916522, guid: 87f55bd7ce413964ebc8a2758015447f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.40421
@@ -8286,7 +8294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2024371033
 Transform:
   m_ObjectHideFlags: 0

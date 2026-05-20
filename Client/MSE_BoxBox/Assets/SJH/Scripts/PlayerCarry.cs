@@ -237,6 +237,11 @@ public void DropBox(Vector2 lastMoveDir)
                 continue;
             }
 
+            if (hit.gameObject.CompareTag("Truck"))
+            {
+                continue;
+            }
+
             if (IsBlockingDropLayer(hit.gameObject.layer))
             {
                 return true;
