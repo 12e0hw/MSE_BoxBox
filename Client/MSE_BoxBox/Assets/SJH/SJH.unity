@@ -256,6 +256,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &284658435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7476517255307746659, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+  m_PrefabInstance: {fileID: 4028726670749775544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4028726670749775544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,6 +269,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 710355219900001001, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 710355219900001004, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: sprayEffect
+      value: 
+      objectReference: {fileID: 284658435}
     - target: {fileID: 2643075146312318860, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.40502
@@ -304,9 +317,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106452905873136392, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6208625308706945366, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
       propertyPath: m_Name
       value: Extinguisher
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755318343896637871, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476517255307746659, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_Name
+      value: A_Spray
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476517255307746659, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -422,6 +483,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Woman
       objectReference: {fileID: 0}
+    - target: {fileID: 5264469214116279808, guid: 90bbd70e9dd931340b42e83155c2c2b0, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -435,6 +500,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2178278464492383017, guid: 00eaa7f4eecf0244ca804f488f95fa91, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4081005193114823340, guid: 00eaa7f4eecf0244ca804f488f95fa91, type: 3}
       propertyPath: m_Name
       value: Box

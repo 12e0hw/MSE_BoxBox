@@ -7,6 +7,7 @@ public class PlayerInputHandler
     public Vector2 LastMoveDir { get; private set; } = Vector2.down;
     public bool InteractPressed { get; private set; }
     public bool ExtinguisherPressed { get; private set; }
+    public bool ExtinguisherHeld { get; private set; }
     public bool DashHeld { get; private set; }
 
     private Key upKey;
@@ -57,6 +58,7 @@ public class PlayerInputHandler
 
         InteractPressed = WasPressedThisFrame(interactKey);
         ExtinguisherPressed = WasPressedThisFrame(extinguisherKey);
+        ExtinguisherHeld = IsPressed(extinguisherKey);
         DashHeld = IsPressed(dashKey);
     }
 

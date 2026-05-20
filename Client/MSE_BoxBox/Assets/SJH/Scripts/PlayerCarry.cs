@@ -14,6 +14,7 @@ public class PlayerCarry
     private Vector3 frontCarryLocalPos;
     private Vector3 backCarryLocalPos;
     private Vector3 sideCarryLocalPos;
+    private Vector3 extinguisherCarryLocalOffset;
     private GameObject currentBox;
     private Rigidbody2D currentBoxRigidbody;
     private Collider2D currentBoxCollider;
@@ -29,7 +30,8 @@ public class PlayerCarry
         LayerMask boxTargetLayer,
         Vector3 frontPosition,
         Vector3 backPosition,
-        Vector3 sidePosition)
+        Vector3 sidePosition,
+        Vector3 extinguisherOffset)
     {
         playerTransform = owner;
         carryPoint = carryTarget;
@@ -39,6 +41,7 @@ public class PlayerCarry
         frontCarryLocalPos = frontPosition;
         backCarryLocalPos = backPosition;
         sideCarryLocalPos = sidePosition;
+        extinguisherCarryLocalOffset = extinguisherOffset;
     }
 
     public void ToggleCarry(Vector2 lastMoveDir)
@@ -162,6 +165,7 @@ public class PlayerCarry
 
     IsCarrying = true;
     UpdateCarryPointPosition(lastMoveDir);
+    UpdateCarriedObjectLocalPosition();
 
     Debug.Log("Picked up: " + currentBox.name);
 }
@@ -170,10 +174,17 @@ public void DropBox(Vector2 lastMoveDir)
 {
     if (currentBox == null) return;
 
-    currentBox.transform.SetParent(null);
+    Vector2 dropDirection = lastMoveDir == Vector2.zero ? Vector2.down : lastMoveDir.normalized;
+    Vector3 dropPosition = playerTransform.position + (Vector3)(dropDirection * 0.8f);
 
-    Vector3 dropOffset = (Vector3)lastMoveDir.normalized * 0.8f;
-    currentBox.transform.position = playerTransform.position + dropOffset;
+    if (IsDropPositionBlocked(dropPosition))
+    {
+        Debug.Log("Cannot drop here: blocked by obstacle or wall");
+        return;
+    }
+
+    currentBox.transform.SetParent(null);
+    currentBox.transform.position = dropPosition;
 
     if (currentBoxCollider != null)
     {
@@ -198,6 +209,86 @@ public void DropBox(Vector2 lastMoveDir)
     hasOriginalBoxSortingOrder = false;
     IsCarrying = false;
 }
+
+    bool IsDropPositionBlocked(Vector3 dropPosition)
+    {
+        Vector2 checkSize = GetDropCheckSize();
+        Collider2D[] hits = Physics2D.OverlapBoxAll(dropPosition, checkSize, 0f);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit == null || hit.isTrigger)
+            {
+                continue;
+            }
+
+            if (currentBoxCollider != null && hit == currentBoxCollider)
+            {
+                continue;
+            }
+
+            if (IsSameRoot(hit.transform, currentBox.transform))
+            {
+                continue;
+            }
+
+            if (playerTransform != null && IsSameRoot(hit.transform, playerTransform))
+            {
+                continue;
+            }
+
+            if (IsBlockingDropLayer(hit.gameObject.layer))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    Vector2 GetDropCheckSize()
+    {
+        BoxCollider2D boxCollider = currentBoxCollider as BoxCollider2D;
+
+        if (boxCollider != null)
+        {
+            Vector3 scale = currentBox.transform.lossyScale;
+            return new Vector2(
+                Mathf.Abs(boxCollider.size.x * scale.x) * 0.9f,
+                Mathf.Abs(boxCollider.size.y * scale.y) * 0.9f);
+        }
+
+        if (currentBoxCollider != null)
+        {
+            Vector2 boundsSize = currentBoxCollider.bounds.size;
+            if (boundsSize != Vector2.zero)
+            {
+                return boundsSize * 0.9f;
+            }
+        }
+
+        return new Vector2(0.8f, 0.8f);
+    }
+
+    bool IsBlockingDropLayer(int layer)
+    {
+        return layer == LayerMask.NameToLayer("Wall")
+            || layer == LayerMask.NameToLayer("IndisibleWall")
+            || layer == LayerMask.NameToLayer("Fire")
+            || layer == LayerMask.NameToLayer("Box")
+            || layer == LayerMask.NameToLayer("Player");
+    }
+
+    bool IsSameRoot(Transform target, Transform root)
+    {
+        if (target == null || root == null)
+        {
+            return false;
+        }
+
+        return target == root || target.IsChildOf(root) || root.IsChildOf(target);
+    }
+
     public void DestroyCarriedObject()
     {
         if (currentBox == null) return;
@@ -236,6 +327,20 @@ public void DropBox(Vector2 lastMoveDir)
         }
 
         UpdateCarrySortingOrder(direction);
+        UpdateCarriedObjectLocalPosition();
+    }
+
+    void UpdateCarriedObjectLocalPosition()
+    {
+        if (!IsCarrying || currentBox == null) return;
+
+        if (IsCarryingExtinguisher)
+        {
+            currentBox.transform.localPosition = extinguisherCarryLocalOffset;
+            return;
+        }
+
+        currentBox.transform.localPosition = Vector3.zero;
     }
 
     void UpdateCarrySortingOrder(PlayerFacingDirection direction)

@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     public Vector3 frontCarryLocalPos = new Vector3(0f, 0.2f, 0f);
     public Vector3 backCarryLocalPos = new Vector3(0f, 0.35f, 0f);
     public Vector3 sideCarryLocalPos = new Vector3(0.2f, 0.25f, 0f);
+    public Vector3 extinguisherCarryLocalOffset = new Vector3(0f, -0.25f, 0f);
 
     [Header("Stamina")]
     public float maxStamina = 100f;
@@ -51,6 +52,11 @@ public class Player : MonoBehaviour
 
     [Header("Extinguisher")]
     public float extinguisherRange = 1.2f;
+    public float extinguishHoldSeconds = 3f;
+    public Vector2 extinguisherSprayPointOffset = new Vector2(0.45f, 0f);
+    public Vector2 extinguisherGaugeOffset = new Vector2(0f, 0.9f);
+    public Vector2 extinguisherGaugeSize = new Vector2(120f, 12f);
+    public bool showExtinguisherGauge = true;
     public LayerMask fireLayer;
 
     public Vector2 MoveInput => inputHandler != null ? inputHandler.MoveInput : Vector2.zero;
@@ -81,12 +87,11 @@ public class Player : MonoBehaviour
             carry.ToggleCarry(inputHandler.LastMoveDir);
         }
 
-        if (inputHandler.ExtinguisherPressed && carry.IsCarryingExtinguisher)
+        bool isUsingExtinguisher = inputHandler.ExtinguisherHeld && carry.IsCarryingExtinguisher;
+        extinguisherUser.SetCarriedExtinguisher(carry.CurrentCarriedObject);
+        if (extinguisherUser.Tick(Time.deltaTime, isUsingExtinguisher, inputHandler.LastMoveDir))
         {
-            if (extinguisherUser.TryUse(inputHandler.LastMoveDir))
-            {
-                carry.DestroyCarriedObject();
-            }
+            carry.DestroyCarriedObject();
         }
 
         bool isMoving = inputHandler.MoveInput != Vector2.zero;
@@ -129,13 +134,26 @@ public class Player : MonoBehaviour
     {
         inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
         movement.Configure(rb, moveSpeed, carryMoveSpeed, dashMoveSpeed, exhaustedMoveSpeed);
-        carry.Configure(transform, carryPoint, spriteRenderer, pickDistance, boxLayer, frontCarryLocalPos, backCarryLocalPos, sideCarryLocalPos);
+        carry.Configure(
+            transform,
+            carryPoint,
+            spriteRenderer,
+            pickDistance,
+            boxLayer,
+            frontCarryLocalPos,
+            backCarryLocalPos,
+            sideCarryLocalPos,
+            extinguisherCarryLocalOffset);
         stamina.Configure(maxStamina, dashDrainPerSecond, carryDrainPerSecond, recoverPerSecond, minStaminaToDash, recoverWhileCarryingIdle);
         stamina.showDebugBar = showStaminaBar;
         stamina.guiPosition = GetStaminaGuiPosition();
         stamina.guiSize = staminaGuiSize;
         animationController.Configure(animator, spriteRenderer, characterPrefix);
-        extinguisherUser.Configure(transform, extinguisherRange, fireLayer);
+        extinguisherUser.Configure(transform, extinguisherRange, extinguishHoldSeconds, fireLayer);
+        extinguisherUser.sprayPointOffset = extinguisherSprayPointOffset;
+        extinguisherUser.showGauge = showExtinguisherGauge;
+        extinguisherUser.gaugeWorldOffset = extinguisherGaugeOffset;
+        extinguisherUser.gaugeSize = extinguisherGaugeSize;
     }
 
     void FindComponents()
@@ -178,6 +196,11 @@ public class Player : MonoBehaviour
         if (stamina != null)
         {
             stamina.DrawGUI();
+        }
+
+        if (extinguisherUser != null)
+        {
+            extinguisherUser.DrawGUI();
         }
     }
 
