@@ -1,9 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class NPC_ExplainManager : MonoBehaviour
 {
     [Header("랜덤 패널")]
-    public GameObject[] explainPanels;       
+    public GameObject[] explainPanels;
+
+    private Coroutine hideCoroutine;
 
 
     void Awake()
@@ -16,6 +19,12 @@ public class NPC_ExplainManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            if (hideCoroutine != null)
+            {
+                StopCoroutine(hideCoroutine);
+                hideCoroutine = null;
+            }
+
             HideAllPanels();
 
             if (explainPanels.Length > 0)
@@ -30,8 +39,18 @@ public class NPC_ExplainManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            HideAllPanels();
+            if (hideCoroutine != null)
+            {
+                StopCoroutine(hideCoroutine);
+            }
+            hideCoroutine = StartCoroutine(HideDelay(1f));
         }
+    }
+
+    private IEnumerator HideDelay(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        HideAllPanels();
     }
 
     void HideAllPanels()
