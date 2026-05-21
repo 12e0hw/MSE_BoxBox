@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/HJW/Scenes/Stage2.unity
     guid: d0e6b30f66c9d8c4c91570661fb5b0cf
   - enabled: 0
-    path: Assets/HJW/NPC/NPCassets.unity
+    path: Assets/HJW/Scenes/NPCassets.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 0
     path: Assets/HJW/Scenes/ResultScene.unity

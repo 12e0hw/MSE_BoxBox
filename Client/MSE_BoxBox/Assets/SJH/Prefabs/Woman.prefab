@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c47abce3a3763694689c2bf308a9c44f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  playerID: P2
   rb: {fileID: 5264469214116279808}
   animator: {fileID: 2834874468743700334}
   spriteRenderer: {fileID: 3713734413020635274}

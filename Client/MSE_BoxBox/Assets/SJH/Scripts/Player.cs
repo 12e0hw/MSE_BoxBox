@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player Settings")]
+    public string playerID = "P1"; //hjw p1, p2 인스펙터창
+
     [Header("Components")]
     public Rigidbody2D rb;
     public Animator animator;
@@ -76,6 +79,49 @@ public class Player : MonoBehaviour
     {
         FindComponents();
         SyncSettingsToComponents();
+        UpdateKey(); // hjw 저장된 키 불러오기
+    }
+
+    // hjw changekey 실행하면 udateKey 실행
+    private void OnEnable()
+    {
+        ChangeKey.OnkeyChanged += UpdateKey;
+    }
+
+    // hjw 스크립트 비활성화시 해제
+    private void OnDisable()
+    {
+        ChangeKey.OnkeyChanged -= UpdateKey;
+    }
+
+    // 키 세팅 불러오기
+    private void UpdateKey()
+    {
+        if (playerID == "P1")
+        {
+            upKey = ChangeKey.GetSavedKey("P1_UpKey", Key.W);
+            downKey = ChangeKey.GetSavedKey("P1_DownKey", Key.S);
+            leftKey = ChangeKey.GetSavedKey("P1_LeftKey", Key.A);
+            rightKey = ChangeKey.GetSavedKey("P1_RightKey", Key.D);
+            interactKey = ChangeKey.GetSavedKey("P1_InteractKey", Key.C);
+            extinguisherKey = ChangeKey.GetSavedKey("P1_FireKey", Key.V); 
+            dashKey = ChangeKey.GetSavedKey("P1_RunKey", Key.B);          
+        }
+        else if (playerID == "P2")
+        {
+            upKey = ChangeKey.GetSavedKey("P2_UpKey", Key.UpArrow);
+            downKey = ChangeKey.GetSavedKey("P2_DownKey", Key.DownArrow);
+            leftKey = ChangeKey.GetSavedKey("P2_LeftKey", Key.LeftArrow);
+            rightKey = ChangeKey.GetSavedKey("P2_RightKey", Key.RightArrow);
+            interactKey = ChangeKey.GetSavedKey("P2_InteractKey", Key.I);
+            extinguisherKey = ChangeKey.GetSavedKey("P2_FireKey", Key.O);
+            dashKey = ChangeKey.GetSavedKey("P2_RunKey", Key.P);
+        }
+
+        if(inputHandler != null)
+        {
+            inputHandler.Configure(upKey,downKey,leftKey,rightKey,interactKey,extinguisherKey, dashKey);
+        }
     }
 
     void Update()
@@ -132,7 +178,7 @@ public class Player : MonoBehaviour
     
     void SyncSettingsToComponents()
     {
-        inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
+        // inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
         movement.Configure(rb, moveSpeed, carryMoveSpeed, dashMoveSpeed, exhaustedMoveSpeed);
         carry.Configure(
             transform,
