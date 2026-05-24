@@ -3070,6 +3070,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599067306}
   m_CullTransparentMesh: 1
+--- !u!1 &603277220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6170625623685477898, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+  m_PrefabInstance: {fileID: 907011116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &644183815
 GameObject:
   m_ObjectHideFlags: 0
@@ -3928,6 +3933,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711551794}
   m_CullTransparentMesh: 1
+--- !u!224 &720711602 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 791841062388459931, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+  m_PrefabInstance: {fileID: 907011116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &722564941
 GameObject:
   m_ObjectHideFlags: 0
@@ -4823,6 +4833,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1164644852}
     m_Modifications:
+    - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+      propertyPath: contentParent
+      value: 
+      objectReference: {fileID: 720711602}
+    - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+      propertyPath: cityItemPrefab
+      value: 
+      objectReference: {fileID: 3206090538185678398, guid: 7a2d4df87039c27429e04a89c71501e3, type: 3}
+    - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+      propertyPath: SelectCityPanel
+      value: 
+      objectReference: {fileID: 603277220}
+    - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+      propertyPath: currentCityText
+      value: 
+      objectReference: {fileID: 1312820387}
     - target: {fileID: 3942183174520933598, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: m_Name
       value: SettingPanel
@@ -6810,6 +6836,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288219178}
   m_CullTransparentMesh: 1
+--- !u!114 &1312820387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6745385956692887934, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+  m_PrefabInstance: {fileID: 907011116}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1416253345
 GameObject:
   m_ObjectHideFlags: 0

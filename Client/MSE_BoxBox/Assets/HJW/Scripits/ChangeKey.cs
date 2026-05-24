@@ -45,7 +45,7 @@ public class ChangeKey : MonoBehaviour
         Key.Q, Key.W, Key.E, Key.R, Key.T,
         Key.A, Key.S, Key.D, Key.F, Key.G,
         Key.Z, Key.X, Key.C, Key.V, Key.B,
-        Key.LeftShift, Key.Escape, Key.Space
+        Key.LeftShift, Key.Space
     };
 
     //p2 can choose this keys
@@ -186,7 +186,6 @@ public class ChangeKey : MonoBehaviour
             case Key.LeftShift: return "L-SHIFT";
             case Key.RightShift: return "R-SHIFT";
             case Key.Space: return "SPACE";
-            case Key.Escape: return "ESC";
             case Key.Enter: return "ENTER";       
             case Key.Backspace: return "BACKSPACE";
             case Key.Comma: return ",";

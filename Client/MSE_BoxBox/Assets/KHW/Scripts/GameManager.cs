@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     // [SerializeField] private GameObject clearUI;
     // [SerializeField] private GameObject gameoverUI;
     [SerializeField] private GameObject settingUI;
+    [SerializeField] private GameObject pauseUI; //HJW 일시정지 창 추가
 
     // 게임 끝났을 때 Ture로 변경
     private bool isGameEnded;
@@ -80,11 +81,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (state == GameState.Playing || state == GameState.Paused)
+        if (state == GameState.Playing) // || state == GameState.Paused 삭제 키로 변경
         {
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            TogglePause();
+            PauseGame(); //TogglePause() 대신
         }
         }
     }
@@ -125,6 +126,8 @@ public class GameManager : MonoBehaviour
         uiManager = bootstrap.UIManager;
         resultManager = bootstrap.ResultManager;
         leaderboardApiClient = bootstrap.LeaderboardApiClient;
+        pauseUI = bootstrap.PauseUI;
+        settingUI = bootstrap.SettingUI;
 
         // hudUI = bootstrap.HudUI;
         // clearUI = bootstrap.ClearUI;
@@ -248,6 +251,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (settingUI != null)
                     {
+                        if(pauseUI != null)pauseUI.SetActive(false); //hjw 추가
                         settingUI.SetActive(false);
                     }
 
@@ -286,7 +290,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f; 
-                if (settingUI) settingUI.SetActive(true); 
+                if (pauseUI) pauseUI.SetActive(true); //settingui pasueui로 변경
                 break;
             case GameState.Clear:
                 Time.timeScale = 1f;
@@ -347,6 +351,7 @@ public class GameManager : MonoBehaviour
         // if (clearUI) clearUI.SetActive(false);
         // if (gameoverUI) gameoverUI.SetActive(false);
         if (settingUI) settingUI.SetActive(false);
+        if (pauseUI) pauseUI.SetActive(false); // hjw 추가
     }
     
     private void HandleMaxScoreReached()
@@ -394,7 +399,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void TogglePause()
+    /* public void TogglePause()
     {
         if (state == GameState.Playing)
         {
@@ -404,5 +409,30 @@ public class GameManager : MonoBehaviour
         {
             SetState(GameState.Playing);
         }
+    }  버튼으로 대체 */
+
+    //hjw 버튼 추가
+    public void PauseGame()
+    {
+        SetState(GameState.Paused);
+    }
+    public void ResumeGame()
+    {
+        SetState(GameState.Playing);
+    }
+    public void OpenSetting()
+    {
+        if(settingUI)settingUI.SetActive(true);
+    }
+    public void CloseSetting()
+    {
+        if(settingUI)settingUI.SetActive(false);
+    }
+    public void BacktoStage()
+    {
+        Time.timeScale = 1f;
+        SetState(GameState.StageSelect);
+        ChangeManager.stageSelectMemo = true; 
+        SceneManager.LoadScene("MainScene");
     }
 }

@@ -18,6 +18,8 @@ public class StageSceneBootstrap : MonoBehaviour
     [SerializeField] private GameObject hudUI;
     [SerializeField] private GameObject clearUI;
     [SerializeField] private GameObject gameoverUI;
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject settingUI;
 
     public StageConfig StageConfig => stageConfig;
 
@@ -32,6 +34,8 @@ public class StageSceneBootstrap : MonoBehaviour
     public GameObject HudUI => hudUI;
     public GameObject ClearUI => clearUI;
     public GameObject GameoverUI => gameoverUI;
+    public GameObject PauseUI => pauseUI;
+    public GameObject SettingUI => settingUI;
 
     private void Awake()
     {
@@ -42,5 +46,25 @@ public class StageSceneBootstrap : MonoBehaviour
         }
 
         GameManager.Instance.InitializeStage(this);
+    }
+
+    public void OnResumeButtonClicked()
+    {
+        if (GameManager.Instance != null) GameManager.Instance.ResumeGame();
+    }
+
+    public void OnOpenSettingsButtonClicked()
+    {
+        if (GameManager.Instance != null) GameManager.Instance.OpenSetting();
+    }
+
+    public void OnCloseSettingsButtonClicked()
+    {
+        if (GameManager.Instance != null) GameManager.Instance.CloseSetting();
+    }
+
+    public void OnBackButtonClicked()
+    {
+        if (GameManager.Instance != null) GameManager.Instance.BacktoStage();
     }
 }
