@@ -6,6 +6,7 @@ import com.boxbox.server.global.ApiResponse;
 import com.boxbox.server.service.WeatherService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,14 +20,18 @@ public class WeatherController {
     }
 
     @GetMapping("/weather")
-    public ApiResponse<WeatherResponseDto> getWeather() {
-        WeatherResponseDto data = weatherService.getCurrentWeather();
-        return ApiResponse.success("날씨 조회 성공", data);
+    public ApiResponse<WeatherResponseDto> getCurrentWeather(
+            @RequestParam(defaultValue = "SUWON") String cityId
+    ) {
+        WeatherResponseDto response = weatherService.getCurrentWeather(cityId);
+        return ApiResponse.success("날씨 조회 성공", response);
     }
 
     @GetMapping("/weather/game")
-    public ApiResponse<GameWeatherResponseDto> getGameWeather() {
-        GameWeatherResponseDto data = weatherService.getGameWeather();
-        return ApiResponse.success("게임용 날씨 조회 성공", data);
+    public ApiResponse<GameWeatherResponseDto> getGameWeather(
+            @RequestParam(defaultValue = "SUWON") String cityId
+    ) {
+        GameWeatherResponseDto response = weatherService.getGameWeather(cityId);
+        return ApiResponse.success("게임용 날씨 조회 성공", response);
     }
 }
