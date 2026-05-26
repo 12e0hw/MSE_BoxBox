@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 418704139412013435}
   - component: {fileID: 3729810131080900517}
   - component: {fileID: 9170842154341666451}
+  - component: {fileID: 7812243994181161001}
+  - component: {fileID: 7812243994181161002}
   - component: {fileID: 4867513496199524083}
   m_Layer: 3
   m_Name: Fire
@@ -154,6 +156,40 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.4020642, y: 1.2381941}
   m_EdgeRadius: 0
+--- !u!114 &7812243994181161001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702148607635396310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb68e79a4964ab5be5aee168c36d6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSlowZone
+  slowMultiplier: 0.55
+--- !u!114 &7812243994181161002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702148607635396310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a307007f4585434aaf40a9b7bfcf425f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeatherReactiveObstacle
+  fireObstacle: {fileID: 3729810131080900517}
+  waterSlowZone: {fileID: 7812243994181161001}
+  obstacleCollider: {fileID: 9170842154341666451}
+  spriteRenderer: {fileID: 418704139412013435}
+  animator: {fileID: 4867513496199524083}
+  waterSprite: {fileID: 0}
+  waterColor: {r: 0.25, g: 0.65, b: 1, a: 0.85}
+  useWaterLayer: 1
+  waterLayerName: Water
 --- !u!95 &4867513496199524083
 Animator:
   serializedVersion: 7

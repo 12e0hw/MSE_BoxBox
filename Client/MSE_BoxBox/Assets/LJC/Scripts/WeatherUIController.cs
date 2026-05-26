@@ -7,6 +7,13 @@ using UnityEngine.UI;
 
 public class WeatherUIController : MonoBehaviour
 {
+    public static event Action<string, string> OnWeatherChanged;
+
+    public static string CurrentWeather { get; private set; } = "";
+    public static string CurrentGameEffect { get; private set; } = "";
+    public static bool HasWeather { get; private set; }
+    public static bool IsRainy => IsRainWeather(CurrentWeather, CurrentGameEffect);
+
     [Header("Server")]
     [SerializeField] private string serverBaseUrl = "http://localhost:8080";
 
@@ -71,8 +78,10 @@ public class WeatherUIController : MonoBehaviour
 
     private void UpdateWeatherUI(GameWeatherData data)
     {
-        string weather = data.weather.ToUpper();
-        string gameEffect = data.gameEffect.ToUpper();
+        string weather = NormalizeWeatherValue(data.weather);
+        string gameEffect = NormalizeWeatherValue(data.gameEffect);
+
+        SetWeatherState(weather, gameEffect);
 
         if (weatherText != null)
         {
@@ -160,6 +169,8 @@ public class WeatherUIController : MonoBehaviour
 
     private void ShowError(string message)
     {
+        SetWeatherState("", "NORMAL");
+
         if (weatherText != null)
         {
             weatherText.text = message;
@@ -182,6 +193,30 @@ public class WeatherUIController : MonoBehaviour
 
             ApplyWeatherImageSize();
         }
+    }
+
+    public static void SetWeatherState(string weather, string gameEffect)
+    {
+        CurrentWeather = NormalizeWeatherValue(weather);
+        CurrentGameEffect = NormalizeWeatherValue(gameEffect);
+        HasWeather = true;
+
+        OnWeatherChanged?.Invoke(CurrentWeather, CurrentGameEffect);
+    }
+
+    private static string NormalizeWeatherValue(string value)
+    {
+        return string.IsNullOrEmpty(value) ? "" : value.ToUpperInvariant();
+    }
+
+    private static bool ContainsToken(string value, string token)
+    {
+        return !string.IsNullOrEmpty(value) && value.Contains(token);
+    }
+
+    private static bool IsRainWeather(string weather, string gameEffect)
+    {
+        return ContainsToken(weather, "RAIN") || ContainsToken(gameEffect, "SLIPPERY");
     }
 
     [Serializable]

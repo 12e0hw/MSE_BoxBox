@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
     private PlayerStamina stamina;
     private PlayerAnimationController animationController;
     private FireExtinguisherUser extinguisherUser;
+    private readonly List<float> moveSpeedMultipliers = new List<float>();
 
     void Awake()
     {
@@ -175,11 +177,53 @@ public class Player : MonoBehaviour
 
         movement.ClearExternalVelocity();
     }
+
+    public void AddMoveSpeedMultiplier(float multiplier)
+    {
+        moveSpeedMultipliers.Add(NormalizeMoveSpeedMultiplier(multiplier));
+        ApplyMoveSpeedMultipliers();
+    }
+
+    public void RemoveMoveSpeedMultiplier(float multiplier)
+    {
+        float normalizedMultiplier = NormalizeMoveSpeedMultiplier(multiplier);
+        int index = moveSpeedMultipliers.FindIndex(value => Mathf.Approximately(value, normalizedMultiplier));
+
+        if (index >= 0)
+        {
+            moveSpeedMultipliers.RemoveAt(index);
+        }
+
+        ApplyMoveSpeedMultipliers();
+    }
+
+    void ApplyMoveSpeedMultipliers()
+    {
+        if (movement == null)
+        {
+            return;
+        }
+
+        float multiplier = 1f;
+
+        foreach (float value in moveSpeedMultipliers)
+        {
+            multiplier = Mathf.Min(multiplier, value);
+        }
+
+        movement.SetSpeedMultiplier(multiplier);
+    }
+
+    float NormalizeMoveSpeedMultiplier(float multiplier)
+    {
+        return Mathf.Clamp(multiplier, 0.1f, 1f);
+    }
     
     void SyncSettingsToComponents()
     {
         // inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
         movement.Configure(rb, moveSpeed, carryMoveSpeed, dashMoveSpeed, exhaustedMoveSpeed);
+        ApplyMoveSpeedMultipliers();
         carry.Configure(
             transform,
             carryPoint,
@@ -231,7 +275,11 @@ public class Player : MonoBehaviour
     {
         if (characterPrefix == "Woman")
         {
-            return new Vector2(staminaGuiPosition.x, staminaGuiPosition.y + 20f);
+            float rightMargin = Mathf.Max(0f, staminaGuiPosition.x);
+            float topMargin = Mathf.Max(0f, staminaGuiPosition.y);
+            float x = Screen.width - staminaGuiSize.x - rightMargin;
+
+            return new Vector2(x, topMargin);
         }
 
         return staminaGuiPosition;
@@ -241,6 +289,7 @@ public class Player : MonoBehaviour
     {
         if (stamina != null)
         {
+            stamina.guiPosition = GetStaminaGuiPosition();
             stamina.DrawGUI();
         }
 

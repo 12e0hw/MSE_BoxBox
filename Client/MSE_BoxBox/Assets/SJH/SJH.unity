@@ -261,6 +261,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7476517255307746659, guid: 1c48aeeb8bf74bc4db13c0c01089ab28, type: 3}
   m_PrefabInstance: {fileID: 4028726670749775544}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &686854857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 686854859}
+  - component: {fileID: 686854858}
+  m_Layer: 0
+  m_Name: WeatherStatus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &686854858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686854857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0995ef170dbe4f21bedda0399b68b7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeatherDebugToggle
+  isRainy: 0
+  applyOnStart: 1
+--- !u!4 &686854859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686854857}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.24449, y: 0.67247, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4028726670749775544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -426,6 +472,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7812243994181161002, guid: f7db1f7b74355e14f980961162146c03, type: 3}
+      propertyPath: waterSprite
+      value: 
+      objectReference: {fileID: 6106861180766025155, guid: d0a59308652dd5644ac839b1ab857a41, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -485,7 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5264469214116279808, guid: 90bbd70e9dd931340b42e83155c2c2b0, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -620,3 +670,4 @@ SceneRoots:
   - {fileID: 5758040437418018005}
   - {fileID: 4028726670749775544}
   - {fileID: 4178211244918471079}
+  - {fileID: 686854859}
