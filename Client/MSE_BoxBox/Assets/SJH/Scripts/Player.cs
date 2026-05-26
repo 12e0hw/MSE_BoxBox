@@ -262,4 +262,13 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(origin, origin + dir * extinguisherRange);
     }
+
+    // 스태미너 회복
+    public void RestoreStamina(float amout)
+    {
+        if (stamina != null)
+        {
+            stamina.Restore(amout);
+        }
+    }
 }
