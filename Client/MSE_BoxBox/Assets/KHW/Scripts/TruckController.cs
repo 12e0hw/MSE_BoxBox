@@ -34,7 +34,6 @@ public class TruckController : MonoBehaviour
 
         if (deliveryManager == null)
         {
-            Debug.LogError("[TruckController] DeliveryManager를 찾지 못했습니다.");
             return;
         }
 

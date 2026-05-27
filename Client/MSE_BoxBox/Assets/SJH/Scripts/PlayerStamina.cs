@@ -97,4 +97,11 @@ public class PlayerStamina
 
         return Color.red;
     }
+
+    // 스태미너 회복
+    public void Restore(float amount)
+    {
+        CurrentStamina += amount;
+        CurrentStamina = Mathf.Clamp(CurrentStamina, 0f, maxStamina);
+    }
 }
