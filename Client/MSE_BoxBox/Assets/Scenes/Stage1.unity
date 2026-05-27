@@ -2824,7 +2824,7 @@ PrefabInstance:
     - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: contentParent
       value: 
-      objectReference: {fileID: 1027856705}
+      objectReference: {fileID: 0}
     - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: cityItemPrefab
       value: 
@@ -2832,7 +2832,7 @@ PrefabInstance:
     - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: SelectCityPanel
       value: 
-      objectReference: {fileID: 1027856706}
+      objectReference: {fileID: 0}
     - target: {fileID: 2603781934065592878, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: currentCityText
       value: 
@@ -2938,20 +2938,11 @@ PrefabInstance:
       value: StageSceneBootstrap, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6170625623685477898, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
---- !u!224 &1027856705 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 791841062388459931, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
-  m_PrefabInstance: {fileID: 1027856704}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1027856706 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6170625623685477898, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
-  m_PrefabInstance: {fileID: 1027856704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1027856707 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6745385956692887934, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
@@ -4071,7 +4062,7 @@ MonoBehaviour:
   scoreManager: {fileID: 1156376101}
   timeManager: {fileID: 982501883}
   deliveryManager: {fileID: 296377143}
-  boxSpawnManager: {fileID: 0}
+  boxSpawnManager: {fileID: 1744116075}
   uiManager: {fileID: 1045609368}
   resultManager: {fileID: 1620370297}
   leaderboardApiClient: {fileID: 725495789}
@@ -5777,6 +5768,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f55bd7ce413964ebc8a2758015447f, type: 3}
+--- !u!114 &1744116075 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3180747328691804299, guid: 87f55bd7ce413964ebc8a2758015447f, type: 3}
+  m_PrefabInstance: {fileID: 1744116074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e837ccc734642148909116a1af6abe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxSpawner
 --- !u!1 &1770752952
 GameObject:
   m_ObjectHideFlags: 0
