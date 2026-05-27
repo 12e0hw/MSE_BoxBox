@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System; 
+using System;
 using System.Collections.Generic;
 
 public class SettingChangeManager : MonoBehaviour
@@ -14,6 +14,12 @@ public class SettingChangeManager : MonoBehaviour
     public GameObject NameSuccessPanel;
     public GameObject SelectCityPanel; 
 
+    private void Awake()
+    {
+        sessionCity = PlayerPrefs.GetString("SelectedCityName", "Suwon");
+        sessionCityId = PlayerPrefs.GetString("SelectedCityId", "SUWON");
+    }
+    
     void Start()
     {
         if(ControlKey1Panel != null) ControlKey1Panel.SetActive(false);
@@ -21,7 +27,17 @@ public class SettingChangeManager : MonoBehaviour
         if(NameSuccessPanel != null) NameSuccessPanel.SetActive(false);
         if(NameFailPanel != null) NameFailPanel.SetActive(false);
         if(SelectCityPanel != null) SelectCityPanel.SetActive(false);
+
+        ApplyCurrentCityUI();
     }
+    private void ApplyCurrentCityUI()
+    {
+        if (currentCityText != null)
+        {
+            currentCityText.text = sessionCity;
+        }
+    }
+    
     public void Back()
     {
         if(SettingPanel != null) SettingPanel.SetActive(false);
@@ -47,21 +63,19 @@ public class SettingChangeManager : MonoBehaviour
         ControlKey2Panel.SetActive(true);
     }
 
+    
     [Header("도시 이름 바꾸기")]
-    public static Action OnCityChanged; 
-    private static string sessionCity = "suwon";
     public Transform contentParent;    
     public GameObject cityItemPrefab;  
     public TMP_Text currentCityText;
-
-    private string[] cityList = {
-        "Seoul", "Daejeon", "Jeonju", "Busan", "Gwangju",
-        "Suwon", "Incheon", "Daegu", "Ulsan", "Jeju",
-        "Cheonan", "Cheongju", "Chuncheon", "Gangneung", "Pohang",
-        "Changwon", "Gimhae", "Jinju", "Gunsan", "Iksan",
-        "Mokpo", "Yeosu", "Suncheon", "Andong", "Gumi",
-        "Gyeongju", "Asan", "Seosan", "Dangjin", "Gongju"
-    };
+    
+    [SerializeField] private List<CityOption> cityOptions = new List<CityOption>();
+    public static Action<string> OnCityIdChanged; 
+    
+    // 유저에게 보여주기용
+    private static string sessionCity = "Suwon";
+    // API 호출용
+    private static string sessionCityId = "SUWON";
 
     public void OpenCityPanel()
     {
@@ -77,27 +91,119 @@ public class SettingChangeManager : MonoBehaviour
 
     private void GenerateCityButtons()
     {
-        foreach (string city in cityList)
+        foreach (CityOption cityOption in cityOptions)
         {
-            GameObject btnObj = Instantiate(cityItemPrefab, contentParent);
-            btnObj.GetComponentInChildren<TMP_Text>().text = city;
-            
-            string capturedCity = city; 
-            btnObj.GetComponent<Button>().onClick.AddListener(() => OnCitySelected(capturedCity));
+            GameObject buttonObject = Instantiate(cityItemPrefab, contentParent);
+
+            CityItemUI cityItemUI = buttonObject.GetComponent<CityItemUI>();
+            if (cityItemUI != null)
+            {
+                cityItemUI.SetCity(cityOption.cityName, cityOption.flagSprite);
+            }
+
+            Button button = buttonObject.GetComponent<Button>();
+            if (button != null)
+            {
+                CityOption selectedCityOption = cityOption;
+                button.onClick.AddListener(() => OnCitySelected(selectedCityOption));
+            }
+        }
+        
+        if (showWeatherTestButtons)
+        {
+            CreateWeatherTestButton("Clear Test", clearTestSprite, "CLEAR", "NORMAL");
+            CreateWeatherTestButton("Rain Test", rainTestSprite, "RAIN", "SLIPPERY_FLOOR");
         }
     }
 
-    public void OnCitySelected(string newCity)
+    public void OnCitySelected(CityOption selectedCity)
     {
-        sessionCity = newCity;
-        currentCityText.text = sessionCity;
-        SelectCityPanel.SetActive(false);
+        if (selectedCity == null)
+        {
+            Debug.LogError("Selected city is null.");
+            return;
+        }
+
+        sessionCity = selectedCity.cityName;
+        sessionCityId = selectedCity.cityId;
+
+        PlayerPrefs.SetString("SelectedCityName", sessionCity);
+        PlayerPrefs.SetString("SelectedCityId", sessionCityId);
+        PlayerPrefs.Save();
+
+        ApplyCurrentCityUI();
+
+        if (SelectCityPanel != null)
+        {
+            SelectCityPanel.SetActive(false);
+        }
+        
+        Debug.Log("Selected City: " + sessionCity);
+        Debug.Log("Selected CityId: " + sessionCityId);
         //다른 스크립트에 전달 때 이용
-        OnCityChanged?.Invoke();
+        OnCityIdChanged?.Invoke(sessionCityId);
+    }
+    
+    public void CloseCityPanel()
+    {
+        if (SelectCityPanel != null)
+        {
+            SelectCityPanel.SetActive(false);
+        }
     }
 
     public static string GetSavedCity()
     {
         return sessionCity;
     }
+    
+    public static string GetSavedCityId()
+    {
+        return sessionCityId;
+    }
+    
+    // 강제 날씨 바꾸는 이벤트
+    public static Action<string, string> OnWeatherOverrideRequested;
+    
+    [Header("Weather Test Buttons")]
+    [SerializeField] private bool showWeatherTestButtons = true;
+    [SerializeField] private Sprite clearTestSprite;
+    [SerializeField] private Sprite rainTestSprite;
+    
+    private void CreateWeatherTestButton(string buttonText, Sprite iconSprite, string weather, string gameEffect)
+    {
+        GameObject buttonObject = Instantiate(cityItemPrefab, contentParent);
+
+        CityItemUI cityItemUI = buttonObject.GetComponent<CityItemUI>();
+        if (cityItemUI != null)
+        {
+            cityItemUI.SetCity(buttonText, iconSprite);
+        }
+
+        Button button = buttonObject.GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.AddListener(() => OnWeatherTestSelected(weather, gameEffect));
+        }
+    }
+    
+    private void OnWeatherTestSelected(string weather, string gameEffect)
+    {
+        if (SelectCityPanel != null)
+        {
+            SelectCityPanel.SetActive(false);
+        }
+
+        Debug.Log("Weather Test Selected: " + weather + " / " + gameEffect);
+
+        OnWeatherOverrideRequested?.Invoke(weather, gameEffect);
+    }
+}
+
+[System.Serializable]
+public class CityOption
+{
+    public string cityName;
+    public string cityId;
+    public Sprite flagSprite;
 }
