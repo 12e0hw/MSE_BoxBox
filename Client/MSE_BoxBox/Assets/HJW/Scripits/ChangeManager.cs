@@ -135,7 +135,6 @@ public class ChangeManager : MonoBehaviour
         
         if (LoginPanel != null) LoginPanel.SetActive(false);
         if (SignupPanel != null) SignupPanel.SetActive(false);
-        if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         HideAllLeaderboardPanels();
     }
 
@@ -154,6 +153,13 @@ public class ChangeManager : MonoBehaviour
         HideAllLeaderboardPanels();
     }
 
+    public void BacktoMain()
+    {
+        if (LoginPanel != null) LoginPanel.SetActive(false);
+        if (SettingPanel != null) SettingPanel.SetActive(false);
+        if (SignupPanel != null) SignupPanel.SetActive(false);
+        if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
+    }
     public void BacktoLogin()
     {
         if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
