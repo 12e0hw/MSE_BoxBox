@@ -7,6 +7,7 @@ public class PlayerMovement
     private float carrySpeed = 2f;
     private float dashSpeed = 5f;
     private float exhaustedSpeed = 1.5f;
+    private float speedMultiplier = 1f;
     
     private Vector2 pendingVelocity;
     // 무빙워크 발판 속도 추가
@@ -61,7 +62,12 @@ public class PlayerMovement
             }
         }
 
-        pendingVelocity = moveInput * speed;
+        pendingVelocity = moveInput * speed * speedMultiplier;
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = Mathf.Max(0f, multiplier);
     }
     
     // 무빙워크 밟았을 때 속도관여 함수

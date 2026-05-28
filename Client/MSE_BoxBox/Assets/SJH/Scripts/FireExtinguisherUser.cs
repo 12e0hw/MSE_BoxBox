@@ -133,7 +133,7 @@ public class FireExtinguisherUser
             if (hit == null) continue;
 
             FireObstacle fire = hit.GetComponentInParent<FireObstacle>();
-            if (fire == null) continue;
+            if (fire == null || !fire.isActiveAndEnabled) continue;
 
             Vector2 firePoint = hit.ClosestPoint(origin);
             if (firePoint == origin)

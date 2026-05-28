@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private TimeManager timeManager;
     [SerializeField] private DeliveryManager deliveryManager;
-    [SerializeField] private BoxSpawner boxSpawnManager;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private LJC.scripts.ResultManager resultManager;
     [SerializeField] private LeaderboardApiClient leaderboardApiClient;
@@ -98,12 +97,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //RegisterStageEvents가 이벤트 연결을 담당
+        // RegisterStageEvents가 이벤트 연결을 담당
     }
 
     private void OnDisable()
     {
-        //UnregisterStageEvents가 이벤트 해제를 담당
+        // UnregisterStageEvents가 이벤트 해제를 담당
     }
     
     // Manager 연결 함수
@@ -122,7 +121,6 @@ public class GameManager : MonoBehaviour
         scoreManager = bootstrap.ScoreManager;
         timeManager = bootstrap.TimeManager;
         deliveryManager = bootstrap.DeliveryManager;
-        boxSpawnManager = bootstrap.BoxSpawnManager;
         uiManager = bootstrap.UIManager;
         resultManager = bootstrap.ResultManager;
         leaderboardApiClient = bootstrap.LeaderboardApiClient;
@@ -217,7 +215,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    //테스트용으로 playing 화면에서 실행하게 바꿈
+    // 테스트용으로 playing 화면에서 실행하게 바꿈
     public void SetState(GameState newState, bool force = false)
     {
         if (!force && state == newState)
@@ -274,7 +272,7 @@ public class GameManager : MonoBehaviour
                     deliveryManager.ResetDeliveryCounts();
                 }
 
-                //타이머 초기화
+                // 타이머 초기화
                 if (timeManager != null)
                 {
                     timeManager.ResetTimer();
@@ -399,19 +397,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /* public void TogglePause()
-    {
-        if (state == GameState.Playing)
-        {
-            SetState(GameState.Paused);
-        }
-        else if (state == GameState.Paused)
-        {
-            SetState(GameState.Playing);
-        }
-    }  버튼으로 대체 */
-
-    //hjw 버튼 추가
     public void PauseGame()
     {
         SetState(GameState.Paused);
