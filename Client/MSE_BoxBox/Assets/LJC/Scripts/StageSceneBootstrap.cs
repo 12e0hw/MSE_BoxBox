@@ -14,6 +14,9 @@ public class StageSceneBootstrap : MonoBehaviour
     [SerializeField] private LJC.scripts.ResultManager resultManager;
     [SerializeField] private LeaderboardApiClient leaderboardApiClient;
 
+    [Header("Test")]
+    [SerializeField] private CheatTester cheatTester;
+    
     [Header("Stage UI")]
     [SerializeField] private GameObject hudUI;
     [SerializeField] private GameObject clearUI;
@@ -46,6 +49,27 @@ public class StageSceneBootstrap : MonoBehaviour
         }
 
         GameManager.Instance.InitializeStage(this);
+    }
+    
+    private void Start()
+    {
+        InitializeStageReferences();
+    }
+
+    private void InitializeStageReferences()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("[StageSceneBootstrap] GameManager Instance가 없어 Stage 초기화를 중단합니다.");
+            return;
+        }
+
+        GameManager.Instance.InitializeStage(this);
+
+        if (cheatTester != null)
+        {
+            cheatTester.Initialize(scoreManager, timeManager);
+        }
     }
 
     public void OnResumeButtonClicked()
