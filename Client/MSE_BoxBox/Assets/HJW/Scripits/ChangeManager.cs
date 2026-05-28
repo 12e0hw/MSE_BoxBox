@@ -113,8 +113,10 @@ public class ChangeManager : MonoBehaviour
     public void OpenSettings()
     {
         if (SettingPanel != null) SettingPanel.SetActive(true);
+        
         if (LoginPanel != null) LoginPanel.SetActive(false);
         if (SignupPanel != null) SignupPanel.SetActive(false);
+        if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
     }
 
@@ -137,16 +139,6 @@ public class ChangeManager : MonoBehaviour
         if (SignupPanel != null) SignupPanel.SetActive(false);
         if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
         if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
-    }
-
-    public void BacktoMain()
-    {
-        if (LoginPanel != null) LoginPanel.SetActive(false);
-        if (SettingPanel != null) SettingPanel.SetActive(false);
-        if (SignupPanel != null) SignupPanel.SetActive(false);
-        if (StageSelectPanel != null) StageSelectPanel.SetActive(false);
-        if (LeaderboardPanel != null) LeaderboardPanel.SetActive(false);
-        if (StageSelectPanel!= null) StageSelectPanel.SetActive(false);
     }
 
     public void BacktoLogin()
