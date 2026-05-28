@@ -3701,7 +3701,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1224414751}
   - component: {fileID: 1224414750}
-  - component: {fileID: 1224414752}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3748,21 +3747,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1224414752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1224414749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0fc25e02724440a963869a256c2a779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreCheatTester
-  scoreManager: {fileID: 1156376101}
-  addScoreAmount: 20
-  onlyInPlayingState: 1
 --- !u!1 &1229836696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3923,6 +3907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1306768941}
   - component: {fileID: 1306768940}
+  - component: {fileID: 1306768942}
   m_Layer: 0
   m_Name: StageSceneBootstrap
   m_TagString: Untagged
@@ -3950,6 +3935,7 @@ MonoBehaviour:
   uiManager: {fileID: 1045609368}
   resultManager: {fileID: 1620370297}
   leaderboardApiClient: {fileID: 725495789}
+  cheatTester: {fileID: 1306768942}
   hudUI: {fileID: 104841603}
   clearUI: {fileID: 1549318958}
   gameoverUI: {fileID: 1770752952}
@@ -3970,6 +3956,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1306768942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306768939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0fc25e02724440a963869a256c2a779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheatTester
+  scoreManager: {fileID: 1156376101}
+  timeManager: {fileID: 982501883}
+  addScoreAmount: 20
+  addTimeAmount: 10
+  subtractTimeAmount: 10
+  onlyInPlayingState: 1
 --- !u!1 &1307986786
 GameObject:
   m_ObjectHideFlags: 0
