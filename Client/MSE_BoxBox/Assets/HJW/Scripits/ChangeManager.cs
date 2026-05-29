@@ -55,13 +55,22 @@ public class ChangeManager : MonoBehaviour
         if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
         if (TryAgainPanel!= null) TryAgainPanel.SetActive(false);
         if (LoginFailPanel != null) LoginFailPanel.SetActive(false);
-        if (CheckPanel!= null) CheckPanel.SetActive(false);
         if (stageSelectMemo)
         {
+            if (CheckPanel != null) CheckPanel.SetActive(true); 
             StageSelect();
             stageSelectMemo = false;
         }
-        leaderboardMemo = false;
+        else if (leaderboardMemo)
+        {
+            if (CheckPanel != null) CheckPanel.SetActive(true); 
+            SelectLeaderboard();
+            leaderboardMemo = false;
+        }
+        else
+        {
+            if (CheckPanel != null) CheckPanel.SetActive(false);
+        }
         /*
         else if (leaderboardMemo)
         {
@@ -99,7 +108,6 @@ public class ChangeManager : MonoBehaviour
             if (LoginPanel != null) LoginPanel.SetActive(false);
             if (SettingPanel != null) SettingPanel.SetActive(false);
             if (SignupPanel != null) SignupPanel.SetActive(false);
-            if (CheckPanel != null) CheckPanel.SetActive(false);
             HideAllLeaderboardPanels();
         }
         else
@@ -346,7 +354,6 @@ public class ChangeManager : MonoBehaviour
         if (LoginPanel != null) LoginPanel.SetActive(false);
         if (SettingPanel != null) SettingPanel.SetActive(false);
         if (SignupPanel != null) SignupPanel.SetActive(false);
-        if (CheckPanel != null) CheckPanel.SetActive(false);
         if (SettingPanel!=null) SettingPanel.SetActive(false);
 
         for (int i = 0; i < leaderboardSettings.Length; i++)
