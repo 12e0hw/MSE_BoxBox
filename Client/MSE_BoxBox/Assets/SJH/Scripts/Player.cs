@@ -150,6 +150,8 @@ public class Player : MonoBehaviour
         carry.UpdateCarryPointPosition(inputHandler.LastMoveDir);
         movement.Move(inputHandler.MoveInput, carry.IsCarrying, isDashing, stamina.IsExhausted);
         animationController.UpdateAnimation(inputHandler.MoveInput, inputHandler.LastMoveDir, carry.IsCarrying);
+
+       
     }
 
     void FixedUpdate()
