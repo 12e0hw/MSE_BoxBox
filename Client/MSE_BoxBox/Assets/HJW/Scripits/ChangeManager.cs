@@ -222,6 +222,11 @@ public class ChangeManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Exit game");
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
     
     // 리더보드 관련 함수 따라 모아 놓았음.
