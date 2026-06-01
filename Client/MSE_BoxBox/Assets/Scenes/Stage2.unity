@@ -1003,7 +1003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3942183174520933598, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4762445587763119064, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
       propertyPath: m_Pivot.x
@@ -1097,6 +1097,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: StageSceneBootstrap, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 8938918943446469581, guid: c9f63886d0836264b8d90e524539c7d6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5999078171350448001, guid: 7831b69fadb2e764bbb4b8cd6bdcb5b4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

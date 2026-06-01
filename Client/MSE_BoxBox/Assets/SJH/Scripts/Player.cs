@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class Player : MonoBehaviour
     public Key interactKey;
     public Key extinguisherKey;
     public Key dashKey;
+
+    [Header("Name")]
+    public TextMeshProUGUI myNameText;
+    public int myPlayerIndex = 1;
 
     [Header("Carry Settings")]
     public Transform carryPoint;
@@ -82,6 +87,16 @@ public class Player : MonoBehaviour
         FindComponents();
         SyncSettingsToComponents();
         UpdateKey(); // hjw 저장된 키 불러오기
+        RefreshName();
+    }
+
+    public void RefreshName()
+    {
+        if (myNameText != null)
+        {
+            string savedName = PlayerPrefs.GetString("Player" + myPlayerIndex + "_Name", "기본이름");
+            myNameText.text = savedName;
+        }
     }
 
     // hjw changekey 실행하면 udateKey 실행

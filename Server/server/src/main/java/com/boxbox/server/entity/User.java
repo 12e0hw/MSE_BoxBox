@@ -25,9 +25,23 @@ public class User {
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
+    @Column(name = "character_name_1")
+    private String characterName1;
+
+    @Column(name = "character_name_2")
+    private String characterName2;
+
     public User(String password, String username){
         this.password = password;
         this.username = username;
+    }
+
+    public void updateCharacterName1(String name) {
+        this.characterName1 = name;
+    }
+
+    public void updateCharacterName2(String name) {
+        this.characterName2 = name;
     }
     
 }

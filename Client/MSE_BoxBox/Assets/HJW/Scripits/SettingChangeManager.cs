@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class SettingChangeManager : MonoBehaviour
 {
@@ -198,6 +199,7 @@ public class SettingChangeManager : MonoBehaviour
 
         OnWeatherOverrideRequested?.Invoke(weather, gameEffect);
     }
+
 }
 
 [System.Serializable]
@@ -207,3 +209,4 @@ public class CityOption
     public string cityId;
     public Sprite flagSprite;
 }
+
