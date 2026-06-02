@@ -12,6 +12,17 @@ public class ExtinguisherSpawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
 
     private List<GameObject> spawnedExtinguishers = new List<GameObject>();
+    private bool isClearWeather = false;
+
+    private void OnEnable()
+    {
+        WeatherUIController.OnGameWeatherRefreshed += SetWeather;
+    }
+
+    private void OnDisable()
+    {
+        WeatherUIController.OnGameWeatherRefreshed -= SetWeather;
+    }
 
     private void Start()
     {
@@ -19,9 +30,21 @@ public class ExtinguisherSpawner : MonoBehaviour
         {
             spawnedExtinguishers.Add(null);
         }
-        SpawnExtinguisher(isInitialSpawn: true);
 
+        if (!string.IsNullOrWhiteSpace(WeatherUIController.CurrentWeather))
+        {
+            SetWeather(WeatherUIController.CurrentWeather);
+        }
+
+        SpawnExtinguisher(isInitialSpawn: true);
         StartCoroutine(SpawnExtinguisherRoutine());
+    }
+
+    public void SetWeather(string weatherFromServer)
+    {
+        if (string.IsNullOrWhiteSpace(weatherFromServer)) return;
+
+        isClearWeather = (weatherFromServer.ToUpper().Trim() == "CLEAR");
     }
 
     private IEnumerator SpawnExtinguisherRoutine()
@@ -35,6 +58,7 @@ public class ExtinguisherSpawner : MonoBehaviour
 
     private void SpawnExtinguisher(bool isInitialSpawn)
     {
+        if (!isClearWeather) return;
         if (extinguisherPrefab == null) return;
 
         for (int i = 0; i < spawnPoints.Count; i++)
