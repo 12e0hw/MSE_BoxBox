@@ -47,6 +47,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Item1
+    uniqueID: 1212266473
+    locked: 0
   - name: Player
     uniqueID: 1601203403
     locked: 0
@@ -58,9 +61,6 @@ TagManager:
     locked: 0
   - name: Box
     uniqueID: 556551103
-    locked: 0
-  - name: Item1
-    uniqueID: 1212266473
     locked: 0
   - name: Item2
     uniqueID: 1660538077
