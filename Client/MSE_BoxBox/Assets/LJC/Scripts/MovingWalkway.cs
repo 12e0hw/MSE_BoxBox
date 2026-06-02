@@ -28,7 +28,7 @@ public class MovingWalkway : MonoBehaviour
     {
         Player player = other.GetComponentInParent<Player>();
 
-        if (player == null)
+        if (player == null || player.IsHoldingBigBox)
         {
             return;
         }
@@ -40,7 +40,7 @@ public class MovingWalkway : MonoBehaviour
     {
         Player player = other.GetComponentInParent<Player>();
 
-        if (player == null)
+        if (player == null || player.IsHoldingBigBox)
         {
             return;
         }

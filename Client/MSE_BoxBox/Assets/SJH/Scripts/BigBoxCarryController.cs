@@ -14,15 +14,26 @@ public class BigBoxCarryController : MonoBehaviour
     [SerializeField] private float movementCastPadding = 0.03f;
     [SerializeField] private LayerMask blockingLayers;
 
+    private const float directionalBlockTolerance = 0.01f;
+
     private BoxController box;
     private Rigidbody2D rb;
     private Player leftHolder;
     private Player rightHolder;
-    private Vector2 pendingVelocity;
+    private Vector2 requestedVelocity;
+    private Vector2 currentVelocity;
+    private RigidbodyType2D originalBodyType;
+    private bool hasOriginalBodyType;
+    private bool isIgnoringPlayerBoxCollisions;
     private readonly RaycastHit2D[] castHits = new RaycastHit2D[32];
+    private readonly Collider2D[] attachedColliders = new Collider2D[8];
+
+    private static int playerBoxCollisionIgnoreCount;
+    private static bool originalPlayerBoxCollisionIgnored;
 
     public bool IsReadyToMove => leftHolder != null && rightHolder != null;
-    public Vector2 CurrentVelocity => pendingVelocity;
+    public bool IsHeld => leftHolder != null || rightHolder != null;
+    public Vector2 CurrentVelocity => currentVelocity;
 
     void Awake()
     {
@@ -35,31 +46,39 @@ public class BigBoxCarryController : MonoBehaviour
 
         if (!IsReadyToMove)
         {
-            pendingVelocity = Vector2.zero;
+            requestedVelocity = Vector2.zero;
+            currentVelocity = Vector2.zero;
         }
         else
         {
-            pendingVelocity = GetAllowedVelocity(pendingVelocity);
+            currentVelocity = GetAllowedVelocity(requestedVelocity);
         }
 
         if (rb != null)
         {
-            rb.linearVelocity = pendingVelocity;
+            if (IsHeld)
+            {
+                MoveHeldGroup(currentVelocity);
+            }
+            else
+            {
+                rb.linearVelocity = currentVelocity;
+            }
         }
-
-        ApplyHolderVelocity(pendingVelocity);
     }
 
     void OnDisable()
     {
         ClearHolderVelocity(leftHolder);
         ClearHolderVelocity(rightHolder);
+        RestoreRigidbody();
     }
 
     void OnDestroy()
     {
         ClearHolderVelocity(leftHolder);
         ClearHolderVelocity(rightHolder);
+        RestoreRigidbody();
     }
 
     public bool TryAttach(Player player)
@@ -105,6 +124,7 @@ public class BigBoxCarryController : MonoBehaviour
             rightHolder = player;
         }
 
+        HoldRigidbody();
         StopMovement();
         return true;
     }
@@ -128,7 +148,12 @@ public class BigBoxCarryController : MonoBehaviour
 
         player.ClearExternalVelocity();
 
-        if (!IsReadyToMove)
+        if (!IsHeld)
+        {
+            RestoreRigidbody();
+            StopMovement();
+        }
+        else if (!IsReadyToMove)
         {
             StopMovement();
         }
@@ -155,8 +180,8 @@ public class BigBoxCarryController : MonoBehaviour
             ? Vector2.zero
             : moveInput.normalized * Mathf.Max(0f, speed);
 
-        pendingVelocity = GetAllowedVelocity(velocity);
-        ApplyHolderVelocity(pendingVelocity);
+        requestedVelocity = velocity;
+        currentVelocity = GetAllowedVelocity(requestedVelocity);
     }
 
     public bool HasHolder(Player player)
@@ -209,13 +234,26 @@ public class BigBoxCarryController : MonoBehaviour
 
     bool IsPlayerOne(Player player)
     {
-        return player != null
-            && string.Equals(player.playerID, "P1", System.StringComparison.OrdinalIgnoreCase);
+        if (player == null)
+        {
+            return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(player.playerID))
+        {
+            string id = player.playerID.Trim();
+            return string.Equals(id, "P1", System.StringComparison.OrdinalIgnoreCase)
+                || string.Equals(id, "Player1", System.StringComparison.OrdinalIgnoreCase)
+                || string.Equals(id, "1", System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        return player.myPlayerIndex == 1;
     }
 
     void StopMovement()
     {
-        pendingVelocity = Vector2.zero;
+        requestedVelocity = Vector2.zero;
+        currentVelocity = Vector2.zero;
 
         if (rb != null)
         {
@@ -223,6 +261,85 @@ public class BigBoxCarryController : MonoBehaviour
         }
 
         ApplyHolderVelocity(Vector2.zero);
+    }
+
+    void HoldRigidbody()
+    {
+        if (rb == null)
+        {
+            return;
+        }
+
+        if (!hasOriginalBodyType)
+        {
+            originalBodyType = rb.bodyType;
+            hasOriginalBodyType = true;
+        }
+
+        // Held big boxes should move only from the carry controller.
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        BeginIgnorePlayerBoxCollisions();
+    }
+
+    void RestoreRigidbody()
+    {
+        EndIgnorePlayerBoxCollisions();
+
+        if (rb == null || !hasOriginalBodyType)
+        {
+            return;
+        }
+
+        rb.bodyType = originalBodyType;
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        hasOriginalBodyType = false;
+    }
+
+    void MoveHeldGroup(Vector2 velocity)
+    {
+        ClearHolderVelocity(leftHolder);
+        ClearHolderVelocity(rightHolder);
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        if (velocity == Vector2.zero)
+        {
+            return;
+        }
+
+        Vector2 delta = velocity * Time.fixedDeltaTime;
+        MoveRigidbodyBy(rb, delta);
+        MovePlayerBy(leftHolder, delta);
+        MovePlayerBy(rightHolder, delta);
+    }
+
+    void MovePlayerBy(Player player, Vector2 delta)
+    {
+        if (player == null)
+        {
+            return;
+        }
+
+        player.ClearExternalVelocity();
+        MoveRigidbodyBy(GetPlayerRigidbody(player), delta);
+    }
+
+    void MoveRigidbodyBy(Rigidbody2D targetRb, Vector2 delta)
+    {
+        if (targetRb == null)
+        {
+            return;
+        }
+
+        targetRb.position += delta;
+        targetRb.linearVelocity = Vector2.zero;
+        targetRb.angularVelocity = 0f;
     }
 
     Vector2 GetAllowedVelocity(Vector2 velocity)
@@ -235,7 +352,7 @@ public class BigBoxCarryController : MonoBehaviour
         Vector2 direction = velocity.normalized;
         float distance = velocity.magnitude * Time.fixedDeltaTime + Mathf.Max(0f, movementCastPadding);
 
-        if (IsRigidbodyBlocked(rb, direction, distance)
+        if (IsRigidbodyBlocked(rb, direction, distance, GetBlockingLayerMask())
             || IsPlayerBlocked(leftHolder, direction, distance)
             || IsPlayerBlocked(rightHolder, direction, distance))
         {
@@ -252,11 +369,11 @@ public class BigBoxCarryController : MonoBehaviour
             return false;
         }
 
-        Rigidbody2D playerRb = player.rb != null ? player.rb : player.GetComponent<Rigidbody2D>();
-        return IsRigidbodyBlocked(playerRb, direction, distance);
+        Rigidbody2D playerRb = GetPlayerRigidbody(player);
+        return IsRigidbodyBlocked(playerRb, direction, distance, GetHolderBlockingLayerMask());
     }
 
-    bool IsRigidbodyBlocked(Rigidbody2D targetRb, Vector2 direction, float distance)
+    bool IsRigidbodyBlocked(Rigidbody2D targetRb, Vector2 direction, float distance, LayerMask layerMask)
     {
         if (targetRb == null)
         {
@@ -265,8 +382,9 @@ public class BigBoxCarryController : MonoBehaviour
 
         ContactFilter2D filter = new ContactFilter2D();
         filter.useTriggers = false;
-        filter.SetLayerMask(GetBlockingLayerMask());
+        filter.SetLayerMask(layerMask);
 
+        bool hasTargetBounds = TryGetRigidbodyBounds(targetRb, out Bounds targetBounds);
         int hitCount = targetRb.Cast(direction, filter, castHits, distance);
 
         for (int i = 0; i < hitCount; i++)
@@ -278,10 +396,73 @@ public class BigBoxCarryController : MonoBehaviour
                 continue;
             }
 
+            if (castHits[i].distance <= directionalBlockTolerance
+                && hasTargetBounds
+                && !IsAheadOfMovement(targetBounds, hitCollider.bounds, direction))
+            {
+                continue;
+            }
+
             return true;
         }
 
         return false;
+    }
+
+    bool TryGetRigidbodyBounds(Rigidbody2D targetRb, out Bounds bounds)
+    {
+        bounds = new Bounds(Vector3.zero, Vector3.zero);
+
+        if (targetRb == null)
+        {
+            return false;
+        }
+
+        bounds = new Bounds(targetRb.position, Vector3.zero);
+        int colliderCount = targetRb.GetAttachedColliders(attachedColliders);
+        bool hasBounds = false;
+
+        for (int i = 0; i < colliderCount; i++)
+        {
+            Collider2D targetCollider = attachedColliders[i];
+
+            if (targetCollider == null || targetCollider.isTrigger)
+            {
+                continue;
+            }
+
+            if (!hasBounds)
+            {
+                bounds = targetCollider.bounds;
+                hasBounds = true;
+            }
+            else
+            {
+                bounds.Encapsulate(targetCollider.bounds);
+            }
+        }
+
+        return hasBounds;
+    }
+
+    bool IsAheadOfMovement(Bounds targetBounds, Bounds hitBounds, Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
+        {
+            if (direction.x > 0f)
+            {
+                return hitBounds.min.x >= targetBounds.max.x - directionalBlockTolerance;
+            }
+
+            return hitBounds.max.x <= targetBounds.min.x + directionalBlockTolerance;
+        }
+
+        if (direction.y > 0f)
+        {
+            return hitBounds.min.y >= targetBounds.max.y - directionalBlockTolerance;
+        }
+
+        return hitBounds.max.y <= targetBounds.min.y + directionalBlockTolerance;
     }
 
     bool IsGroupCollider(Collider2D target)
@@ -300,6 +481,64 @@ public class BigBoxCarryController : MonoBehaviour
         return hitPlayer != null && (hitPlayer == leftHolder || hitPlayer == rightHolder);
     }
 
+    Rigidbody2D GetPlayerRigidbody(Player player)
+    {
+        if (player == null)
+        {
+            return null;
+        }
+
+        return player.rb != null ? player.rb : player.GetComponent<Rigidbody2D>();
+    }
+
+    void BeginIgnorePlayerBoxCollisions()
+    {
+        if (isIgnoringPlayerBoxCollisions)
+        {
+            return;
+        }
+
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int boxLayer = LayerMask.NameToLayer("Box");
+
+        if (playerLayer < 0 || boxLayer < 0)
+        {
+            return;
+        }
+
+        if (playerBoxCollisionIgnoreCount == 0)
+        {
+            originalPlayerBoxCollisionIgnored = Physics2D.GetIgnoreLayerCollision(playerLayer, boxLayer);
+            Physics2D.IgnoreLayerCollision(playerLayer, boxLayer, true);
+        }
+
+        playerBoxCollisionIgnoreCount++;
+        isIgnoringPlayerBoxCollisions = true;
+    }
+
+    void EndIgnorePlayerBoxCollisions()
+    {
+        if (!isIgnoringPlayerBoxCollisions)
+        {
+            return;
+        }
+
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int boxLayer = LayerMask.NameToLayer("Box");
+
+        if (playerLayer >= 0 && boxLayer >= 0)
+        {
+            playerBoxCollisionIgnoreCount = Mathf.Max(0, playerBoxCollisionIgnoreCount - 1);
+
+            if (playerBoxCollisionIgnoreCount == 0)
+            {
+                Physics2D.IgnoreLayerCollision(playerLayer, boxLayer, originalPlayerBoxCollisionIgnored);
+            }
+        }
+
+        isIgnoringPlayerBoxCollisions = false;
+    }
+
     LayerMask GetBlockingLayerMask()
     {
         if (blockingLayers.value != 0)
@@ -308,6 +547,23 @@ public class BigBoxCarryController : MonoBehaviour
         }
 
         return LayerMask.GetMask("Wall", "IndivisibleWall", "Fire", "Box", "Player");
+    }
+
+    LayerMask GetHolderBlockingLayerMask()
+    {
+        if (blockingLayers.value != 0)
+        {
+            int boxLayer = LayerMask.NameToLayer("Box");
+
+            if (boxLayer >= 0)
+            {
+                return blockingLayers.value & ~(1 << boxLayer);
+            }
+
+            return blockingLayers;
+        }
+
+        return LayerMask.GetMask("Wall", "IndivisibleWall", "Fire", "Player");
     }
 
     void ApplyHolderVelocity(Vector2 velocity)
