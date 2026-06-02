@@ -6075,7 +6075,7 @@ PrefabInstance:
     - target: {fileID: 8887789257811510401, guid: ac28da730375821408da0fee8b498675, type: 3}
       propertyPath: weatherSettings.Array.data[1].obstaclePrefab
       value: 
-      objectReference: {fileID: 4707183124798516529, guid: 02d3c283ba8eae14f971c3e10d2c8d0d, type: 3}
+      objectReference: {fileID: 6595281047951693014, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6223,6 +6223,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896155860}
   m_CullTransparentMesh: 1
+--- !u!1001 &1936518583
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.2844477
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.4410741
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842374804925343489, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595281047951693014, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
+      propertyPath: m_Name
+      value: Water
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b43c6e06c4624b7e842b19ed7127eb36, type: 3}
 --- !u!1 &1954885169
 GameObject:
   m_ObjectHideFlags: 0
@@ -6833,3 +6890,4 @@ SceneRoots:
   - {fileID: 1214570609}
   - {fileID: 1184293502}
   - {fileID: 635621527}
+  - {fileID: 1936518583}
