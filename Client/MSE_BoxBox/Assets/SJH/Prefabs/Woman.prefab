@@ -251,6 +251,8 @@ MonoBehaviour:
   interactKey: 23
   extinguisherKey: 29
   dashKey: 30
+  myNameText: {fileID: 0}
+  myPlayerIndex: 1
   carryPoint: {fileID: 8918289460465904030}
   pickDistance: 0.8
   boxLayer:
@@ -270,7 +272,7 @@ MonoBehaviour:
   staminaGuiPosition: {x: 20, y: 20}
   staminaGuiSize: {x: 120, y: 12}
   extinguisherRange: 1.2
-  extinguishHoldSeconds: 3
+  extinguishHoldSeconds: 1.5
   extinguisherSprayPointOffset: {x: 0.45, y: 0}
   extinguisherGaugeOffset: {x: 0, y: 0.9}
   extinguisherGaugeSize: {x: 120, y: 12}
