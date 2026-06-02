@@ -11,8 +11,7 @@ public class BigBoxCarryController : MonoBehaviour
 {
     [SerializeField] private float minHorizontalSeparation = 0.15f;
     [SerializeField] private bool requireHorizontalDominance = true;
-    [SerializeField] private float movementCastPadding = 0f;
-    [SerializeField] private bool useMovementBlockCheck = false;
+    [SerializeField] private float movementCastPadding = 0.03f;
     [SerializeField] private LayerMask blockingLayers;
 
     private BoxController box;
@@ -20,10 +19,8 @@ public class BigBoxCarryController : MonoBehaviour
     private Player leftHolder;
     private Player rightHolder;
     private Vector2 pendingVelocity;
-    private int lastBoxCollisionRefreshFrame = -1;
     private readonly RaycastHit2D[] castHits = new RaycastHit2D[32];
 
-    public bool IsHeld => leftHolder != null || rightHolder != null;
     public bool IsReadyToMove => leftHolder != null && rightHolder != null;
     public Vector2 CurrentVelocity => pendingVelocity;
 
@@ -45,8 +42,6 @@ public class BigBoxCarryController : MonoBehaviour
             pendingVelocity = GetAllowedVelocity(pendingVelocity);
         }
 
-        RefreshMovingBoxCollisionIgnores();
-
         if (rb != null)
         {
             rb.linearVelocity = pendingVelocity;
@@ -57,22 +52,12 @@ public class BigBoxCarryController : MonoBehaviour
 
     void OnDisable()
     {
-        SetBoxCollisionIgnored(leftHolder, false);
-        SetBoxCollisionIgnored(rightHolder, false);
-        SetMovingBoxCollisionIgnored(leftHolder, false);
-        SetMovingBoxCollisionIgnored(rightHolder, false);
-        SetHeldBoxCollisionWithOtherBoxesIgnored(false);
         ClearHolderVelocity(leftHolder);
         ClearHolderVelocity(rightHolder);
     }
 
     void OnDestroy()
     {
-        SetBoxCollisionIgnored(leftHolder, false);
-        SetBoxCollisionIgnored(rightHolder, false);
-        SetMovingBoxCollisionIgnored(leftHolder, false);
-        SetMovingBoxCollisionIgnored(rightHolder, false);
-        SetHeldBoxCollisionWithOtherBoxesIgnored(false);
         ClearHolderVelocity(leftHolder);
         ClearHolderVelocity(rightHolder);
     }
@@ -120,8 +105,6 @@ public class BigBoxCarryController : MonoBehaviour
             rightHolder = player;
         }
 
-        SetBoxCollisionIgnored(player, true);
-        RefreshMovingBoxCollisionIgnores();
         StopMovement();
         return true;
     }
@@ -133,9 +116,6 @@ public class BigBoxCarryController : MonoBehaviour
             return;
         }
 
-        SetBoxCollisionIgnored(player, false);
-        SetMovingBoxCollisionIgnored(player, false);
-
         if (leftHolder == player)
         {
             leftHolder = null;
@@ -144,11 +124,6 @@ public class BigBoxCarryController : MonoBehaviour
         if (rightHolder == player)
         {
             rightHolder = null;
-        }
-
-        if (!IsHeld)
-        {
-            SetHeldBoxCollisionWithOtherBoxesIgnored(false);
         }
 
         player.ClearExternalVelocity();
@@ -234,25 +209,8 @@ public class BigBoxCarryController : MonoBehaviour
 
     bool IsPlayerOne(Player player)
     {
-        if (player == null)
-        {
-            return false;
-        }
-
-        string playerId = string.IsNullOrWhiteSpace(player.playerID)
-            ? string.Empty
-            : player.playerID.Trim();
-
-        if (string.Equals(playerId, "P1", System.StringComparison.OrdinalIgnoreCase)
-            || string.Equals(playerId, "Player1", System.StringComparison.OrdinalIgnoreCase)
-            || string.Equals(playerId, "Player 1", System.StringComparison.OrdinalIgnoreCase)
-            || string.Equals(playerId, "1", System.StringComparison.OrdinalIgnoreCase))
-        {
-            return true;
-        }
-
-        return playerId.Length == 0
-            && string.Equals(player.characterPrefix, "Man", System.StringComparison.OrdinalIgnoreCase);
+        return player != null
+            && string.Equals(player.playerID, "P1", System.StringComparison.OrdinalIgnoreCase);
     }
 
     void StopMovement()
@@ -272,17 +230,6 @@ public class BigBoxCarryController : MonoBehaviour
         if (velocity == Vector2.zero)
         {
             return Vector2.zero;
-        }
-
-        if (!useMovementBlockCheck)
-        {
-            return velocity;
-        }
-
-        LayerMask layerMask = GetBlockingLayerMask();
-        if (layerMask.value == 0)
-        {
-            return velocity;
         }
 
         Vector2 direction = velocity.normalized;
@@ -344,14 +291,13 @@ public class BigBoxCarryController : MonoBehaviour
             return false;
         }
 
-        if (IsHolderOrBoxRigidbody(target.attachedRigidbody))
+        if (rb != null && target.attachedRigidbody == rb)
         {
             return true;
         }
 
-        return IsSameRoot(target.transform, transform)
-            || IsSameRoot(target.transform, GetPlayerTransform(leftHolder))
-            || IsSameRoot(target.transform, GetPlayerTransform(rightHolder));
+        Player hitPlayer = target.GetComponentInParent<Player>();
+        return hitPlayer != null && (hitPlayer == leftHolder || hitPlayer == rightHolder);
     }
 
     LayerMask GetBlockingLayerMask()
@@ -361,154 +307,7 @@ public class BigBoxCarryController : MonoBehaviour
             return blockingLayers;
         }
 
-        return LayerMask.GetMask("Wall", "IndisibleWall", "IndivisibleWall", "Fire");
-    }
-
-    void RefreshMovingBoxCollisionIgnores()
-    {
-        if (!IsHeld || lastBoxCollisionRefreshFrame == Time.frameCount)
-        {
-            return;
-        }
-
-        lastBoxCollisionRefreshFrame = Time.frameCount;
-
-        SetMovingBoxCollisionIgnored(leftHolder, true);
-        SetMovingBoxCollisionIgnored(rightHolder, true);
-        SetHeldBoxCollisionWithOtherBoxesIgnored(true);
-    }
-
-    void SetBoxCollisionIgnored(Player player, bool ignored)
-    {
-        if (player == null)
-        {
-            return;
-        }
-
-        Collider2D[] boxColliders = GetComponentsInChildren<Collider2D>();
-        Collider2D[] playerColliders = player.GetComponentsInChildren<Collider2D>();
-
-        foreach (Collider2D boxCollider in boxColliders)
-        {
-            if (boxCollider == null)
-            {
-                continue;
-            }
-
-            foreach (Collider2D playerCollider in playerColliders)
-            {
-                if (playerCollider != null)
-                {
-                    Physics2D.IgnoreCollision(boxCollider, playerCollider, ignored);
-                }
-            }
-        }
-    }
-
-    void SetMovingBoxCollisionIgnored(Player player, bool ignored)
-    {
-        if (player == null)
-        {
-            return;
-        }
-
-        Collider2D[] playerColliders = player.GetComponentsInChildren<Collider2D>();
-        Collider2D[] boxColliders = FindBoxLayerColliders();
-
-        foreach (Collider2D boxCollider in boxColliders)
-        {
-            if (boxCollider == null || IsSameRoot(boxCollider.transform, player.transform))
-            {
-                continue;
-            }
-
-            foreach (Collider2D playerCollider in playerColliders)
-            {
-                if (playerCollider != null && playerCollider != boxCollider)
-                {
-                    Physics2D.IgnoreCollision(playerCollider, boxCollider, ignored);
-                }
-            }
-        }
-    }
-
-    void SetHeldBoxCollisionWithOtherBoxesIgnored(bool ignored)
-    {
-        Collider2D[] heldBoxColliders = GetComponentsInChildren<Collider2D>();
-        Collider2D[] boxColliders = FindBoxLayerColliders();
-
-        foreach (Collider2D boxCollider in boxColliders)
-        {
-            if (boxCollider == null || IsSameRoot(boxCollider.transform, transform))
-            {
-                continue;
-            }
-
-            foreach (Collider2D heldBoxCollider in heldBoxColliders)
-            {
-                if (heldBoxCollider != null && heldBoxCollider != boxCollider)
-                {
-                    Physics2D.IgnoreCollision(heldBoxCollider, boxCollider, ignored);
-                }
-            }
-        }
-    }
-
-    Collider2D[] FindBoxLayerColliders()
-    {
-        int boxLayer = LayerMask.NameToLayer("Box");
-        Collider2D[] colliders = UnityEngine.Object.FindObjectsByType<Collider2D>(FindObjectsSortMode.None);
-
-        if (boxLayer < 0)
-        {
-            return colliders;
-        }
-
-        int writeIndex = 0;
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i] != null && colliders[i].gameObject.layer == boxLayer)
-            {
-                colliders[writeIndex] = colliders[i];
-                writeIndex++;
-            }
-        }
-
-        System.Array.Resize(ref colliders, writeIndex);
-        return colliders;
-    }
-
-    bool IsHolderOrBoxRigidbody(Rigidbody2D targetRb)
-    {
-        return targetRb != null
-            && (targetRb == rb
-                || targetRb == GetPlayerRigidbody(leftHolder)
-                || targetRb == GetPlayerRigidbody(rightHolder));
-    }
-
-    Rigidbody2D GetPlayerRigidbody(Player player)
-    {
-        if (player == null)
-        {
-            return null;
-        }
-
-        return player.rb != null ? player.rb : player.GetComponent<Rigidbody2D>();
-    }
-
-    Transform GetPlayerTransform(Player player)
-    {
-        return player != null ? player.transform : null;
-    }
-
-    bool IsSameRoot(Transform target, Transform root)
-    {
-        if (target == null || root == null)
-        {
-            return false;
-        }
-
-        return target == root || target.IsChildOf(root) || root.IsChildOf(target);
+        return LayerMask.GetMask("Wall", "IndivisibleWall", "Fire", "Box", "Player");
     }
 
     void ApplyHolderVelocity(Vector2 velocity)
