@@ -4,6 +4,7 @@ public class PlayerCarry
 {
     public bool IsCarrying { get; private set; }
     public GameObject CurrentCarriedObject => currentBox;
+    public BoxController CurrentCarriedBoxController => IsCarrying && currentBigBox == null ? GetBoxController(currentBox) : null;
     public bool IsCarryingExtinguisher => IsExtinguisher(currentBox);
     public bool IsHoldingBigBox => currentBigBox != null;
     public bool IsBigBoxReadyToMove => currentBigBox != null && currentBigBox.IsReadyToMove;
@@ -184,6 +185,35 @@ public class PlayerCarry
         Object.Destroy(target);
     }
 
+    public void ClearBigBoxCarry(BigBoxCarryController bigBox)
+    {
+        if (currentBigBox != bigBox)
+        {
+            return;
+        }
+
+        ClearCarryState();
+    }
+
+    public void ClearDeliveredCarriedObject(GameObject deliveredObject)
+    {
+        if (currentBox == null || deliveredObject == null)
+        {
+            return;
+        }
+
+        bool isDeliveredObject = currentBox == deliveredObject
+            || currentBox.transform.IsChildOf(deliveredObject.transform)
+            || deliveredObject.transform.IsChildOf(currentBox.transform);
+
+        if (!isDeliveredObject)
+        {
+            return;
+        }
+
+        ClearCarryState();
+    }
+
     public void UpdateCarryPointPosition(Vector2 lastMoveDir)
     {
         if (carryPoint == null)
@@ -242,7 +272,69 @@ public class PlayerCarry
             return true;
         }
 
-        return false;
+        return TryFindNearbyHeldBigBox(direction, out target, out targetCollider, out targetRigidbody);
+    }
+
+    bool TryFindNearbyHeldBigBox(
+        Vector2 direction,
+        out GameObject target,
+        out Collider2D targetCollider,
+        out Rigidbody2D targetRigidbody)
+    {
+        target = null;
+        targetCollider = null;
+        targetRigidbody = null;
+
+        if (playerTransform == null)
+        {
+            return false;
+        }
+
+        if (direction == Vector2.zero)
+        {
+            direction = Vector2.down;
+        }
+
+        BigBoxCarryController[] bigBoxes = Object.FindObjectsByType<BigBoxCarryController>(FindObjectsSortMode.None);
+        BigBoxCarryController bestBox = null;
+        float bestDistance = float.MaxValue;
+
+        foreach (BigBoxCarryController bigBox in bigBoxes)
+        {
+            if (bigBox == null || !bigBox.IsHeld || bigBox.HasHolder(ownerPlayer))
+            {
+                continue;
+            }
+
+            Vector2 toBox = (Vector2)bigBox.transform.position - (Vector2)playerTransform.position;
+            float distance = toBox.magnitude;
+
+            if (distance > pickDistance + 0.8f)
+            {
+                continue;
+            }
+
+            if (Vector2.Dot(direction, toBox.normalized) < 0.1f)
+            {
+                continue;
+            }
+
+            if (distance < bestDistance)
+            {
+                bestBox = bigBox;
+                bestDistance = distance;
+            }
+        }
+
+        if (bestBox == null)
+        {
+            return false;
+        }
+
+        target = bestBox.gameObject;
+        targetCollider = bestBox.GetComponent<Collider2D>();
+        targetRigidbody = bestBox.GetComponent<Rigidbody2D>();
+        return true;
     }
 
     bool IsValidCarryHit(RaycastHit2D hit, out GameObject candidate, out Rigidbody2D hitRigidbody)

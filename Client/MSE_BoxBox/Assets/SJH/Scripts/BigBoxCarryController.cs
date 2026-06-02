@@ -24,6 +24,10 @@ public class BigBoxCarryController : MonoBehaviour
     private Vector2 currentVelocity;
     private RigidbodyType2D originalBodyType;
     private bool hasOriginalBodyType;
+    private RigidbodyType2D originalLeftHolderBodyType;
+    private RigidbodyType2D originalRightHolderBodyType;
+    private bool hasOriginalLeftHolderBodyType;
+    private bool hasOriginalRightHolderBodyType;
     private bool isIgnoringPlayerBoxCollisions;
     private readonly RaycastHit2D[] castHits = new RaycastHit2D[32];
     private readonly Collider2D[] attachedColliders = new Collider2D[8];
@@ -44,6 +48,13 @@ public class BigBoxCarryController : MonoBehaviour
     {
         FindReferences();
 
+        if (!IsHeld)
+        {
+            requestedVelocity = Vector2.zero;
+            currentVelocity = Vector2.zero;
+            return;
+        }
+
         if (!IsReadyToMove)
         {
             requestedVelocity = Vector2.zero;
@@ -56,29 +67,18 @@ public class BigBoxCarryController : MonoBehaviour
 
         if (rb != null)
         {
-            if (IsHeld)
-            {
-                MoveHeldGroup(currentVelocity);
-            }
-            else
-            {
-                rb.linearVelocity = currentVelocity;
-            }
+            MoveHeldGroup(currentVelocity);
         }
     }
 
     void OnDisable()
     {
-        ClearHolderVelocity(leftHolder);
-        ClearHolderVelocity(rightHolder);
-        RestoreRigidbody();
+        ReleaseAllHolders();
     }
 
     void OnDestroy()
     {
-        ClearHolderVelocity(leftHolder);
-        ClearHolderVelocity(rightHolder);
-        RestoreRigidbody();
+        ReleaseAllHolders();
     }
 
     public bool TryAttach(Player player)
@@ -125,6 +125,7 @@ public class BigBoxCarryController : MonoBehaviour
         }
 
         HoldRigidbody();
+        HoldHolderRigidbody(player, side);
         StopMovement();
         return true;
     }
@@ -136,27 +137,13 @@ public class BigBoxCarryController : MonoBehaviour
             return;
         }
 
-        if (leftHolder == player)
+        if (!HasHolder(player))
         {
-            leftHolder = null;
+            player.ClearExternalVelocity();
+            return;
         }
 
-        if (rightHolder == player)
-        {
-            rightHolder = null;
-        }
-
-        player.ClearExternalVelocity();
-
-        if (!IsHeld)
-        {
-            RestoreRigidbody();
-            StopMovement();
-        }
-        else if (!IsReadyToMove)
-        {
-            StopMovement();
-        }
+        ReleaseAllHolders();
     }
 
     public void SetMovementFrom(Player player, Vector2 moveInput, float speed)
@@ -298,6 +285,92 @@ public class BigBoxCarryController : MonoBehaviour
         hasOriginalBodyType = false;
     }
 
+    void HoldHolderRigidbody(Player player, BigBoxHoldSide side)
+    {
+        Rigidbody2D holderRb = GetPlayerRigidbody(player);
+
+        if (holderRb == null)
+        {
+            return;
+        }
+
+        if (side == BigBoxHoldSide.Left)
+        {
+            if (!hasOriginalLeftHolderBodyType)
+            {
+                originalLeftHolderBodyType = holderRb.bodyType;
+                hasOriginalLeftHolderBodyType = true;
+            }
+        }
+        else if (!hasOriginalRightHolderBodyType)
+        {
+            originalRightHolderBodyType = holderRb.bodyType;
+            hasOriginalRightHolderBodyType = true;
+        }
+
+        holderRb.bodyType = RigidbodyType2D.Kinematic;
+        holderRb.linearVelocity = Vector2.zero;
+        holderRb.angularVelocity = 0f;
+    }
+
+    void RestoreHolderRigidbody(Player player, BigBoxHoldSide side)
+    {
+        bool hasOriginal = side == BigBoxHoldSide.Left
+            ? hasOriginalLeftHolderBodyType
+            : hasOriginalRightHolderBodyType;
+
+        if (!hasOriginal)
+        {
+            return;
+        }
+
+        Rigidbody2D holderRb = GetPlayerRigidbody(player);
+
+        if (holderRb != null)
+        {
+            holderRb.bodyType = side == BigBoxHoldSide.Left
+                ? originalLeftHolderBodyType
+                : originalRightHolderBodyType;
+            holderRb.linearVelocity = Vector2.zero;
+            holderRb.angularVelocity = 0f;
+        }
+
+        if (side == BigBoxHoldSide.Left)
+        {
+            hasOriginalLeftHolderBodyType = false;
+        }
+        else
+        {
+            hasOriginalRightHolderBodyType = false;
+        }
+    }
+
+    void ReleaseAllHolders()
+    {
+        Player previousLeftHolder = leftHolder;
+        Player previousRightHolder = rightHolder;
+
+        leftHolder = null;
+        rightHolder = null;
+
+        ClearHolderVelocity(previousLeftHolder);
+        ClearHolderVelocity(previousRightHolder);
+        RestoreHolderRigidbody(previousLeftHolder, BigBoxHoldSide.Left);
+        RestoreHolderRigidbody(previousRightHolder, BigBoxHoldSide.Right);
+        StopMovement();
+        RestoreRigidbody();
+        ClearPlayerBigBoxCarry(previousLeftHolder);
+        ClearPlayerBigBoxCarry(previousRightHolder);
+    }
+
+    void ClearPlayerBigBoxCarry(Player player)
+    {
+        if (player != null)
+        {
+            player.ClearBigBoxCarry(this);
+        }
+    }
+
     void MoveHeldGroup(Vector2 velocity)
     {
         ClearHolderVelocity(leftHolder);
@@ -391,7 +464,7 @@ public class BigBoxCarryController : MonoBehaviour
         {
             Collider2D hitCollider = castHits[i].collider;
 
-            if (hitCollider == null || hitCollider.isTrigger || IsGroupCollider(hitCollider))
+            if (hitCollider == null || hitCollider.isTrigger || IsGroupCollider(hitCollider) || IsTruckCollider(hitCollider))
             {
                 continue;
             }
@@ -479,6 +552,22 @@ public class BigBoxCarryController : MonoBehaviour
 
         Player hitPlayer = target.GetComponentInParent<Player>();
         return hitPlayer != null && (hitPlayer == leftHolder || hitPlayer == rightHolder);
+    }
+
+    bool IsTruckCollider(Collider2D target)
+    {
+        if (target == null)
+        {
+            return false;
+        }
+
+        if (target.CompareTag("Truck"))
+        {
+            return true;
+        }
+
+        TruckController truck = target.GetComponentInParent<TruckController>();
+        return truck != null;
     }
 
     Rigidbody2D GetPlayerRigidbody(Player player)
