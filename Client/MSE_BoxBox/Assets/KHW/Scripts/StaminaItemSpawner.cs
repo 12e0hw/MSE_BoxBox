@@ -14,19 +14,19 @@ public class StaminaItemSpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnObstacleRoutine());
+        StartCoroutine(SpawnStaminaItemRoutine());
     }
 
-    private IEnumerator SpawnObstacleRoutine()
+    private IEnumerator SpawnStaminaItemRoutine()
     {
         while (true)
         {
-            SpawnObstacle();
+            SpawnStaminaItem();
             yield return new WaitForSeconds(spawnInterval);
         }
     }
 
-    private void SpawnObstacle()
+    private void SpawnStaminaItem()
     {
         if (staminerItem == null) return;
 
