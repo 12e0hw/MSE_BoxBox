@@ -5,7 +5,24 @@ public class PlayerCarry
     public bool IsCarrying { get; private set; }
     public GameObject CurrentCarriedObject => currentBox;
     public bool IsCarryingExtinguisher => IsExtinguisher(currentBox);
+    public bool IsHoldingBigBox => currentBigBox != null;
+    public bool IsBigBoxReadyToMove => currentBigBox != null && currentBigBox.IsReadyToMove;
+    public bool CanControlBigBoxMovement => currentBigBox != null && currentBigBox.CanControlMovement(ownerPlayer);
+    public Vector2 BigBoxVelocity => currentBigBox != null ? currentBigBox.CurrentVelocity : Vector2.zero;
+    public Vector2 BigBoxFacingDirection
+    {
+        get
+        {
+            if (currentBigBox != null && currentBigBox.TryGetFacingDirection(ownerPlayer, out Vector2 direction))
+            {
+                return direction;
+            }
 
+            return Vector2.down;
+        }
+    }
+
+    private Player ownerPlayer;
     private Transform playerTransform;
     private Transform carryPoint;
     private SpriteRenderer playerSpriteRenderer;
@@ -21,9 +38,11 @@ public class PlayerCarry
     private SpriteRenderer currentBoxSpriteRenderer;
     private int originalBoxSortingOrder;
     private bool hasOriginalBoxSortingOrder;
+    private BigBoxCarryController currentBigBox;
 
     public void Configure(
-        Transform owner,
+        Player owner,
+        Transform ownerTransform,
         Transform carryTarget,
         SpriteRenderer ownerSpriteRenderer,
         float distance,
@@ -33,7 +52,8 @@ public class PlayerCarry
         Vector3 sidePosition,
         Vector3 extinguisherOffset)
     {
-        playerTransform = owner;
+        ownerPlayer = owner;
+        playerTransform = ownerTransform != null ? ownerTransform : owner != null ? owner.transform : null;
         carryPoint = carryTarget;
         playerSpriteRenderer = ownerSpriteRenderer;
         pickDistance = distance;
@@ -46,6 +66,8 @@ public class PlayerCarry
 
     public void ToggleCarry(Vector2 lastMoveDir)
     {
+        ValidateState();
+
         if (!IsCarrying)
         {
             TryPickUpBox(lastMoveDir);
@@ -58,6 +80,8 @@ public class PlayerCarry
 
     public void TryPickUpBox(Vector2 lastMoveDir)
     {
+        ValidateState();
+
         if (playerTransform == null || carryPoint == null) return;
 
         Vector2 direction = lastMoveDir.normalized;
@@ -131,6 +155,14 @@ public class PlayerCarry
             return;
         }
 
+        BoxController boxController = GetBoxController(target);
+
+        if (boxController != null && boxController.IsBig)
+        {
+            TryPickUpBigBox(boxController, lastMoveDir);
+            return;
+        }
+
         currentBox = target;
     currentBoxCollider = targetCollider;
     currentBoxRigidbody = targetRigidbody;
@@ -172,6 +204,14 @@ public class PlayerCarry
 
 public void DropBox(Vector2 lastMoveDir)
 {
+    ValidateState();
+
+    if (currentBigBox != null)
+    {
+        ReleaseBigBox();
+        return;
+    }
+
     if (currentBox == null) return;
 
     Vector2 dropDirection = lastMoveDir == Vector2.zero ? Vector2.down : lastMoveDir.normalized;
@@ -209,6 +249,24 @@ public void DropBox(Vector2 lastMoveDir)
     hasOriginalBoxSortingOrder = false;
     IsCarrying = false;
 }
+
+    public void ValidateState()
+    {
+        if (IsCarrying && currentBox == null)
+        {
+            ClearCarryState();
+        }
+    }
+
+    public void UpdateBigBoxMovement(Vector2 moveInput, float speed)
+    {
+        if (currentBigBox == null)
+        {
+            return;
+        }
+
+        currentBigBox.SetMovementFrom(ownerPlayer, moveInput, speed);
+    }
 
     bool IsDropPositionBlocked(Vector3 dropPosition)
     {
@@ -296,6 +354,12 @@ public void DropBox(Vector2 lastMoveDir)
 
     public void DestroyCarriedObject()
     {
+        if (currentBigBox != null)
+        {
+            ReleaseBigBox();
+            return;
+        }
+
         if (currentBox == null) return;
 
         GameObject target = currentBox;
@@ -339,6 +403,11 @@ public void DropBox(Vector2 lastMoveDir)
     {
         if (!IsCarrying || currentBox == null) return;
 
+        if (currentBigBox != null)
+        {
+            return;
+        }
+
         if (IsCarryingExtinguisher)
         {
             currentBox.transform.localPosition = extinguisherCarryLocalOffset;
@@ -351,6 +420,11 @@ public void DropBox(Vector2 lastMoveDir)
     void UpdateCarrySortingOrder(PlayerFacingDirection direction)
     {
         if (!IsCarrying || currentBoxSpriteRenderer == null || playerSpriteRenderer == null) return;
+
+        if (currentBigBox != null)
+        {
+            return;
+        }
 
         if (direction == PlayerFacingDirection.Front)
         {
@@ -394,5 +468,70 @@ public void DropBox(Vector2 lastMoveDir)
         }
 
         return target.CompareTag("Extinguisher");
+    }
+
+    bool TryPickUpBigBox(BoxController boxController, Vector2 lastMoveDir)
+    {
+        BigBoxCarryController bigBoxCarry = boxController.GetComponent<BigBoxCarryController>();
+
+        if (bigBoxCarry == null)
+        {
+            bigBoxCarry = boxController.gameObject.AddComponent<BigBoxCarryController>();
+        }
+
+        if (!bigBoxCarry.TryAttach(ownerPlayer))
+        {
+            return false;
+        }
+
+        currentBigBox = bigBoxCarry;
+        currentBox = boxController.gameObject;
+        currentBoxCollider = null;
+        currentBoxRigidbody = null;
+        currentBoxSpriteRenderer = null;
+        hasOriginalBoxSortingOrder = false;
+        IsCarrying = true;
+
+        UpdateCarryPointPosition(lastMoveDir);
+        Debug.Log("Grabbed big box: " + currentBox.name);
+        return true;
+    }
+
+    void ReleaseBigBox()
+    {
+        if (currentBigBox != null)
+        {
+            currentBigBox.Detach(ownerPlayer);
+        }
+
+        ClearCarryState();
+    }
+
+    void ClearCarryState()
+    {
+        currentBox = null;
+        currentBoxCollider = null;
+        currentBoxRigidbody = null;
+        currentBoxSpriteRenderer = null;
+        currentBigBox = null;
+        hasOriginalBoxSortingOrder = false;
+        IsCarrying = false;
+    }
+
+    BoxController GetBoxController(GameObject target)
+    {
+        if (target == null)
+        {
+            return null;
+        }
+
+        BoxController box = target.GetComponent<BoxController>();
+
+        if (box == null)
+        {
+            box = target.GetComponentInParent<BoxController>();
+        }
+
+        return box;
     }
 }

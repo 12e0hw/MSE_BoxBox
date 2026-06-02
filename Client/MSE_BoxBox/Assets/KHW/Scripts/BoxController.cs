@@ -11,6 +11,8 @@ public class BoxController : MonoBehaviour
 
     public BoxSize Size => boxSize;
     public BoxColor Color => boxColor;
+    public bool IsSmall => Size == BoxSize.Small;
+    public bool IsBig => Size == BoxSize.Big;
     public int scoreValue => Size ==  BoxSize.Big ? 5 : 2;
     public bool IsDelivered { get; private set; }
     

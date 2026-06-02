@@ -150,6 +150,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         inputHandler.ReadInput();
+        carry.ValidateState();
 
         if (inputHandler.InteractPressed)
         {
@@ -163,14 +164,37 @@ public class Player : MonoBehaviour
             carry.DestroyCarriedObject();
         }
 
-        bool isMoving = inputHandler.MoveInput != Vector2.zero;
-        bool wantsDash = inputHandler.DashHeld && isMoving;
+        Vector2 moveInput = inputHandler.MoveInput;
+
+        if (carry.IsHoldingBigBox)
+        {
+            carry.UpdateBigBoxMovement(moveInput, carryMoveSpeed);
+        }
+
+        Vector2 playerMoveInput = carry.IsHoldingBigBox ? Vector2.zero : moveInput;
+        Vector2 animationMoveInput = playerMoveInput;
+        Vector2 facingDirection = inputHandler.LastMoveDir;
+
+        if (carry.IsHoldingBigBox && carry.IsBigBoxReadyToMove)
+        {
+            animationMoveInput = carry.BigBoxVelocity == Vector2.zero ? Vector2.zero : carry.BigBoxVelocity.normalized;
+        }
+
+        if (carry.IsHoldingBigBox)
+        {
+            facingDirection = carry.BigBoxFacingDirection;
+        }
+
+        bool isMoving = carry.IsHoldingBigBox
+            ? carry.BigBoxVelocity != Vector2.zero
+            : playerMoveInput != Vector2.zero;
+        bool wantsDash = inputHandler.DashHeld && isMoving && !carry.IsHoldingBigBox;
         stamina.Tick(Time.deltaTime, isMoving, carry.IsCarrying, wantsDash);
 
         bool isDashing = wantsDash && stamina.CanDash;
-        carry.UpdateCarryPointPosition(inputHandler.LastMoveDir);
-        movement.Move(inputHandler.MoveInput, carry.IsCarrying, isDashing, stamina.IsExhausted);
-        animationController.UpdateAnimation(inputHandler.MoveInput, inputHandler.LastMoveDir, carry.IsCarrying);
+        carry.UpdateCarryPointPosition(facingDirection);
+        movement.Move(playerMoveInput, carry.IsCarrying, isDashing, stamina.IsExhausted);
+        animationController.UpdateAnimation(animationMoveInput, facingDirection, carry.IsCarrying);
 
        
     }
@@ -297,6 +321,7 @@ public class Player : MonoBehaviour
         movement.Configure(rb, moveSpeed, carryMoveSpeed, dashMoveSpeed, exhaustedMoveSpeed);
         ApplyMoveSpeedMultipliers();
         carry.Configure(
+            this,
             transform,
             carryPoint,
             spriteRenderer,
