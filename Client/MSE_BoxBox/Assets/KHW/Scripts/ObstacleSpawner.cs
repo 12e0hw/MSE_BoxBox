@@ -13,7 +13,7 @@ public class ObstacleSpawner : MonoBehaviour
     
     [Header("Obstacle Settings")]
     [SerializeField] private List<WeatherObstacleSetting> weatherSettings;
-    [SerializeField] private float spawnInterval = 8.0f; 
+    [SerializeField] private float spawnInterval = 15.0f; 
 
     [Header("Spawn Area")]
     [SerializeField] private float minX = -6.0f;

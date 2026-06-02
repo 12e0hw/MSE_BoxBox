@@ -152,4 +152,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterSlowZone
   slowMultiplier: 0.55
-  lifeTime: 10
+  lifeTime: 40
