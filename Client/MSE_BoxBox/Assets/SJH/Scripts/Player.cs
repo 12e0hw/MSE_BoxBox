@@ -1,13 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
-using System.Collections;
 
 public class Player : MonoBehaviour
 {
     [Header("Player Settings")]
-    public string playerID = "P1"; //hjw p1, p2 인스펙터창
+    public string playerID = "P1";
 
     [Header("Components")]
     public Rigidbody2D rb;
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
     private PlayerAnimationController animationController;
     private FireExtinguisherUser extinguisherUser;
     private readonly List<float> moveSpeedMultipliers = new List<float>();
-    
+
     private Coroutine npcSlowCoroutine;
     private bool isNpcSlowActive;
     private float currentNpcSlowMultiplier = 1f;
@@ -92,60 +92,19 @@ public class Player : MonoBehaviour
     {
         FindComponents();
         SyncSettingsToComponents();
-        UpdateKey(); // hjw 저장된 키 불러오기
+        UpdateKey();
         RefreshName();
     }
 
-    public void RefreshName()
-    {
-        if (myNameText != null)
-        {
-            string savedName = PlayerPrefs.GetString("Player" + myPlayerIndex + "_Name", "기본이름");
-            myNameText.text = savedName;
-        }
-    }
-
-    // hjw changekey 실행하면 udateKey 실행
-    private void OnEnable()
+    void OnEnable()
     {
         ChangeKey.OnkeyChanged += UpdateKey;
     }
 
-    // hjw 스크립트 비활성화시 해제
-    private void OnDisable()
+    void OnDisable()
     {
         ChangeKey.OnkeyChanged -= UpdateKey;
         ClearNpcSlow();
-    }
-
-    // 키 세팅 불러오기
-    private void UpdateKey()
-    {
-        if (playerID == "P1")
-        {
-            upKey = ChangeKey.GetSavedKey("P1_UpKey", Key.W);
-            downKey = ChangeKey.GetSavedKey("P1_DownKey", Key.S);
-            leftKey = ChangeKey.GetSavedKey("P1_LeftKey", Key.A);
-            rightKey = ChangeKey.GetSavedKey("P1_RightKey", Key.D);
-            interactKey = ChangeKey.GetSavedKey("P1_InteractKey", Key.C);
-            extinguisherKey = ChangeKey.GetSavedKey("P1_FireKey", Key.V); 
-            dashKey = ChangeKey.GetSavedKey("P1_RunKey", Key.B);          
-        }
-        else if (playerID == "P2")
-        {
-            upKey = ChangeKey.GetSavedKey("P2_UpKey", Key.UpArrow);
-            downKey = ChangeKey.GetSavedKey("P2_DownKey", Key.DownArrow);
-            leftKey = ChangeKey.GetSavedKey("P2_LeftKey", Key.LeftArrow);
-            rightKey = ChangeKey.GetSavedKey("P2_RightKey", Key.RightArrow);
-            interactKey = ChangeKey.GetSavedKey("P2_InteractKey", Key.I);
-            extinguisherKey = ChangeKey.GetSavedKey("P2_FireKey", Key.O);
-            dashKey = ChangeKey.GetSavedKey("P2_RunKey", Key.P);
-        }
-
-        if(inputHandler != null)
-        {
-            inputHandler.Configure(upKey,downKey,leftKey,rightKey,interactKey,extinguisherKey, dashKey);
-        }
     }
 
     void Update()
@@ -153,51 +112,10 @@ public class Player : MonoBehaviour
         inputHandler.ReadInput();
         carry.ValidateState();
 
-        if (inputHandler.InteractPressed)
-        {
-            carry.ToggleCarry(inputHandler.LastMoveDir);
-        }
-
-        bool isUsingExtinguisher = inputHandler.ExtinguisherHeld && carry.IsCarryingExtinguisher;
-        extinguisherUser.SetCarriedExtinguisher(carry.CurrentCarriedObject);
-        if (extinguisherUser.Tick(Time.deltaTime, isUsingExtinguisher, inputHandler.LastMoveDir))
-        {
-            carry.DestroyCarriedObject();
-        }
-
-        Vector2 moveInput = inputHandler.MoveInput;
-
-        if (carry.IsHoldingBigBox)
-        {
-            carry.UpdateBigBoxMovement(moveInput, carryMoveSpeed);
-        }
-
-        Vector2 playerMoveInput = carry.IsHoldingBigBox ? Vector2.zero : moveInput;
-        Vector2 animationMoveInput = playerMoveInput;
-        Vector2 facingDirection = inputHandler.LastMoveDir;
-
-        if (carry.IsHoldingBigBox && carry.IsBigBoxReadyToMove)
-        {
-            animationMoveInput = carry.BigBoxVelocity == Vector2.zero ? Vector2.zero : carry.BigBoxVelocity.normalized;
-        }
-
-        if (carry.IsHoldingBigBox)
-        {
-            facingDirection = carry.BigBoxFacingDirection;
-        }
-
-        bool isMoving = carry.IsHoldingBigBox
-            ? carry.BigBoxVelocity != Vector2.zero
-            : playerMoveInput != Vector2.zero;
-        bool wantsDash = inputHandler.DashHeld && isMoving && !carry.IsHoldingBigBox;
-        stamina.Tick(Time.deltaTime, isMoving, carry.IsCarrying, wantsDash);
-
-        bool isDashing = wantsDash && stamina.CanDash;
-        carry.UpdateCarryPointPosition(facingDirection);
-        movement.Move(playerMoveInput, carry.IsCarrying, isDashing, stamina.IsExhausted);
-        animationController.UpdateAnimation(animationMoveInput, facingDirection, carry.IsCarrying);
-
-       
+        // Run player features in a fixed order.
+        HandleCarryInput();
+        UpdateExtinguisherUse();
+        UpdateMovementAndAnimation();
     }
 
     void FixedUpdate()
@@ -205,7 +123,44 @@ public class Player : MonoBehaviour
         movement.ApplyVelocity();
     }
 
-    // PlayerMovement는 private으로 설정했으므로 외부 오브젝트에서 접근하기 위한 함수
+    void OnGUI()
+    {
+        if (stamina != null)
+        {
+            stamina.guiPosition = GetStaminaGuiPosition();
+            stamina.DrawGUI();
+        }
+
+        if (extinguisherUser != null)
+        {
+            extinguisherUser.DrawGUI();
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Vector2 direction = Application.isPlaying && inputHandler != null ? inputHandler.LastMoveDir.normalized : Vector2.down;
+        Vector2 origin = transform.position;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(origin, origin + direction * pickDistance);
+        Gizmos.DrawWireSphere(origin + direction * pickDistance, 0.05f);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(origin, origin + direction * extinguisherRange);
+    }
+
+    public void RefreshName()
+    {
+        if (myNameText == null)
+        {
+            return;
+        }
+
+        string savedName = PlayerPrefs.GetString("Player" + myPlayerIndex + "_Name", "기본이름");
+        myNameText.text = savedName;
+    }
+
     public void SetExternalVelocity(Vector2 velocity)
     {
         if (movement == null)
@@ -245,23 +200,6 @@ public class Player : MonoBehaviour
         ApplyMoveSpeedMultipliers();
     }
 
-    void ApplyMoveSpeedMultipliers()
-    {
-        if (movement == null)
-        {
-            return;
-        }
-
-        float multiplier = 1f;
-
-        foreach (float value in moveSpeedMultipliers)
-        {
-            multiplier = Mathf.Min(multiplier, value);
-        }
-
-        movement.SetSpeedMultiplier(multiplier);
-    }
-    
     public void ApplyNpcSlow(float slowMultiplier, float duration)
     {
         slowMultiplier = NormalizeMoveSpeedMultiplier(slowMultiplier);
@@ -285,14 +223,124 @@ public class Player : MonoBehaviour
         npcSlowCoroutine = StartCoroutine(NpcSlowRoutine(duration));
     }
 
-    private IEnumerator NpcSlowRoutine(float duration)
+    public void RestoreStamina(float amount)
+    {
+        if (stamina != null)
+        {
+            stamina.Restore(amount);
+        }
+    }
+
+    // Load saved key settings for each player.
+    void UpdateKey()
+    {
+        if (playerID == "P1")
+        {
+            upKey = ChangeKey.GetSavedKey("P1_UpKey", Key.W);
+            downKey = ChangeKey.GetSavedKey("P1_DownKey", Key.S);
+            leftKey = ChangeKey.GetSavedKey("P1_LeftKey", Key.A);
+            rightKey = ChangeKey.GetSavedKey("P1_RightKey", Key.D);
+            interactKey = ChangeKey.GetSavedKey("P1_InteractKey", Key.C);
+            extinguisherKey = ChangeKey.GetSavedKey("P1_FireKey", Key.V);
+            dashKey = ChangeKey.GetSavedKey("P1_RunKey", Key.B);
+        }
+        else if (playerID == "P2")
+        {
+            upKey = ChangeKey.GetSavedKey("P2_UpKey", Key.UpArrow);
+            downKey = ChangeKey.GetSavedKey("P2_DownKey", Key.DownArrow);
+            leftKey = ChangeKey.GetSavedKey("P2_LeftKey", Key.LeftArrow);
+            rightKey = ChangeKey.GetSavedKey("P2_RightKey", Key.RightArrow);
+            interactKey = ChangeKey.GetSavedKey("P2_InteractKey", Key.I);
+            extinguisherKey = ChangeKey.GetSavedKey("P2_FireKey", Key.O);
+            dashKey = ChangeKey.GetSavedKey("P2_RunKey", Key.P);
+        }
+
+        if (inputHandler != null)
+        {
+            inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
+        }
+    }
+
+    void HandleCarryInput()
+    {
+        if (inputHandler.InteractPressed)
+        {
+            carry.ToggleCarry(inputHandler.LastMoveDir);
+        }
+    }
+
+    void UpdateExtinguisherUse()
+    {
+        bool isUsingExtinguisher = inputHandler.ExtinguisherHeld && carry.IsCarryingExtinguisher;
+        extinguisherUser.SetCarriedExtinguisher(carry.CurrentCarriedObject);
+
+        if (extinguisherUser.Tick(Time.deltaTime, isUsingExtinguisher, inputHandler.LastMoveDir))
+        {
+            carry.DestroyCarriedObject();
+        }
+    }
+
+    void UpdateMovementAndAnimation()
+    {
+        Vector2 moveInput = inputHandler.MoveInput;
+
+        if (carry.IsHoldingBigBox)
+        {
+            carry.UpdateBigBoxMovement(moveInput, carryMoveSpeed);
+        }
+
+        Vector2 playerMoveInput = carry.IsHoldingBigBox ? Vector2.zero : moveInput;
+        Vector2 animationMoveInput = playerMoveInput;
+        Vector2 facingDirection = inputHandler.LastMoveDir;
+
+        if (carry.IsHoldingBigBox && carry.IsBigBoxReadyToMove)
+        {
+            animationMoveInput = carry.BigBoxVelocity == Vector2.zero ? Vector2.zero : carry.BigBoxVelocity.normalized;
+        }
+
+        if (carry.IsHoldingBigBox)
+        {
+            facingDirection = carry.BigBoxFacingDirection;
+        }
+
+        bool isMoving = carry.IsHoldingBigBox
+            ? carry.BigBoxVelocity != Vector2.zero
+            : playerMoveInput != Vector2.zero;
+        bool wantsDash = inputHandler.DashHeld && isMoving && !carry.IsHoldingBigBox;
+
+        stamina.Tick(Time.deltaTime, isMoving, carry.IsCarrying, wantsDash);
+
+        bool isDashing = wantsDash && stamina.CanDash;
+        carry.UpdateCarryPointPosition(facingDirection);
+        movement.Move(playerMoveInput, carry.IsCarrying, isDashing, stamina.IsExhausted);
+        animationController.UpdateAnimation(animationMoveInput, facingDirection, carry.IsCarrying);
+    }
+
+    void ApplyMoveSpeedMultipliers()
+    {
+        if (movement == null)
+        {
+            return;
+        }
+
+        float multiplier = 1f;
+
+        foreach (float value in moveSpeedMultipliers)
+        {
+            multiplier = Mathf.Min(multiplier, value);
+        }
+
+        movement.SetSpeedMultiplier(multiplier);
+    }
+
+    IEnumerator NpcSlowRoutine(float duration)
     {
         yield return new WaitForSeconds(duration);
 
         ClearNpcSlow();
     }
 
-    private void ClearNpcSlow()
+    void ClearNpcSlow()
     {
         if (npcSlowCoroutine != null)
         {
@@ -315,12 +363,13 @@ public class Player : MonoBehaviour
     {
         return Mathf.Clamp(multiplier, 0.1f, 1f);
     }
-    
+
     void SyncSettingsToComponents()
     {
-        // inputHandler.Configure(upKey, downKey, leftKey, rightKey, interactKey, extinguisherKey, dashKey);
+        // Send inspector settings to helper classes.
         movement.Configure(rb, moveSpeed, carryMoveSpeed, dashMoveSpeed, exhaustedMoveSpeed);
         ApplyMoveSpeedMultipliers();
+
         carry.Configure(
             this,
             transform,
@@ -332,11 +381,14 @@ public class Player : MonoBehaviour
             backCarryLocalPos,
             sideCarryLocalPos,
             extinguisherCarryLocalOffset);
+
         stamina.Configure(maxStamina, dashDrainPerSecond, carryDrainPerSecond, recoverPerSecond, minStaminaToDash, recoverWhileCarryingIdle);
         stamina.showDebugBar = showStaminaBar;
         stamina.guiPosition = GetStaminaGuiPosition();
         stamina.guiSize = staminaGuiSize;
+
         animationController.Configure(animator, spriteRenderer, characterPrefix);
+
         extinguisherUser.Configure(transform, extinguisherRange, extinguishHoldSeconds, fireLayer);
         extinguisherUser.sprayPointOffset = extinguisherSprayPointOffset;
         extinguisherUser.showGauge = showExtinguisherGauge;
@@ -381,41 +433,5 @@ public class Player : MonoBehaviour
         }
 
         return staminaGuiPosition;
-    }
-
-    void OnGUI()
-    {
-        if (stamina != null)
-        {
-            stamina.guiPosition = GetStaminaGuiPosition();
-            stamina.DrawGUI();
-        }
-
-        if (extinguisherUser != null)
-        {
-            extinguisherUser.DrawGUI();
-        }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Vector2 dir = Application.isPlaying && inputHandler != null ? inputHandler.LastMoveDir.normalized : Vector2.down;
-        Vector2 origin = transform.position;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(origin, origin + dir * pickDistance);
-        Gizmos.DrawWireSphere(origin + dir * pickDistance, 0.05f);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(origin, origin + dir * extinguisherRange);
-    }
-
-    // 스태미너 회복
-    public void RestoreStamina(float amout)
-    {
-        if (stamina != null)
-        {
-            stamina.Restore(amout);
-        }
     }
 }

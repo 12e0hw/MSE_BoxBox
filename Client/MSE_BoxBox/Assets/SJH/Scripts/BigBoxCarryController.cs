@@ -98,7 +98,6 @@ public class BigBoxCarryController : MonoBehaviour
 
         if (!TryGetHoldSide(player.transform.position, out BigBoxHoldSide side))
         {
-            Debug.Log("[BigBoxCarryController] Big boxes can only be held from left or right.");
             return false;
         }
 
@@ -106,7 +105,6 @@ public class BigBoxCarryController : MonoBehaviour
         {
             if (leftHolder != null)
             {
-                Debug.Log("[BigBoxCarryController] Left side is already held.");
                 return false;
             }
 
@@ -116,7 +114,6 @@ public class BigBoxCarryController : MonoBehaviour
         {
             if (rightHolder != null)
             {
-                Debug.Log("[BigBoxCarryController] Right side is already held.");
                 return false;
             }
 

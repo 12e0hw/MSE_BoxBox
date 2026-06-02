@@ -66,7 +66,10 @@ public class PlayerStamina
 
     public void DrawGUI()
     {
-        if (!showDebugBar) return;
+        if (!showDebugBar)
+        {
+            return;
+        }
 
         float percent = MaxStamina <= 0f ? 0f : CurrentStamina / MaxStamina;
         percent = Mathf.Clamp01(percent);
@@ -83,6 +86,12 @@ public class PlayerStamina
         GUI.color = Color.white;
     }
 
+    public void Restore(float amount)
+    {
+        CurrentStamina += amount;
+        CurrentStamina = Mathf.Clamp(CurrentStamina, 0f, maxStamina);
+    }
+
     Color GetFillColor(float percent)
     {
         if (percent > 0.5f)
@@ -96,12 +105,5 @@ public class PlayerStamina
         }
 
         return Color.red;
-    }
-
-    // 스태미너 회복
-    public void Restore(float amount)
-    {
-        CurrentStamina += amount;
-        CurrentStamina = Mathf.Clamp(CurrentStamina, 0f, maxStamina);
     }
 }

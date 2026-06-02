@@ -9,6 +9,7 @@ public class PlayerCarry
     public bool IsBigBoxReadyToMove => currentBigBox != null && currentBigBox.IsReadyToMove;
     public bool CanControlBigBoxMovement => currentBigBox != null && currentBigBox.CanControlMovement(ownerPlayer);
     public Vector2 BigBoxVelocity => currentBigBox != null ? currentBigBox.CurrentVelocity : Vector2.zero;
+
     public Vector2 BigBoxFacingDirection
     {
         get
@@ -32,6 +33,7 @@ public class PlayerCarry
     private Vector3 backCarryLocalPos;
     private Vector3 sideCarryLocalPos;
     private Vector3 extinguisherCarryLocalOffset;
+
     private GameObject currentBox;
     private Rigidbody2D currentBoxRigidbody;
     private Collider2D currentBoxCollider;
@@ -71,184 +73,79 @@ public class PlayerCarry
         if (!IsCarrying)
         {
             TryPickUpBox(lastMoveDir);
+            return;
         }
-        else
-        {
-            DropBox(lastMoveDir);
-        }
+
+        DropBox(lastMoveDir);
     }
 
     public void TryPickUpBox(Vector2 lastMoveDir)
     {
         ValidateState();
 
-        if (playerTransform == null || carryPoint == null) return;
-
-        Vector2 direction = lastMoveDir.normalized;
-        Vector2 origin = (Vector2)playerTransform.position + direction * 0.6f;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, pickDistance);
-
-        Debug.DrawRay(origin, direction * pickDistance, Color.red, 1f);
-
-        GameObject target = null;
-        Collider2D targetCollider = null;
-        Rigidbody2D targetRigidbody = null;
-        
-        int boxLayerIndex = LayerMask.NameToLayer("Box");
-
-        foreach (RaycastHit2D hit in hits)
+        if (playerTransform == null || carryPoint == null)
         {
-            if (hit.collider == null)
-            {
-                continue;
-            }
-
-            Rigidbody2D hitRb = hit.collider.attachedRigidbody;
-            GameObject candidate;
-
-            if (hitRb != null)
-            {
-                candidate = hitRb.gameObject;
-            }
-            else
-            {
-                candidate = hit.collider.gameObject;
-            }
-
-            if (candidate == playerTransform.gameObject)
-            {
-                continue;
-            }
-
-            if (candidate.GetComponent<Player>() != null)
-            {
-                continue;
-            }
-            
-            // 들 수 있는 물체를 box와 extinguisher로 제한
-            bool isBoxLayer =
-                candidate.layer == boxLayerIndex ||
-                hit.collider.gameObject.layer == boxLayerIndex;
-
-            bool isExtinguisher =
-                IsExtinguisher(candidate) ||
-                IsExtinguisher(hit.collider.gameObject);
-
-            /*
-            bool isBoxLayer = IsInLayerMask(hit.collider.gameObject.layer, boxLayer);
-            bool isExtinguisher = IsExtinguisher(candidate);
-            */
-            if (!isBoxLayer && !isExtinguisher)
-            {
-                continue;
-            }
-
-            target = candidate;
-            targetCollider = hit.collider;
-            targetRigidbody = hitRb;
-            break;
+            return;
         }
 
-        if (target == null)
+        if (!TryFindCarryTarget(lastMoveDir, out GameObject target, out Collider2D targetCollider, out Rigidbody2D targetRigidbody))
         {
-            Debug.Log("Carry target not found");
             return;
         }
 
         BoxController boxController = GetBoxController(target);
-
         if (boxController != null && boxController.IsBig)
         {
             TryPickUpBigBox(boxController, lastMoveDir);
             return;
         }
 
-        currentBox = target;
-    currentBoxCollider = targetCollider;
-    currentBoxRigidbody = targetRigidbody;
-
-    if (currentBoxCollider != null)
-    {
-        currentBoxCollider.enabled = false;
+        PickUpSmallObject(target, targetCollider, targetRigidbody, lastMoveDir);
     }
 
-    // 자식 오브젝트에서 SpriteRenderer를 찾도록 변경
-    currentBoxSpriteRenderer = currentBox.GetComponentInChildren<SpriteRenderer>();
-    
-    if (currentBoxSpriteRenderer != null)
+    public void DropBox(Vector2 lastMoveDir)
     {
-        originalBoxSortingOrder = currentBoxSpriteRenderer.sortingOrder;
-        hasOriginalBoxSortingOrder = true;
+        ValidateState();
+
+        if (currentBigBox != null)
+        {
+            ReleaseBigBox();
+            return;
+        }
+
+        if (currentBox == null)
+        {
+            return;
+        }
+
+        Vector2 dropDirection = lastMoveDir == Vector2.zero ? Vector2.down : lastMoveDir.normalized;
+        Vector3 dropPosition = playerTransform.position + (Vector3)(dropDirection * 0.8f);
+
+        if (IsDropPositionBlocked(dropPosition))
+        {
+            return;
+        }
+
+        currentBox.transform.SetParent(null);
+        currentBox.transform.position = dropPosition;
+
+        if (currentBoxCollider != null)
+        {
+            currentBoxCollider.enabled = true;
+        }
+
+        if (currentBoxRigidbody != null)
+        {
+            currentBoxRigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
+
+        if (currentBoxSpriteRenderer != null && hasOriginalBoxSortingOrder)
+        {
+            currentBoxSpriteRenderer.sortingOrder = originalBoxSortingOrder;
+        }
+
+        ClearCarryState();
     }
-
-    // isKinematic을 true로 변경
-    if (currentBoxRigidbody != null)
-    {
-        currentBoxRigidbody.bodyType = RigidbodyType2D.Kinematic;
-        currentBoxRigidbody.linearVelocity = Vector2.zero;
-        currentBoxRigidbody.angularVelocity = 0f;
-    }
-
-    currentBox.transform.SetParent(carryPoint);
-    currentBox.transform.localPosition = Vector3.zero;
-    
-    // 회전값도 초기화
-    currentBox.transform.localRotation = Quaternion.identity; 
-
-    IsCarrying = true;
-    UpdateCarryPointPosition(lastMoveDir);
-    UpdateCarriedObjectLocalPosition();
-
-    Debug.Log("Picked up: " + currentBox.name);
-}
-
-public void DropBox(Vector2 lastMoveDir)
-{
-    ValidateState();
-
-    if (currentBigBox != null)
-    {
-        ReleaseBigBox();
-        return;
-    }
-
-    if (currentBox == null) return;
-
-    Vector2 dropDirection = lastMoveDir == Vector2.zero ? Vector2.down : lastMoveDir.normalized;
-    Vector3 dropPosition = playerTransform.position + (Vector3)(dropDirection * 0.8f);
-
-    if (IsDropPositionBlocked(dropPosition))
-    {
-        Debug.Log("Cannot drop here: blocked by obstacle or wall");
-        return;
-    }
-
-    currentBox.transform.SetParent(null);
-    currentBox.transform.position = dropPosition;
-
-    if (currentBoxCollider != null)
-    {
-        currentBoxCollider.enabled = true;
-    }
-
-    // 내려놓을 때 물리 엔진이 다시 작동하도록 복구
-    if (currentBoxRigidbody != null)
-    {
-        currentBoxRigidbody.bodyType = RigidbodyType2D.Dynamic;
-    }
-
-    if (currentBoxSpriteRenderer != null && hasOriginalBoxSortingOrder)
-    {
-        currentBoxSpriteRenderer.sortingOrder = originalBoxSortingOrder;
-    }
-
-    currentBox = null;
-    currentBoxCollider = null;
-    currentBoxRigidbody = null;
-    currentBoxSpriteRenderer = null;
-    hasOriginalBoxSortingOrder = false;
-    IsCarrying = false;
-}
 
     public void ValidateState()
     {
@@ -266,6 +163,154 @@ public void DropBox(Vector2 lastMoveDir)
         }
 
         currentBigBox.SetMovementFrom(ownerPlayer, moveInput, speed);
+    }
+
+    public void DestroyCarriedObject()
+    {
+        if (currentBigBox != null)
+        {
+            ReleaseBigBox();
+            return;
+        }
+
+        if (currentBox == null)
+        {
+            return;
+        }
+
+        GameObject target = currentBox;
+        ClearCarryState();
+
+        Object.Destroy(target);
+    }
+
+    public void UpdateCarryPointPosition(Vector2 lastMoveDir)
+    {
+        if (carryPoint == null)
+        {
+            return;
+        }
+
+        PlayerFacingDirection direction = GetDirection(lastMoveDir);
+
+        if (direction == PlayerFacingDirection.Front)
+        {
+            carryPoint.localPosition = frontCarryLocalPos;
+        }
+        else if (direction == PlayerFacingDirection.Back)
+        {
+            carryPoint.localPosition = backCarryLocalPos;
+        }
+        else
+        {
+            Vector3 position = sideCarryLocalPos;
+            position.x = lastMoveDir.x < 0f ? -Mathf.Abs(sideCarryLocalPos.x) : Mathf.Abs(sideCarryLocalPos.x);
+            carryPoint.localPosition = position;
+        }
+
+        UpdateCarrySortingOrder(direction);
+        UpdateCarriedObjectLocalPosition();
+    }
+
+    bool TryFindCarryTarget(
+        Vector2 lastMoveDir,
+        out GameObject target,
+        out Collider2D targetCollider,
+        out Rigidbody2D targetRigidbody)
+    {
+        // Find the first box or extinguisher in front of the player.
+        Vector2 direction = lastMoveDir.normalized;
+        Vector2 origin = (Vector2)playerTransform.position + direction * 0.6f;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, pickDistance);
+
+        Debug.DrawRay(origin, direction * pickDistance, Color.red, 1f);
+
+        target = null;
+        targetCollider = null;
+        targetRigidbody = null;
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (!IsValidCarryHit(hit, out GameObject candidate, out Rigidbody2D hitRigidbody))
+            {
+                continue;
+            }
+
+            target = candidate;
+            targetCollider = hit.collider;
+            targetRigidbody = hitRigidbody;
+            return true;
+        }
+
+        return false;
+    }
+
+    bool IsValidCarryHit(RaycastHit2D hit, out GameObject candidate, out Rigidbody2D hitRigidbody)
+    {
+        candidate = null;
+        hitRigidbody = null;
+
+        if (hit.collider == null)
+        {
+            return false;
+        }
+
+        hitRigidbody = hit.collider.attachedRigidbody;
+        candidate = hitRigidbody != null ? hitRigidbody.gameObject : hit.collider.gameObject;
+
+        if (candidate == playerTransform.gameObject || candidate.GetComponent<Player>() != null)
+        {
+            return false;
+        }
+
+        return IsBoxTarget(candidate, hit.collider.gameObject) || IsExtinguisher(candidate) || IsExtinguisher(hit.collider.gameObject);
+    }
+
+    bool IsBoxTarget(GameObject candidate, GameObject hitObject)
+    {
+        int boxLayerIndex = LayerMask.NameToLayer("Box");
+
+        if (boxLayerIndex >= 0)
+        {
+            return candidate.layer == boxLayerIndex || hitObject.layer == boxLayerIndex;
+        }
+
+        return IsInLayerMask(candidate.layer, boxLayer) || IsInLayerMask(hitObject.layer, boxLayer);
+    }
+
+    void PickUpSmallObject(GameObject target, Collider2D targetCollider, Rigidbody2D targetRigidbody, Vector2 lastMoveDir)
+    {
+        // Attach small objects to the carry point.
+        currentBox = target;
+        currentBoxCollider = targetCollider;
+        currentBoxRigidbody = targetRigidbody;
+        currentBoxSpriteRenderer = currentBox.GetComponentInChildren<SpriteRenderer>();
+
+        if (currentBoxCollider != null)
+        {
+            currentBoxCollider.enabled = false;
+        }
+
+        if (currentBoxSpriteRenderer != null)
+        {
+            originalBoxSortingOrder = currentBoxSpriteRenderer.sortingOrder;
+            hasOriginalBoxSortingOrder = true;
+        }
+
+        if (currentBoxRigidbody != null)
+        {
+            currentBoxRigidbody.bodyType = RigidbodyType2D.Kinematic;
+            currentBoxRigidbody.linearVelocity = Vector2.zero;
+            currentBoxRigidbody.angularVelocity = 0f;
+        }
+
+        currentBox.transform.SetParent(carryPoint);
+        currentBox.transform.localPosition = Vector3.zero;
+        currentBox.transform.localRotation = Quaternion.identity;
+
+        IsCarrying = true;
+        UpdateCarryPointPosition(lastMoveDir);
+        UpdateCarriedObjectLocalPosition();
     }
 
     bool IsDropPositionBlocked(Vector3 dropPosition)
@@ -342,68 +387,9 @@ public void DropBox(Vector2 lastMoveDir)
             || layer == LayerMask.NameToLayer("Player");
     }
 
-    bool IsSameRoot(Transform target, Transform root)
-    {
-        if (target == null || root == null)
-        {
-            return false;
-        }
-
-        return target == root || target.IsChildOf(root) || root.IsChildOf(target);
-    }
-
-    public void DestroyCarriedObject()
-    {
-        if (currentBigBox != null)
-        {
-            ReleaseBigBox();
-            return;
-        }
-
-        if (currentBox == null) return;
-
-        GameObject target = currentBox;
-
-        currentBox = null;
-        currentBoxCollider = null;
-        currentBoxRigidbody = null;
-        currentBoxSpriteRenderer = null;
-        hasOriginalBoxSortingOrder = false;
-        IsCarrying = false;
-
-        Object.Destroy(target);
-    }
-
-    public void UpdateCarryPointPosition(Vector2 lastMoveDir)
-    {
-        if (carryPoint == null) return;
-
-        PlayerFacingDirection direction = GetDirection(lastMoveDir);
-
-        if (direction == PlayerFacingDirection.Front)
-        {
-            carryPoint.localPosition = frontCarryLocalPos;
-        }
-        else if (direction == PlayerFacingDirection.Back)
-        {
-            carryPoint.localPosition = backCarryLocalPos;
-        }
-        else
-        {
-            Vector3 pos = sideCarryLocalPos;
-            pos.x = lastMoveDir.x < 0f ? -Mathf.Abs(sideCarryLocalPos.x) : Mathf.Abs(sideCarryLocalPos.x);
-            carryPoint.localPosition = pos;
-        }
-
-        UpdateCarrySortingOrder(direction);
-        UpdateCarriedObjectLocalPosition();
-    }
-
     void UpdateCarriedObjectLocalPosition()
     {
-        if (!IsCarrying || currentBox == null) return;
-
-        if (currentBigBox != null)
+        if (!IsCarrying || currentBox == null || currentBigBox != null)
         {
             return;
         }
@@ -419,13 +405,12 @@ public void DropBox(Vector2 lastMoveDir)
 
     void UpdateCarrySortingOrder(PlayerFacingDirection direction)
     {
-        if (!IsCarrying || currentBoxSpriteRenderer == null || playerSpriteRenderer == null) return;
-
-        if (currentBigBox != null)
+        if (!IsCarrying || currentBoxSpriteRenderer == null || playerSpriteRenderer == null || currentBigBox != null)
         {
             return;
         }
 
+        // Draw carried items in front or behind the player.
         if (direction == PlayerFacingDirection.Front)
         {
             currentBoxSpriteRenderer.sortingOrder = playerSpriteRenderer.sortingOrder + 1;
@@ -454,20 +439,10 @@ public void DropBox(Vector2 lastMoveDir)
 
         return PlayerFacingDirection.Front;
     }
-/*
-    bool IsInLayerMask(int layer, LayerMask layerMask)
-    {
-        return (layerMask.value & (1 << layer)) != 0;
-    }
-*/
+
     bool IsExtinguisher(GameObject target)
     {
-        if (target == null)
-        {
-            return false;
-        }
-
-        return target.CompareTag("Extinguisher");
+        return target != null && target.CompareTag("Extinguisher");
     }
 
     bool TryPickUpBigBox(BoxController boxController, Vector2 lastMoveDir)
@@ -493,7 +468,6 @@ public void DropBox(Vector2 lastMoveDir)
         IsCarrying = true;
 
         UpdateCarryPointPosition(lastMoveDir);
-        Debug.Log("Grabbed big box: " + currentBox.name);
         return true;
     }
 
@@ -533,5 +507,20 @@ public void DropBox(Vector2 lastMoveDir)
         }
 
         return box;
+    }
+
+    bool IsSameRoot(Transform target, Transform root)
+    {
+        if (target == null || root == null)
+        {
+            return false;
+        }
+
+        return target == root || target.IsChildOf(root) || root.IsChildOf(target);
+    }
+
+    bool IsInLayerMask(int layer, LayerMask layerMask)
+    {
+        return (layerMask.value & (1 << layer)) != 0;
     }
 }
