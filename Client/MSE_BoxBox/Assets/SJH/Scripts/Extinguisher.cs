@@ -36,6 +36,18 @@ public class Extinguisher : MonoBehaviour
         if (changed)
         {
             sprayEffect.SetActive(active);
+
+            if (BGM_Manager.instance != null)
+            {
+                if (active)
+                {
+                    BGM_Manager.instance.StartExtinguisherSound();
+                }
+                else
+                {
+                    BGM_Manager.instance.StopExtinguisherSound();
+                }
+            }
         }
 
         if (sprayAnimator != null)

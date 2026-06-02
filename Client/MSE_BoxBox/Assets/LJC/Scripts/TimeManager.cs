@@ -13,6 +13,7 @@ public class TimeManager : MonoBehaviour
     public event Action OnTimeOver;
     
     private bool hasTimeOverTriggered;
+    private bool hasWarningTriggered;
 
     private void Awake()
     {
@@ -33,6 +34,15 @@ public class TimeManager : MonoBehaviour
             RemainingTime = 0f;
         }
 
+        if (RemainingTime > 0f && RemainingTime <= 7f && !hasWarningTriggered)
+        {
+            hasWarningTriggered = true;
+            if (BGM_Manager.instance != null)
+            {
+                BGM_Manager.instance.StartWarningSound();
+            }
+        }
+
         OnTimeChanged?.Invoke(RemainingTime);
 
         if (RemainingTime <= 0f)
@@ -45,18 +55,24 @@ public class TimeManager : MonoBehaviour
     {
         IsRunning = true;
         hasTimeOverTriggered = false;
+        CheckWarningReset();
         OnTimeChanged?.Invoke(RemainingTime);
     }
 
     public void StopTimer()
     {
         IsRunning = false;
+        if (BGM_Manager.instance != null)
+        {
+            BGM_Manager.instance.StopWarningSound();
+        }
     }
 
     public void ResetTimer()
     {
         RemainingTime = startTime;
         hasTimeOverTriggered = false;
+        hasWarningTriggered = false;
         OnTimeChanged?.Invoke(RemainingTime);
     }
     
@@ -74,6 +90,7 @@ public class TimeManager : MonoBehaviour
 
         RemainingTime += seconds;
         hasTimeOverTriggered = false;
+        CheckWarningReset();
         OnTimeChanged?.Invoke(RemainingTime);
     }
 
@@ -112,6 +129,7 @@ public class TimeManager : MonoBehaviour
         else
         {
             hasTimeOverTriggered = false;
+            CheckWarningReset();
         }
     }
 
@@ -125,7 +143,24 @@ public class TimeManager : MonoBehaviour
         hasTimeOverTriggered = true;
         IsRunning = false;
 
+        if (BGM_Manager.instance != null)
+        {
+            BGM_Manager.instance.StopWarningSound();
+        }
+
         Debug.Log("[TimeManager] Time Over 이벤트 발생");
         OnTimeOver?.Invoke();
+    }
+
+    private void CheckWarningReset()
+    {
+        if (RemainingTime > 7f && hasWarningTriggered)
+        {
+            hasWarningTriggered = false;
+            if (BGM_Manager.instance != null)
+            {
+                BGM_Manager.instance.StopWarningSound();
+            }
+        }
     }
 }
