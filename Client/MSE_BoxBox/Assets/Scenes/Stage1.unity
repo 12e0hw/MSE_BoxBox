@@ -6371,10 +6371,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageConveyor
       objectReference: {fileID: 0}
-    - target: {fileID: 4932133725960275964, guid: 87f55bd7ce413964ebc8a2758015447f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9029467128748916522, guid: 87f55bd7ce413964ebc8a2758015447f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.40421
