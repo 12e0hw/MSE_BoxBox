@@ -8,9 +8,8 @@ public class PlayerMovement
     private float dashSpeed = 5f;
     private float exhaustedSpeed = 1.5f;
     private float speedMultiplier = 1f;
-    
+
     private Vector2 pendingVelocity;
-    // 무빙워크 발판 속도 추가
     private Vector2 externalVelocity;
 
     public bool IsMoving
@@ -69,8 +68,7 @@ public class PlayerMovement
     {
         speedMultiplier = Mathf.Max(0f, multiplier);
     }
-    
-    // 무빙워크 밟았을 때 속도관여 함수
+
     public void SetExternalVelocity(Vector2 velocity)
     {
         externalVelocity = velocity;
@@ -80,10 +78,13 @@ public class PlayerMovement
     {
         externalVelocity = Vector2.zero;
     }
-    
+
     public void ApplyVelocity()
     {
-        if (rb == null) return;
+        if (rb == null)
+        {
+            return;
+        }
 
         rb.linearVelocity = pendingVelocity + externalVelocity;
     }
