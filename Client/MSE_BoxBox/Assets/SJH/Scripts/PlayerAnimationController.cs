@@ -9,6 +9,7 @@ public enum PlayerFacingDirection
 
 public class PlayerAnimationController
 {
+    // Chooses player animation clips from movement, facing, and carry state.
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private string characterPrefix = "Man";
@@ -16,6 +17,7 @@ public class PlayerAnimationController
 
     public void Configure(Animator targetAnimator, SpriteRenderer targetSpriteRenderer, string prefix)
     {
+        // Cache animation references from the Player component.
         animator = targetAnimator;
         spriteRenderer = targetSpriteRenderer;
         characterPrefix = prefix;
@@ -23,12 +25,14 @@ public class PlayerAnimationController
 
     public void UpdateAnimation(Vector2 moveInput, Vector2 lastMoveDir, bool isCarrying)
     {
+        // Build the animation name from direction and movement state.
         if (animator == null) return;
 
         PlayerFacingDirection direction = GetDirection(lastMoveDir);
 
         if (direction == PlayerFacingDirection.Side && spriteRenderer != null)
         {
+            // Side animations share one clip and flip the sprite.
             if (lastMoveDir.x < 0f)
             {
                 spriteRenderer.flipX = true;
@@ -55,6 +59,7 @@ public class PlayerAnimationController
 
     void PlayAnimation(string animName)
     {
+        // Avoid restarting the same animation every frame.
         if (currentAnim == animName) return;
 
         currentAnim = animName;
@@ -63,6 +68,7 @@ public class PlayerAnimationController
 
     PlayerFacingDirection GetDirection(Vector2 lastMoveDir)
     {
+        // Use the stronger input axis to choose facing direction.
         if (Mathf.Abs(lastMoveDir.x) > Mathf.Abs(lastMoveDir.y))
         {
             return PlayerFacingDirection.Side;

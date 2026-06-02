@@ -9,6 +9,7 @@ public enum BigBoxHoldSide
 [RequireComponent(typeof(BoxController))]
 public class BigBoxCarryController : MonoBehaviour
 {
+    // Controls two-player carrying for big boxes.
     [SerializeField] private float minHorizontalSeparation = 0.15f;
     [SerializeField] private bool requireHorizontalDominance = true;
     [SerializeField] private float movementCastPadding = 0.03f;
@@ -20,6 +21,7 @@ public class BigBoxCarryController : MonoBehaviour
     private Rigidbody2D rb;
     private Player leftHolder;
     private Player rightHolder;
+    // One holder is required on each X-axis side before movement is allowed.
     private Vector2 requestedVelocity;
     private Vector2 currentVelocity;
     private RigidbodyType2D originalBodyType;
@@ -46,6 +48,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Only move while held; released boxes use normal physics and conveyors.
         FindReferences();
 
         if (!IsHeld)
@@ -83,6 +86,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     public bool TryAttach(Player player)
     {
+        // Attach a player to the left or right side of the box.
         if (player == null)
         {
             return false;
@@ -148,6 +152,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     public void SetMovementFrom(Player player, Vector2 moveInput, float speed)
     {
+        // Only Player 1 can provide movement once both players hold the box.
         if (!HasHolder(player))
         {
             return;
@@ -201,6 +206,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     bool TryGetHoldSide(Vector3 playerPosition, out BigBoxHoldSide side)
     {
+        // Use X-axis position to decide which side the player is holding.
         Vector2 offset = playerPosition - transform.position;
 
         if (Mathf.Abs(offset.x) < minHorizontalSeparation)
@@ -239,6 +245,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void StopMovement()
     {
+        // Stop the box and both holders immediately.
         requestedVelocity = Vector2.zero;
         currentVelocity = Vector2.zero;
 
@@ -272,6 +279,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void RestoreRigidbody()
     {
+        // Restore the box so conveyors and normal physics can affect it again.
         EndIgnorePlayerBoxCollisions();
 
         if (rb == null || !hasOriginalBodyType)
@@ -287,6 +295,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void HoldHolderRigidbody(Player player, BigBoxHoldSide side)
     {
+        // Make holders kinematic so the group moves as one unit.
         Rigidbody2D holderRb = GetPlayerRigidbody(player);
 
         if (holderRb == null)
@@ -347,6 +356,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void ReleaseAllHolders()
     {
+        // Release both players together and restore physics state.
         Player previousLeftHolder = leftHolder;
         Player previousRightHolder = rightHolder;
 
@@ -373,6 +383,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void MoveHeldGroup(Vector2 velocity)
     {
+        // Move box and holders by the same checked delta.
         ClearHolderVelocity(leftHolder);
         ClearHolderVelocity(rightHolder);
 
@@ -405,6 +416,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void MoveRigidbodyBy(Rigidbody2D targetRb, Vector2 delta)
     {
+        // Move kinematic bodies directly after collision checks pass.
         if (targetRb == null)
         {
             return;
@@ -417,6 +429,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     Vector2 GetAllowedVelocity(Vector2 velocity)
     {
+        // Block movement if the box or either holder would hit an obstacle.
         if (velocity == Vector2.zero)
         {
             return Vector2.zero;
@@ -448,6 +461,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     bool IsRigidbodyBlocked(Rigidbody2D targetRb, Vector2 direction, float distance, LayerMask layerMask)
     {
+        // Cast the target body forward to test the next movement step.
         if (targetRb == null)
         {
             return false;
@@ -540,6 +554,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     bool IsGroupCollider(Collider2D target)
     {
+        // Ignore the carried group when checking blockers.
         if (target == null)
         {
             return false;
@@ -556,6 +571,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     bool IsTruckCollider(Collider2D target)
     {
+        // Trucks are delivery targets, so they should not block carry movement.
         if (target == null)
         {
             return false;
@@ -582,6 +598,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void BeginIgnorePlayerBoxCollisions()
     {
+        // Avoid holder-box collision jitter while carrying.
         if (isIgnoringPlayerBoxCollisions)
         {
             return;
@@ -607,6 +624,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void EndIgnorePlayerBoxCollisions()
     {
+        // Restore the original Player/Box collision rule.
         if (!isIgnoringPlayerBoxCollisions)
         {
             return;
@@ -630,6 +648,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     LayerMask GetBlockingLayerMask()
     {
+        // Default blockers for the box body.
         if (blockingLayers.value != 0)
         {
             return blockingLayers;
@@ -640,6 +659,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     LayerMask GetHolderBlockingLayerMask()
     {
+        // Holders ignore the carried box but still respect walls and hazards.
         if (blockingLayers.value != 0)
         {
             int boxLayer = LayerMask.NameToLayer("Box");
@@ -678,6 +698,7 @@ public class BigBoxCarryController : MonoBehaviour
 
     void FindReferences()
     {
+        // Cache required components.
         if (box == null)
         {
             box = GetComponent<BoxController>();

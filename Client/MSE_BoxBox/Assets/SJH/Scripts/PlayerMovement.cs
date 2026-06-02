@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement
 {
+    // Applies player movement speed and outside movement forces.
     private Rigidbody2D rb;
     private float normalSpeed = 3f;
     private float carrySpeed = 2f;
@@ -22,6 +23,7 @@ public class PlayerMovement
 
     public void Configure(Rigidbody2D targetRb, float normal, float carrying, float dashing, float exhausted)
     {
+        // Cache movement settings from the Player component.
         rb = targetRb;
         normalSpeed = normal;
         carrySpeed = carrying;
@@ -31,6 +33,7 @@ public class PlayerMovement
 
     public void Move(Vector2 moveInput, bool isCarrying, bool isDashing, bool isExhausted)
     {
+        // Choose the current move speed from the player state.
         float speed = normalSpeed;
 
         if (isCarrying)
@@ -66,21 +69,25 @@ public class PlayerMovement
 
     public void SetSpeedMultiplier(float multiplier)
     {
+        // Used by slow zones and other temporary speed effects.
         speedMultiplier = Mathf.Max(0f, multiplier);
     }
 
     public void SetExternalVelocity(Vector2 velocity)
     {
+        // Used by conveyor belts, walkways, and carried big boxes.
         externalVelocity = velocity;
     }
 
     public void ClearExternalVelocity()
     {
+        // Stop outside movement when the effect ends.
         externalVelocity = Vector2.zero;
     }
 
     public void ApplyVelocity()
     {
+        // Apply the final velocity in FixedUpdate.
         if (rb == null)
         {
             return;
