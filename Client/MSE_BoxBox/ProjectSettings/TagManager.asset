@@ -59,6 +59,12 @@ TagManager:
   - name: Box
     uniqueID: 556551103
     locked: 0
+  - name: Item1
+    uniqueID: 1212266473
+    locked: 0
+  - name: Item2
+    uniqueID: 1660538077
+    locked: 0
   - name: UI_Explain
     uniqueID: 853823855
     locked: 0
