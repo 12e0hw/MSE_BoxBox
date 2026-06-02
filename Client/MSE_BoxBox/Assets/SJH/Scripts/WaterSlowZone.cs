@@ -4,7 +4,7 @@ using UnityEngine;
 public class WaterSlowZone : MonoBehaviour
 {
     [SerializeField] private float slowMultiplier = 0.55f;
-    [SerializeField] private float lifeTime = 10.0f;
+    [SerializeField] private float lifeTime = 40.0f;
 
     private readonly HashSet<Player> slowedPlayers = new HashSet<Player>();
 

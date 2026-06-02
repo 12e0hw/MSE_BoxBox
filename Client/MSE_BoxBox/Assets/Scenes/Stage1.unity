@@ -1341,17 +1341,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 453752753013672561, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 2211068643564966533, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
       propertyPath: m_Name
       value: StageGrid
-      objectReference: {fileID: 0}
-    - target: {fileID: 2251115362165765632, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4197865503659866345, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1392,22 +1384,6 @@ PrefabInstance:
     - target: {fileID: 4197865503659866345, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4935873992989612784, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5820911181320512962, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6009481410595430323, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8844242782910403968, guid: a4e33fd52c9ca134b97f7af7dac944ac, type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
