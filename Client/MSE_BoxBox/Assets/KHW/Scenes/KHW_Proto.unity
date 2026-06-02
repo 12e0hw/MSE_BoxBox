@@ -129,15 +129,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.509356
+      value: 1.9548637
       objectReference: {fileID: 0}
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.509356
+      value: 1.9548637
       objectReference: {fileID: 0}
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.509356
+      value: 1.9548637
       objectReference: {fileID: 0}
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -728,11 +728,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df3e032f296f1414fa83c244b91777a9, type: 3}
---- !u!1 &1904991112 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5808052658124708032, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-  m_PrefabInstance: {fileID: 1815425282734098618}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1907991990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -920,63 +915,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20ff9671f09253643aaf716f5e5d82e0, type: 3}
---- !u!1001 &1815425282734098618
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.27519
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.19233
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5769615952277204291, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5808052658124708032, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
-      propertyPath: m_Name
-      value: StaminaItem
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
 --- !u!1001 &3080720382262487258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1028,7 +966,11 @@ PrefabInstance:
     - target: {fileID: 2385354004489874038, guid: e7702145ffb591e449684dda3fc3c1a6, type: 3}
       propertyPath: staminerItem
       value: 
-      objectReference: {fileID: 1904991112}
+      objectReference: {fileID: 5808052658124708032, guid: 634c3fd6dc7ef6a479bfe4e75bc0bcc2, type: 3}
+    - target: {fileID: 2385354004489874038, guid: e7702145ffb591e449684dda3fc3c1a6, type: 3}
+      propertyPath: spawnInterval
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4017129521979678439, guid: e7702145ffb591e449684dda3fc3c1a6, type: 3}
       propertyPath: m_Name
       value: StaminerItemSpawner
@@ -1053,6 +995,5 @@ SceneRoots:
   - {fileID: 722884196}
   - {fileID: 582270222}
   - {fileID: 6470187}
-  - {fileID: 1815425282734098618}
   - {fileID: 3080720382262487258}
   - {fileID: 1462537690}
