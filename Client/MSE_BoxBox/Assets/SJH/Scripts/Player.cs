@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -81,6 +82,10 @@ public class Player : MonoBehaviour
     private PlayerAnimationController animationController;
     private FireExtinguisherUser extinguisherUser;
     private readonly List<float> moveSpeedMultipliers = new List<float>();
+    
+    private Coroutine npcSlowCoroutine;
+    private bool isNpcSlowActive;
+    private float currentNpcSlowMultiplier = 1f;
 
     void Awake()
     {
@@ -109,6 +114,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         ChangeKey.OnkeyChanged -= UpdateKey;
+        ClearNpcSlow();
     }
 
     // 키 세팅 불러오기
@@ -229,6 +235,55 @@ public class Player : MonoBehaviour
         }
 
         movement.SetSpeedMultiplier(multiplier);
+    }
+    
+    public void ApplyNpcSlow(float slowMultiplier, float duration)
+    {
+        slowMultiplier = NormalizeMoveSpeedMultiplier(slowMultiplier);
+        duration = Mathf.Max(0f, duration);
+
+        if (npcSlowCoroutine != null)
+        {
+            StopCoroutine(npcSlowCoroutine);
+            npcSlowCoroutine = null;
+        }
+
+        if (isNpcSlowActive)
+        {
+            RemoveMoveSpeedMultiplier(currentNpcSlowMultiplier);
+        }
+
+        currentNpcSlowMultiplier = slowMultiplier;
+        isNpcSlowActive = true;
+
+        AddMoveSpeedMultiplier(currentNpcSlowMultiplier);
+        npcSlowCoroutine = StartCoroutine(NpcSlowRoutine(duration));
+    }
+
+    private IEnumerator NpcSlowRoutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        ClearNpcSlow();
+    }
+
+    private void ClearNpcSlow()
+    {
+        if (npcSlowCoroutine != null)
+        {
+            StopCoroutine(npcSlowCoroutine);
+            npcSlowCoroutine = null;
+        }
+
+        if (!isNpcSlowActive)
+        {
+            return;
+        }
+
+        RemoveMoveSpeedMultiplier(currentNpcSlowMultiplier);
+
+        currentNpcSlowMultiplier = 1f;
+        isNpcSlowActive = false;
     }
 
     float NormalizeMoveSpeedMultiplier(float multiplier)

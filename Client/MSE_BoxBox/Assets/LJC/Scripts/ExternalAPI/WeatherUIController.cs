@@ -11,6 +11,7 @@ public class WeatherUIController : MonoBehaviour
     [Header("Server")]
     [SerializeField] private string serverBaseUrl = "http://localhost:8080";
 
+
     [Header("UI Text")]
     [SerializeField] private TMP_Text cityText;
     [SerializeField] private TMP_Text weatherText;
@@ -36,6 +37,8 @@ public class WeatherUIController : MonoBehaviour
     [SerializeField] private bool loadOnStart = true;
 
     private Coroutine weatherCoroutine;
+    public static Action<string> OnGameWeatherRefreshed;
+    public static string CurrentWeather { get; private set; } = "";
 
     private void OnEnable()
     {
@@ -177,6 +180,14 @@ public class WeatherUIController : MonoBehaviour
         }
 
         UpdateCountryFlag(cityId);
+
+        if (!string.IsNullOrWhiteSpace(weather))
+        {
+            string formattedWeather = weather.ToUpper().Trim();
+        
+            CurrentWeather = formattedWeather;
+            OnGameWeatherRefreshed?.Invoke(weather);
+        }
     }
 
     private void ApplyWeatherImageSize()
