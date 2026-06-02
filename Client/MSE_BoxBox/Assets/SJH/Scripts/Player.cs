@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     public Vector2 MoveInput => inputHandler != null ? inputHandler.MoveInput : Vector2.zero;
     public Vector2 LastMoveDir => inputHandler != null ? inputHandler.LastMoveDir : Vector2.down;
     public bool IsCarrying => carry != null && carry.IsCarrying;
+    public bool IsHoldingBigBox => carry != null && carry.IsHoldingBigBox;
     public float CurrentStamina => stamina != null ? stamina.CurrentStamina : maxStamina;
     public float MaxStamina => stamina != null ? stamina.MaxStamina : maxStamina;
 
