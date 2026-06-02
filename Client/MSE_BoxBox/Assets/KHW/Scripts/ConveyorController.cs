@@ -7,11 +7,22 @@ public class ConveyorController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        BoxController box = other.GetComponentInParent<BoxController>();
+        if (box == null)
+        {
+            return;
+        }
+
+        BigBoxCarryController bigBoxCarry = box.GetComponent<BigBoxCarryController>();
+        if (bigBoxCarry != null && bigBoxCarry.IsHeld)
+        {
+            return;
+        }
+
+        Rigidbody2D rb = box.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = direction.normalized * speed;
-
         }
     }
 }
