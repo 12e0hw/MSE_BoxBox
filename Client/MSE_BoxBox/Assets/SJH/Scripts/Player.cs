@@ -72,7 +72,9 @@ public class Player : MonoBehaviour
     public Vector2 MoveInput => inputHandler != null ? inputHandler.MoveInput : Vector2.zero;
     public Vector2 LastMoveDir => inputHandler != null ? inputHandler.LastMoveDir : Vector2.down;
     public bool IsCarrying => carry != null && carry.IsCarrying;
+    public GameObject CurrentCarriedObject => carry != null ? carry.CurrentCarriedObject : null;
     public bool IsHoldingBigBox => carry != null && carry.IsHoldingBigBox;
+    public BoxController CurrentCarriedBoxController => carry != null ? carry.CurrentCarriedBoxController : null;
     public float CurrentStamina => stamina != null ? stamina.CurrentStamina : maxStamina;
     public float MaxStamina => stamina != null ? stamina.MaxStamina : maxStamina;
 
@@ -179,6 +181,26 @@ public class Player : MonoBehaviour
         }
 
         movement.ClearExternalVelocity();
+    }
+
+    public void ClearBigBoxCarry(BigBoxCarryController bigBox)
+    {
+        if (carry != null)
+        {
+            carry.ClearBigBoxCarry(bigBox);
+        }
+
+        ClearExternalVelocity();
+    }
+
+    public void ClearDeliveredCarriedObject(GameObject deliveredObject)
+    {
+        if (carry != null)
+        {
+            carry.ClearDeliveredCarriedObject(deliveredObject);
+        }
+
+        ClearExternalVelocity();
     }
 
     public void AddMoveSpeedMultiplier(float multiplier)
