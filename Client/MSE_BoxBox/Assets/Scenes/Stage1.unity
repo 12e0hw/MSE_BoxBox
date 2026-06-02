@@ -865,6 +865,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5913567830500541807, guid: 377e1697c990da849aa28429655052e2, type: 3}
+      propertyPath: bgmSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913567830500541807, guid: 377e1697c990da849aa28429655052e2, type: 3}
+      propertyPath: truckInSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b8b90c781ee2ad4fb0c4524e8b805df, type: 3}
+    - target: {fileID: 5913567830500541807, guid: 377e1697c990da849aa28429655052e2, type: 3}
+      propertyPath: warningSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6da8252ad5b983340a04e1b77a613f5a, type: 3}
+    - target: {fileID: 5913567830500541807, guid: 377e1697c990da849aa28429655052e2, type: 3}
+      propertyPath: extinguisherSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 90021fedf1603f6438905240dddd8798, type: 3}
     - target: {fileID: 6936065692749244198, guid: 377e1697c990da849aa28429655052e2, type: 3}
       propertyPath: m_Name
       value: BGMmanager
