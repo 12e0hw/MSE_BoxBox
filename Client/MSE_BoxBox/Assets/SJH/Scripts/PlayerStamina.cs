@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerStamina
 {
+    // Tracks stamina drain, recovery, and the debug bar.
     [Header("Debug UI")]
     public bool showDebugBar = true;
     public Vector2 guiPosition = new Vector2(20f, 20f);
@@ -22,6 +23,7 @@ public class PlayerStamina
 
     public void Configure(float max, float dashDrain, float carryDrain, float recover, float minDash, bool recoverCarryingIdle)
     {
+        // Copy stamina settings from the Player component.
         maxStamina = Mathf.Max(1f, max);
         dashDrainPerSecond = Mathf.Max(0f, dashDrain);
         carryDrainPerSecond = Mathf.Max(0f, carryDrain);
@@ -40,6 +42,7 @@ public class PlayerStamina
 
     public void Tick(float deltaTime, bool isMoving, bool isCarrying, bool wantsDash)
     {
+        // Drain stamina while carrying or dashing, then recover when allowed.
         float drain = 0f;
 
         if (isMoving && isCarrying)
@@ -66,6 +69,7 @@ public class PlayerStamina
 
     public void DrawGUI()
     {
+        // Draw a simple stamina bar for quick testing.
         if (!showDebugBar)
         {
             return;
@@ -88,12 +92,14 @@ public class PlayerStamina
 
     public void Restore(float amount)
     {
+        // Restore stamina from items or external effects.
         CurrentStamina += amount;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0f, maxStamina);
     }
 
     Color GetFillColor(float percent)
     {
+        // Change the bar color as stamina gets low.
         if (percent > 0.5f)
         {
             return Color.green;

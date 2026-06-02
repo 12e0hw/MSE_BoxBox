@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerCarry
 {
+    // Handles pickup, drop, delivery cleanup, and big-box attachment for one player.
     public bool IsCarrying { get; private set; }
     public GameObject CurrentCarriedObject => currentBox;
     public BoxController CurrentCarriedBoxController => IsCarrying && currentBigBox == null ? GetBoxController(currentBox) : null;
@@ -55,6 +56,7 @@ public class PlayerCarry
         Vector3 sidePosition,
         Vector3 extinguisherOffset)
     {
+        // Cache references and carry placement settings from Player.
         ownerPlayer = owner;
         playerTransform = ownerTransform != null ? ownerTransform : owner != null ? owner.transform : null;
         carryPoint = carryTarget;
@@ -69,6 +71,7 @@ public class PlayerCarry
 
     public void ToggleCarry(Vector2 lastMoveDir)
     {
+        // Pick up when empty, drop or release when already carrying.
         ValidateState();
 
         if (!IsCarrying)
@@ -82,6 +85,7 @@ public class PlayerCarry
 
     public void TryPickUpBox(Vector2 lastMoveDir)
     {
+        // Choose between small-object pickup and big-box attach.
         ValidateState();
 
         if (playerTransform == null || carryPoint == null)
@@ -106,6 +110,7 @@ public class PlayerCarry
 
     public void DropBox(Vector2 lastMoveDir)
     {
+        // Place a small carried object in front of the player.
         ValidateState();
 
         if (currentBigBox != null)
@@ -150,6 +155,7 @@ public class PlayerCarry
 
     public void ValidateState()
     {
+        // Clear stale state if the carried object was destroyed.
         if (IsCarrying && currentBox == null)
         {
             ClearCarryState();
@@ -158,6 +164,7 @@ public class PlayerCarry
 
     public void UpdateBigBoxMovement(Vector2 moveInput, float speed)
     {
+        // Forward Player 1 movement input to the held big box.
         if (currentBigBox == null)
         {
             return;
@@ -168,6 +175,7 @@ public class PlayerCarry
 
     public void DestroyCarriedObject()
     {
+        // Destroy the currently carried small object.
         if (currentBigBox != null)
         {
             ReleaseBigBox();
@@ -197,6 +205,7 @@ public class PlayerCarry
 
     public void ClearDeliveredCarriedObject(GameObject deliveredObject)
     {
+        // Clear references after truck delivery destroys the carried box.
         if (currentBox == null || deliveredObject == null)
         {
             return;
@@ -221,6 +230,7 @@ public class PlayerCarry
 
     public void UpdateCarryPointPosition(Vector2 lastMoveDir)
     {
+        // Move the carry point to match the facing direction.
         if (carryPoint == null)
         {
             return;
@@ -286,6 +296,7 @@ public class PlayerCarry
         out Collider2D targetCollider,
         out Rigidbody2D targetRigidbody)
     {
+        // Let the second player attach to a big box already held by the first.
         target = null;
         targetCollider = null;
         targetRigidbody = null;
@@ -344,6 +355,7 @@ public class PlayerCarry
 
     bool IsValidCarryHit(RaycastHit2D hit, out GameObject candidate, out Rigidbody2D hitRigidbody)
     {
+        // Accept boxes or extinguishers hit by the pickup ray.
         candidate = null;
         hitRigidbody = null;
 
@@ -412,6 +424,7 @@ public class PlayerCarry
 
     bool IsDropPositionBlocked(Vector3 dropPosition)
     {
+        // Prevent dropping into solid objects.
         Vector2 checkSize = GetDropCheckSize();
         Collider2D[] hits = Physics2D.OverlapBoxAll(dropPosition, checkSize, 0f);
 
@@ -544,6 +557,7 @@ public class PlayerCarry
 
     bool TryPickUpBigBox(BoxController boxController, Vector2 lastMoveDir)
     {
+        // Attach this player to the left or right side of a big box.
         BigBoxCarryController bigBoxCarry = boxController.GetComponent<BigBoxCarryController>();
 
         if (bigBoxCarry == null)
@@ -570,6 +584,7 @@ public class PlayerCarry
 
     void ReleaseBigBox()
     {
+        // Release both big-box holders through the controller.
         if (currentBigBox != null)
         {
             currentBigBox.Detach(ownerPlayer);
@@ -580,6 +595,7 @@ public class PlayerCarry
 
     void ClearCarryState()
     {
+        // Reset all carry references.
         currentBox = null;
         currentBoxCollider = null;
         currentBoxRigidbody = null;

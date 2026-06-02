@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    // Main player component that coordinates input, movement, carry, stamina, and tools.
     [Header("Player Settings")]
     public string playerID = "P1";
 
@@ -90,6 +91,7 @@ public class Player : MonoBehaviour
     private bool isNpcSlowActive;
     private float currentNpcSlowMultiplier = 1f;
 
+    // Build helper classes and sync inspector values.
     void Awake()
     {
         FindComponents();
@@ -105,6 +107,7 @@ public class Player : MonoBehaviour
 
     void OnDisable()
     {
+        // Clean up subscriptions and temporary speed effects.
         ChangeKey.OnkeyChanged -= UpdateKey;
         ClearNpcSlow();
     }
@@ -122,6 +125,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Apply physics movement after Update computes input state.
         movement.ApplyVelocity();
     }
 
@@ -141,6 +145,7 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
+        // Show pickup and extinguisher reach in the Scene view.
         Vector2 direction = Application.isPlaying && inputHandler != null ? inputHandler.LastMoveDir.normalized : Vector2.down;
         Vector2 origin = transform.position;
 
@@ -154,6 +159,7 @@ public class Player : MonoBehaviour
 
     public void RefreshName()
     {
+        // Load the saved display name for this player.
         if (myNameText == null)
         {
             return;
@@ -165,6 +171,7 @@ public class Player : MonoBehaviour
 
     public void SetExternalVelocity(Vector2 velocity)
     {
+        // Add outside movement from conveyors or carry systems.
         if (movement == null)
         {
             return;
@@ -185,6 +192,7 @@ public class Player : MonoBehaviour
 
     public void ClearBigBoxCarry(BigBoxCarryController bigBox)
     {
+        // Clear carry state when a big box releases this player.
         if (carry != null)
         {
             carry.ClearBigBoxCarry(bigBox);
@@ -195,6 +203,7 @@ public class Player : MonoBehaviour
 
     public void ClearDeliveredCarriedObject(GameObject deliveredObject)
     {
+        // Clear carry state after a held box is delivered.
         if (carry != null)
         {
             carry.ClearDeliveredCarriedObject(deliveredObject);
@@ -205,12 +214,14 @@ public class Player : MonoBehaviour
 
     public void AddMoveSpeedMultiplier(float multiplier)
     {
+        // Stack temporary slow effects.
         moveSpeedMultipliers.Add(NormalizeMoveSpeedMultiplier(multiplier));
         ApplyMoveSpeedMultipliers();
     }
 
     public void RemoveMoveSpeedMultiplier(float multiplier)
     {
+        // Remove one matching slow effect.
         float normalizedMultiplier = NormalizeMoveSpeedMultiplier(multiplier);
         int index = moveSpeedMultipliers.FindIndex(value => Mathf.Approximately(value, normalizedMultiplier));
 
@@ -224,6 +235,7 @@ public class Player : MonoBehaviour
 
     public void ApplyNpcSlow(float slowMultiplier, float duration)
     {
+        // Apply a timed slow effect from NPC contact.
         slowMultiplier = NormalizeMoveSpeedMultiplier(slowMultiplier);
         duration = Mathf.Max(0f, duration);
 
@@ -293,6 +305,7 @@ public class Player : MonoBehaviour
 
     void UpdateExtinguisherUse()
     {
+        // Drive extinguisher use from input and carried item state.
         bool isUsingExtinguisher = inputHandler.ExtinguisherHeld && carry.IsCarryingExtinguisher;
         extinguisherUser.SetCarriedExtinguisher(carry.CurrentCarriedObject);
 
@@ -304,6 +317,7 @@ public class Player : MonoBehaviour
 
     void UpdateMovementAndAnimation()
     {
+        // Resolve big-box control, stamina, movement, and animation for this frame.
         Vector2 moveInput = inputHandler.MoveInput;
 
         if (carry.IsHoldingBigBox)
@@ -340,6 +354,7 @@ public class Player : MonoBehaviour
 
     void ApplyMoveSpeedMultipliers()
     {
+        // Use the slowest active multiplier.
         if (movement == null)
         {
             return;
@@ -364,6 +379,7 @@ public class Player : MonoBehaviour
 
     void ClearNpcSlow()
     {
+        // Remove the active NPC slow effect if it exists.
         if (npcSlowCoroutine != null)
         {
             StopCoroutine(npcSlowCoroutine);
@@ -420,6 +436,7 @@ public class Player : MonoBehaviour
 
     void FindComponents()
     {
+        // Create helper classes and auto-fill missing component references.
         if (rb == null)
         {
             rb = GetComponent<Rigidbody2D>();
@@ -445,6 +462,7 @@ public class Player : MonoBehaviour
 
     Vector2 GetStaminaGuiPosition()
     {
+        // Mirror the second player's stamina bar to the right side.
         if (characterPrefix == "Woman")
         {
             float rightMargin = Mathf.Max(0f, staminaGuiPosition.x);

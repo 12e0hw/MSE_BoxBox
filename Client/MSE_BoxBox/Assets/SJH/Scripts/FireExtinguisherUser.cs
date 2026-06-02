@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FireExtinguisherUser
 {
+    // Handles aiming, hold time, and gauge drawing for extinguisher use.
     public bool showGauge = true;
     public Vector2 gaugeWorldOffset = new Vector2(0f, 0.9f);
     public Vector2 gaugeSize = new Vector2(120f, 12f);
@@ -18,6 +19,7 @@ public class FireExtinguisherUser
 
     public void Configure(Transform ownerTransform, float extinguisherRange, float requiredHoldSeconds, LayerMask targetLayer)
     {
+        // Cache extinguisher settings from the Player component.
         owner = ownerTransform;
         range = extinguisherRange;
         holdSeconds = Mathf.Max(0.1f, requiredHoldSeconds);
@@ -26,6 +28,7 @@ public class FireExtinguisherUser
 
     public void SetCarriedExtinguisher(GameObject extinguisher)
     {
+        // Update the currently carried extinguisher reference.
         Extinguisher nextExtinguisher = extinguisher != null ? extinguisher.GetComponent<Extinguisher>() : null;
 
         if (currentExtinguisher == nextExtinguisher)
@@ -46,6 +49,7 @@ public class FireExtinguisherUser
 
     public bool Tick(float deltaTime, bool useHeld, Vector2 lastMoveDir)
     {
+        // Return true when a fire has been fully extinguished.
         if (owner == null)
         {
             ResetUse();
@@ -84,6 +88,7 @@ public class FireExtinguisherUser
 
     public void DrawGUI()
     {
+        // Show hold progress above the player while extinguishing.
         if (!showGauge || holdTimer <= 0f)
         {
             return;
@@ -120,6 +125,7 @@ public class FireExtinguisherUser
 
     FireObstacle FindFireInDirection(Vector2 direction)
     {
+        // Find the closest active fire inside range and in front of the player.
         Vector2 origin = owner.position;
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, fireLayer);
 
@@ -180,6 +186,7 @@ public class FireExtinguisherUser
 
     void ResetUse()
     {
+        // Stop the spray and clear hold progress.
         holdTimer = 0f;
         isUsing = false;
         SetSprayActive(false, Vector2.down);

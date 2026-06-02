@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler
 {
+    // Reads keyboard input and keeps the latest facing direction.
     public Vector2 MoveInput { get; private set; }
     public Vector2 LastMoveDir { get; private set; } = Vector2.down;
     public bool InteractPressed { get; private set; }
@@ -20,6 +21,7 @@ public class PlayerInputHandler
 
     public void Configure(Key up, Key down, Key left, Key right, Key interact, Key extinguisher, Key dash)
     {
+        // Store the current key bindings for this player.
         upKey = up;
         downKey = down;
         leftKey = left;
@@ -31,6 +33,7 @@ public class PlayerInputHandler
 
     public void ReadInput()
     {
+        // Reset one-frame input states before reading the keyboard.
         InteractPressed = false;
         ExtinguisherPressed = false;
         DashHeld = false;
@@ -53,6 +56,7 @@ public class PlayerInputHandler
 
         if (MoveInput != Vector2.zero)
         {
+            // Keep the last non-zero direction for carrying and aiming.
             LastMoveDir = MoveInput;
         }
 

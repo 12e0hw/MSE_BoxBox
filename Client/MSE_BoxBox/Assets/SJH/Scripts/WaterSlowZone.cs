@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class WaterSlowZone : MonoBehaviour
 {
+    // Slows players while they stand inside this water area.
     [SerializeField] private float slowMultiplier = 0.55f;
     [SerializeField] private float lifeTime = 40.0f;
 
@@ -20,6 +21,7 @@ public class WaterSlowZone : MonoBehaviour
 
     void OnEnable()
     {
+        // Keep the water layer from physically blocking players.
         int waterLayer = LayerMask.NameToLayer("Water");
         int playerLayer = LayerMask.NameToLayer("Player");
 
@@ -31,6 +33,7 @@ public class WaterSlowZone : MonoBehaviour
 
     void OnDisable()
     {
+        // Restore player speed if this zone disappears while players are inside.
         foreach (Player player in slowedPlayers)
         {
             if (player != null)
@@ -44,6 +47,7 @@ public class WaterSlowZone : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Apply the slow effect once per player.
         Player player = other.GetComponentInParent<Player>();
         if (player == null || !slowedPlayers.Add(player))
         {
@@ -55,6 +59,7 @@ public class WaterSlowZone : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        // Remove the slow effect when the player leaves the water.
         Player player = other.GetComponentInParent<Player>();
         if (player == null || !slowedPlayers.Remove(player))
         {

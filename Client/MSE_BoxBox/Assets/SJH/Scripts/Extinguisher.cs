@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Extinguisher : MonoBehaviour
 {
+    // Controls the visual spray point and spray effect object.
     public Transform sprayPoint;
     public GameObject sprayEffect;
     public Vector2 sprayPointOffset = new Vector2(0.45f, 0f);
@@ -17,11 +18,13 @@ public class Extinguisher : MonoBehaviour
 
     public void ConfigureSprayOffset(Vector2 offset)
     {
+        // Let the player tune where the spray starts from.
         sprayPointOffset = offset;
     }
 
     public void SetSpraying(bool active, Vector2 direction)
     {
+        // Toggle the spray effect and rotate it toward the aim direction.
         FindSprayReferences();
 
         if (sprayEffect == null)
@@ -63,6 +66,7 @@ public class Extinguisher : MonoBehaviour
 
     void FindSprayReferences()
     {
+        // Auto-find child objects if the prefab fields are not assigned.
         if (sprayPoint == null)
         {
             sprayPoint = transform.Find("SprayPoint");
@@ -105,6 +109,7 @@ public class Extinguisher : MonoBehaviour
 
     void UpdateSprayPoint(Vector2 direction)
     {
+        // Move and rotate the spray origin to face the current direction.
         if (sprayPoint == null)
         {
             return;
