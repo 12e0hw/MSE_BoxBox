@@ -8892,7 +8892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BGM_Manager
   bgmSource: {fileID: 49881138}
   sfxSource: {fileID: 605867291}
-  loopSfxSource: {fileID: 0}
+  loopSfxSource: {fileID: 605867291}
   buttonClickSound: {fileID: 8300000, guid: 18a0bb106ec20a64ba264ed5d2a4b312, type: 3}
   extinguisherSound: {fileID: 8300000, guid: 90021fedf1603f6438905240dddd8798, type: 3}
   truckInSound: {fileID: 8300000, guid: 8b8b90c781ee2ad4fb0c4524e8b805df, type: 3}

@@ -220,11 +220,6 @@ public class PlayerCarry
             return;
         }
 
-        if (BGM_Manager.instance != null)
-        {
-            BGM_Manager.instance.PlayTruckInSound();
-        }
-
         ClearCarryState();
     }
 

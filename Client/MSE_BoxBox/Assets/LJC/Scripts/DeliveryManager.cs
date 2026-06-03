@@ -60,9 +60,10 @@ public class DeliveryManager : MonoBehaviour
 
         AddDeliveryCount(box);
         AddScore(box);
+        InputBoxSoundPlay();
 
         OnDeliverySuccess?.Invoke(box, truck);
-
+        
         Debug.Log(
             $"[DeliveryManager] Delivery Success / Total: {TotalDeliveredCount}, Small: {SmallBoxDeliveredCount}, Big: {BigBoxDeliveredCount}"
         );
@@ -99,5 +100,13 @@ public class DeliveryManager : MonoBehaviour
         }
 
         scoreManager.AddScore(box.scoreValue);
+    }
+
+    private void InputBoxSoundPlay()
+    { 
+        if (BGM_Manager.instance != null)
+        {
+            BGM_Manager.instance.PlayTruckInSound();
+        }
     }
 }

@@ -308,7 +308,7 @@ public class Player : MonoBehaviour
         // Drive extinguisher use from input and carried item state.
         bool isUsingExtinguisher = inputHandler.ExtinguisherHeld && carry.IsCarryingExtinguisher;
         extinguisherUser.SetCarriedExtinguisher(carry.CurrentCarriedObject);
-
+        
         if (extinguisherUser.Tick(Time.deltaTime, isUsingExtinguisher, inputHandler.LastMoveDir))
         {
             carry.DestroyCarriedObject();
