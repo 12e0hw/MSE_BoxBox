@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -19,6 +21,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public int selectStage = 1;   // 선택 스테이지 번호
+
+    [Header("Audio Settings")]
+    public AudioMixer audioMixer;
 
 
     [Header("Game Settings")]
@@ -165,6 +170,37 @@ public class GameManager : MonoBehaviour
         RegisterStageEvents();
 
         SetState(GameState.Playing, true);
+    }
+
+    public void AudioSliders(Slider bgmSlider, Slider sfxSlider)
+    {
+        float saveBGM = PlayerPrefs.GetFloat("BGMVolume", 1f);
+        float saveSFX = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
+        bgmSlider.value = saveBGM;
+        sfxSlider.value = saveSFX;
+
+        SetBGMVolume(saveBGM);
+        SetSFXVolume(saveSFX);
+
+        bgmSlider.onValueChanged.AddListener(SetBGMVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        if (audioMixer != null) 
+            audioMixer.SetFloat("BGMVolume", Mathf.Log10(Mathf.Max(0.0001f, volume)) * 20);
+            
+        PlayerPrefs.SetFloat("BGMVolume", volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        if (audioMixer != null) 
+            audioMixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Max(0.0001f, volume)) * 20);
+            
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
     
     // 스테이지마다 이벤트 연결을 담당

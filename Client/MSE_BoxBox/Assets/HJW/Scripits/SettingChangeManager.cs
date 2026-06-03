@@ -13,7 +13,11 @@ public class SettingChangeManager : MonoBehaviour
     public GameObject ControlKey2Panel;
     public GameObject NameFailPanel;
     public GameObject NameSuccessPanel;
-    public GameObject SelectCityPanel; 
+    public GameObject SelectCityPanel;
+
+    [Header("UI Sliders")]
+    public Slider bgmSlider;
+    public Slider sfxSlider;
 
     private void Awake()
     {
@@ -30,6 +34,10 @@ public class SettingChangeManager : MonoBehaviour
         if(SelectCityPanel != null) SelectCityPanel.SetActive(false);
 
         ApplyCurrentCityUI();
+        if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AudioSliders(bgmSlider, sfxSlider);
+            }
     }
     private void ApplyCurrentCityUI()
     {
