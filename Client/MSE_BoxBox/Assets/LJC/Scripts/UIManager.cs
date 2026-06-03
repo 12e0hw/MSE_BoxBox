@@ -17,9 +17,51 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text smallBoxCountText;
     [SerializeField] private TMP_Text bigBoxCountText;
     
+    [Header("Warning UI")]
+    [SerializeField] private TimeManager timeManager;
+    [SerializeField] private GameObject warningPanel;
+    [SerializeField] private CanvasGroup warningCanvas;
+    [SerializeField] private float warningMinAlpha = 0.08f;
+    [SerializeField] private float warningMaxAlpha = 0.32f;
+    [SerializeField] private float warningBlinkSpeed = 1.5f;
+
+    private bool isWarningActive;
+    
     [Header("Leaderboard UI")] [SerializeField]
     private TMP_Text[] leaderboardSlots;
 
+    private void Awake()
+    {
+        HideWarningPanel();
+    }
+
+    private void OnEnable()
+    {
+        if (timeManager == null)
+        {
+            return;
+        }
+
+        timeManager.OnWarningStarted += ShowWarningPanel;
+        timeManager.OnWarningStopped += HideWarningPanel;
+    }
+
+    private void OnDisable()
+    {
+        if (timeManager == null)
+        {
+            return;
+        }
+
+        timeManager.OnWarningStarted -= ShowWarningPanel;
+        timeManager.OnWarningStopped -= HideWarningPanel;
+    }
+    
+    private void Update()
+    {
+        UpdateWarningPanelAlpha();
+    }
+    
     public void InitializeTimer(float maxTime)
     {
         if (timeGauge != null)
@@ -184,5 +226,57 @@ public class UIManager : MonoBehaviour
                 leaderboardSlots[i].text = "";
             }
         }
+    }
+    
+    public void ShowWarningPanel()
+    {
+        isWarningActive = true;
+
+        if (warningPanel != null)
+        {
+            warningPanel.SetActive(true);
+        }
+
+        if (warningCanvas != null)
+        {
+            warningCanvas.alpha = warningMaxAlpha;
+        }
+    }
+
+    public void HideWarningPanel()
+    {
+        isWarningActive = false;
+
+        if (warningCanvas != null)
+        {
+            warningCanvas.alpha = 0f;
+        }
+
+        if (warningPanel != null)
+        {
+            warningPanel.SetActive(false);
+        }
+    }
+
+    private void UpdateWarningPanelAlpha()
+    {
+        if (!isWarningActive)
+        {
+            return;
+        }
+
+        if (warningCanvas == null)
+        {
+            return;
+        }
+
+        float wave = (Mathf.Sin(Time.time * warningBlinkSpeed * Mathf.PI * 2f) + 1f) * 0.5f;
+        float smoothWave = Mathf.SmoothStep(0f, 1f, wave);
+
+        warningCanvas.alpha = Mathf.Lerp(
+            warningMinAlpha,
+            warningMaxAlpha,
+            smoothWave
+        );
     }
 }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 
 public class BGM_Manager : MonoBehaviour
 {
@@ -15,6 +15,8 @@ public class BGM_Manager : MonoBehaviour
     public AudioClip extinguisherSound;
     public AudioClip truckInSound;
     public AudioClip warningSound;
+    
+    private Coroutine warningSoundCoroutine;
 
     void Awake()
     {
@@ -69,9 +71,39 @@ public class BGM_Manager : MonoBehaviour
 
     public void StopWarningSound()
     {
+        if (warningSoundCoroutine != null)
+        {
+            StopCoroutine(warningSoundCoroutine);
+            warningSoundCoroutine = null;
+        }
+
         if (loopSfxSource && loopSfxSource.clip == warningSound)
         {
             loopSfxSource.Stop();
+            loopSfxSource.loop = false;
         }
+    }
+    
+    // 
+    public void StartWarningSoundForSeconds(float duration)
+    {
+        if (warningSoundCoroutine != null)
+        {
+            StopCoroutine(warningSoundCoroutine);
+            warningSoundCoroutine = null;
+        }
+
+        StartWarningSound();
+
+        warningSoundCoroutine = StartCoroutine(StopWarningSoundAfterSeconds(duration));
+    }
+
+    private IEnumerator StopWarningSoundAfterSeconds(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        StopWarningSound();
+
+        warningSoundCoroutine = null;
     }
 }

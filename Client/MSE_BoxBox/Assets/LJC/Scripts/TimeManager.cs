@@ -4,6 +4,7 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     [SerializeField] private float startTime = 10f;
+    [SerializeField] private float warningStartTime = 10f;
 
     public float StartTime => startTime;
     public float RemainingTime { get; private set; }
@@ -14,6 +15,9 @@ public class TimeManager : MonoBehaviour
     
     private bool hasTimeOverTriggered;
     private bool hasWarningTriggered;
+    
+    public event Action OnWarningStarted;
+    public event Action OnWarningStopped;
 
     private void Awake()
     {
@@ -34,20 +38,33 @@ public class TimeManager : MonoBehaviour
             RemainingTime = 0f;
         }
 
-        if (RemainingTime > 0f && RemainingTime <= 7f && !hasWarningTriggered)
-        {
-            hasWarningTriggered = true;
-            if (BGM_Manager.instance != null)
-            {
-                BGM_Manager.instance.StartWarningSound();
-            }
-        }
-
         OnTimeChanged?.Invoke(RemainingTime);
+        
+        if (RemainingTime > 0f && RemainingTime <= warningStartTime)
+        {
+            StartWarning();
+        }
 
         if (RemainingTime <= 0f)
         {
             TriggerTimeOver();
+        }
+    }
+    
+    private void StartWarning()
+    {
+        if (hasWarningTriggered)
+        {
+            return;
+        }
+
+        hasWarningTriggered = true;
+
+        OnWarningStarted?.Invoke();
+
+        if (BGM_Manager.instance != null)
+        {
+            BGM_Manager.instance.StartWarningSound();
         }
     }
 
@@ -72,7 +89,9 @@ public class TimeManager : MonoBehaviour
     {
         RemainingTime = startTime;
         hasTimeOverTriggered = false;
-        hasWarningTriggered = false;
+        
+        StopWarning();
+
         OnTimeChanged?.Invoke(RemainingTime);
     }
     
@@ -116,20 +135,20 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void SetRemainingTime(float remainingTime)
+    private void StopWarning()
     {
-        RemainingTime = Mathf.Max(0f, remainingTime);
-
-        OnTimeChanged?.Invoke(RemainingTime);
-
-        if (RemainingTime <= 0f)
+        if (!hasWarningTriggered)
         {
-            TriggerTimeOver();
+            return;
         }
-        else
+
+        hasWarningTriggered = false;
+
+        OnWarningStopped?.Invoke();
+
+        if (BGM_Manager.instance != null)
         {
-            hasTimeOverTriggered = false;
-            CheckWarningReset();
+            BGM_Manager.instance.StopWarningSound();
         }
     }
 
@@ -143,24 +162,16 @@ public class TimeManager : MonoBehaviour
         hasTimeOverTriggered = true;
         IsRunning = false;
 
-        if (BGM_Manager.instance != null)
-        {
-            BGM_Manager.instance.StopWarningSound();
-        }
+        StopWarning();
 
-        Debug.Log("[TimeManager] Time Over 이벤트 발생");
         OnTimeOver?.Invoke();
     }
 
     private void CheckWarningReset()
     {
-        if (RemainingTime > 7f && hasWarningTriggered)
+        if (RemainingTime > warningStartTime)
         {
-            hasWarningTriggered = false;
-            if (BGM_Manager.instance != null)
-            {
-                BGM_Manager.instance.StopWarningSound();
-            }
+            StopWarning();
         }
     }
 }
