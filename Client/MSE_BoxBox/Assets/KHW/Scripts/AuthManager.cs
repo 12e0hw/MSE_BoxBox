@@ -150,10 +150,5 @@ public class AuthManager : MonoBehaviour
             }
         }
     }
-
-    private void ShowFailPanel(string message)
-    {
-        if (signupFailPanel != null) signupFailPanel.SetActive(true);
-    }
     
 }
