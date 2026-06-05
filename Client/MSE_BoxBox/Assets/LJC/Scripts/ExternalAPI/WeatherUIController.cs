@@ -379,6 +379,9 @@ public class WeatherUIController : MonoBehaviour
 
         UpdateCountryFlag(cityId);
 
+        CurrentWeather = normalizedWeather;
+        OnGameWeatherRefreshed?.Invoke(normalizedWeather);
+
         Debug.Log("Weather Override Applied: " + normalizedWeather + " / " + normalizedGameEffect);
     }
 

@@ -17,11 +17,14 @@ public class ExtinguisherSpawner : MonoBehaviour
     private void OnEnable()
     {
         WeatherUIController.OnGameWeatherRefreshed += SetWeather;
+        SettingChangeManager.OnWeatherOverrideRequested += HandleWeatherOverride;
+
     }
 
     private void OnDisable()
     {
         WeatherUIController.OnGameWeatherRefreshed -= SetWeather;
+        SettingChangeManager.OnWeatherOverrideRequested -= HandleWeatherOverride;
     }
 
     private void Start()
@@ -38,6 +41,11 @@ public class ExtinguisherSpawner : MonoBehaviour
 
         SpawnExtinguisher(isInitialSpawn: true);
         StartCoroutine(SpawnExtinguisherRoutine());
+    }
+
+    private void HandleWeatherOverride(string weather, string gameEffect)
+    {
+        SetWeather(weather);
     }
 
     public void SetWeather(string weatherFromServer)

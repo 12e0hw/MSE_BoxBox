@@ -26,11 +26,13 @@ public class ObstacleSpawner : MonoBehaviour
     private void OnEnable()
     {
         WeatherUIController.OnGameWeatherRefreshed += SetWeather;
+        SettingChangeManager.OnWeatherOverrideRequested += HandleWeatherOverride;
     }
 
     private void OnDisable()
     {
         WeatherUIController.OnGameWeatherRefreshed -= SetWeather;
+        SettingChangeManager.OnWeatherOverrideRequested -= HandleWeatherOverride;
     }
 
     private void Start()
