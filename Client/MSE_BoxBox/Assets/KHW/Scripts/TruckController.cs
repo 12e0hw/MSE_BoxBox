@@ -1,5 +1,4 @@
 using UnityEngine;
-using LJC;
 
 public class TruckController : MonoBehaviour
 {

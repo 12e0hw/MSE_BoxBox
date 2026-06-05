@@ -149,6 +149,17 @@ public class PlayerCarry
         {
             currentBoxSpriteRenderer.sortingOrder = originalBoxSortingOrder;
         }
+        
+        Extinguisher extinguisher = currentBox.GetComponent<Extinguisher>();
+        if (extinguisher == null)
+        {
+            extinguisher = currentBox.GetComponentInChildren<Extinguisher>();
+        }
+
+        if (extinguisher != null)
+        {
+            extinguisher.ResetSortingLayerAfterDrop();
+        }
 
         ClearCarryState();
     }
@@ -250,6 +261,7 @@ public class PlayerCarry
 
         UpdateCarrySortingOrder(direction);
         UpdateCarriedObjectLocalPosition();
+        UpdateCarriedExtinguisherDirection(lastMoveDir);
     }
 
     bool TryFindCarryTarget(
@@ -507,12 +519,49 @@ public class PlayerCarry
 
         currentBox.transform.localPosition = Vector3.zero;
     }
+    
+    void UpdateCarriedExtinguisherDirection(Vector2 lastMoveDir)
+    {
+        if (!IsCarryingExtinguisher || currentBox == null)
+        {
+            return;
+        }
+
+        Vector2 direction = lastMoveDir == Vector2.zero ? Vector2.down : lastMoveDir.normalized;
+
+        Extinguisher extinguisher = currentBox.GetComponent<Extinguisher>();
+
+        if (extinguisher == null)
+        {
+            extinguisher = currentBox.GetComponentInChildren<Extinguisher>();
+        }
+
+        if (extinguisher != null)
+        {
+            extinguisher.UpdateHeldDirection(direction);
+        }
+    }
 
     void UpdateCarrySortingOrder(PlayerFacingDirection direction)
     {
         if (!IsCarrying || currentBoxSpriteRenderer == null || playerSpriteRenderer == null || currentBigBox != null)
         {
             return;
+        }
+        
+        if (IsCarryingExtinguisher)
+        {
+            Extinguisher extinguisher = currentBox.GetComponent<Extinguisher>();
+            if (extinguisher == null)
+            {
+                extinguisher = currentBox.GetComponentInChildren<Extinguisher>();
+            }
+
+            if (extinguisher != null)
+            {
+                bool isBehindPlayer = direction == PlayerFacingDirection.Back;
+                extinguisher.SetHeldSortingLayer(isBehindPlayer);
+            }
         }
 
         // Draw carried items in front or behind the player.

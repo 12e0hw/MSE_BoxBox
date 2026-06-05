@@ -27,8 +27,8 @@ public class UIManager : MonoBehaviour
 
     private bool isWarningActive;
     
-    [Header("Leaderboard UI")] [SerializeField]
-    private TMP_Text[] leaderboardSlots;
+    //[Header("Leaderboard UI")] [SerializeField]
+    //private TMP_Text[] leaderboardSlots;
 
     private void Awake()
     {
@@ -155,9 +155,9 @@ public class UIManager : MonoBehaviour
             bigBoxCountText.text = $"{bigBoxCount}";
         }
 
-        ShowLeaderboardLoading();
+        //ShowLeaderboardLoading();
     }
-
+/*
     public void ShowLeaderboardLoading()
     {
         ClearLeaderboardSlots();
@@ -226,7 +226,7 @@ public class UIManager : MonoBehaviour
                 leaderboardSlots[i].text = "";
             }
         }
-    }
+    }*/
     
     public void ShowWarningPanel()
     {

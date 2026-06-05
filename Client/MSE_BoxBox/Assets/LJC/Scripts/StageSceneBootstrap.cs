@@ -11,7 +11,7 @@ public class StageSceneBootstrap : MonoBehaviour
     [SerializeField] private DeliveryManager deliveryManager;
     [SerializeField] private BoxSpawner boxSpawnManager;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private LJC.scripts.ResultManager resultManager;
+    [SerializeField] private ResultManager resultManager;
     [SerializeField] private LeaderboardApiClient leaderboardApiClient;
 
     [Header("Test")]
@@ -31,7 +31,7 @@ public class StageSceneBootstrap : MonoBehaviour
     public DeliveryManager DeliveryManager => deliveryManager;
     public BoxSpawner BoxSpawnManager => boxSpawnManager;
     public UIManager UIManager => uiManager;
-    public LJC.scripts.ResultManager ResultManager => resultManager;
+    public ResultManager ResultManager => resultManager;
     public LeaderboardApiClient LeaderboardApiClient => leaderboardApiClient;
 
     public GameObject HudUI => hudUI;

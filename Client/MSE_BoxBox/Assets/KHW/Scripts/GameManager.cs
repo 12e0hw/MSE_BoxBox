@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TimeManager timeManager;
     [SerializeField] private DeliveryManager deliveryManager;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private LJC.scripts.ResultManager resultManager;
+    [SerializeField] private ResultManager resultManager;
     [SerializeField] private LeaderboardApiClient leaderboardApiClient;
 
     [Header("UI")]

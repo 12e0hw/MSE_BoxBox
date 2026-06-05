@@ -216,6 +216,10 @@ MonoBehaviour:
   sprayEffect: {fileID: 0}
   sprayPointOffset: {x: 0.45, y: 0}
   sprayEffectLocalOffset: {x: 0.15, y: 0}
+  bodySpriteRenderer: {fileID: 1698313262667670983}
+  spriteFacesRight: 0
+  frontSortingLayerName: Item2
+  backSortingLayerName: Default
 --- !u!1 &7476517255307746659
 GameObject:
   m_ObjectHideFlags: 0
