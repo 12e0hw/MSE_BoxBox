@@ -17,7 +17,8 @@ public class BGM_Manager : MonoBehaviour
     public AudioClip warningSound;
     
     private Coroutine warningSoundCoroutine;
-
+    public float defaultVolume = 1.0f;
+    
     void Awake()
     {
         if (instance != null)
@@ -28,6 +29,9 @@ public class BGM_Manager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+        
+        ResetAudioPrefs();
+        AudioListener.volume = defaultVolume;
     }
     public void PlayButtonSound()
     {
@@ -105,5 +109,12 @@ public class BGM_Manager : MonoBehaviour
         StopWarningSound();
 
         warningSoundCoroutine = null;
+    }
+
+    private void ResetAudioPrefs()
+    {
+        PlayerPrefs.DeleteKey("BGMVolume");
+        PlayerPrefs.DeleteKey("SFXVolume");
+        PlayerPrefs.Save();
     }
 }

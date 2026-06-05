@@ -33,6 +33,18 @@ namespace HJW.scripts
         private string saveApiUrl = "http://localhost:8080/api/users/savename";
         private string loadApiUrl = "http://localhost:8080/api/users/loadname";
 
+        private void Start()
+        {
+            if (p1InputField != null)
+            {
+                p1InputField.contentType = TMP_InputField.ContentType.Alphanumeric;
+            }
+            if (p2InputField != null)
+            {
+                p2InputField.contentType = TMP_InputField.ContentType.Alphanumeric;
+            }
+        }
+
         private void OnEnable()
         {
             if (AuthManager.LoginUserId == 0) 
@@ -41,9 +53,8 @@ namespace HJW.scripts
                 p2InputField.text = "Player2";
                 return;
             }
-
-            p1InputField.text = PlayerPrefs.GetString("Player1_Name", "Player1");
-            p2InputField.text = PlayerPrefs.GetString("Player2_Name", "Player2");
+            p1InputField.text = "Player1";
+            p2InputField.text = "Player2";
 
             StartCoroutine(LoadName(1, p1InputField));
             StartCoroutine(LoadName(2, p2InputField));
@@ -99,15 +110,21 @@ namespace HJW.scripts
                 if (req.result == UnityWebRequest.Result.Success)
                 {
                     NameLoadResponse res = JsonUtility.FromJson<NameLoadResponse>(req.downloadHandler.text);
+                    
                     if (res != null && res.data != null && !string.IsNullOrEmpty(res.data.characterName))
                     {
                         inputField.text = res.data.characterName;
                         PlayerPrefs.SetString("Player" + index + "_Name", res.data.characterName);
                     }
+                    else
+                    {
+                        string defaultName = "Player" + index;
+                        inputField.text = defaultName;
+                        PlayerPrefs.SetString("Player" + index + "_Name", defaultName);
+                    }
                 }
             }
         }
-
         private void OnApplicationQuit()
         {
             PlayerPrefs.DeleteKey("Player1_Name");
