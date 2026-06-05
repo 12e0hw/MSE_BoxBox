@@ -16,4 +16,4 @@ MonoBehaviour:
   stageName: Stage 2
   targetScore: 40
   timeLimit: 180
-  boxSpawnInterval: 0.1
+  boxSpawnInterval: 2.5

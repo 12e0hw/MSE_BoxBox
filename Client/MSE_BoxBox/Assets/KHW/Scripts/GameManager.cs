@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int targetScore = 30;
     
     public GameState State => state;
-    public int TargetScore => targetScore;
     
     // Stage마다 Manager 연결을 담당
     private StageConfig currentStageConfig;
@@ -43,14 +42,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     [SerializeField] private LJC.scripts.ResultManager resultManager;
     [SerializeField] private LeaderboardApiClient leaderboardApiClient;
+    [SerializeField] private BoxSpawner boxSpawner;
 
     [Header("UI")]
-    // [SerializeField] private GameObject startMenuUI;
-    // [SerializeField] private GameObject stageSelectUI;
-    // [SerializeField] private GameObject loadingUI;
-    // [SerializeField] private GameObject hudUI;
-    // [SerializeField] private GameObject clearUI;
-    // [SerializeField] private GameObject gameoverUI;
     [SerializeField] private GameObject settingUI;
     [SerializeField] private GameObject pauseUI; //HJW 일시정지 창 추가
 
@@ -61,7 +55,6 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        // 싱글톤 유지
         if (Instance && Instance != this)
         {
             Destroy(gameObject);
@@ -69,18 +62,15 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // Manager 연결은 StageSceneBootstrap에서 연결 담당
     
     }
 
     
     private void Start()
     {
-        //SetState(GameState.StartMenu);
-        
         // play화면에서 실행
-        SetState(GameState.Playing, true);
+        //SetState(GameState.Playing, true);
+        SetState(GameState.StartMenu, true);
     }
 
     private void Update()
@@ -88,9 +78,9 @@ public class GameManager : MonoBehaviour
         if (state == GameState.Playing) // || state == GameState.Paused 삭제 키로 변경
         {
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            PauseGame(); //TogglePause() 대신
-        }
+            {
+                PauseGame(); //TogglePause() 대신
+            }
         }
     }
     
@@ -99,16 +89,6 @@ public class GameManager : MonoBehaviour
         selectStage = stageNum;
         Debug.Log($"Selected Stage: {selectStage}");
     } 
-
-    private void OnEnable()
-    {
-        // RegisterStageEvents가 이벤트 연결을 담당
-    }
-
-    private void OnDisable()
-    {
-        // UnregisterStageEvents가 이벤트 해제를 담당
-    }
     
     // Manager 연결 함수
     public void InitializeStage(StageSceneBootstrap bootstrap)
@@ -132,9 +112,12 @@ public class GameManager : MonoBehaviour
         pauseUI = bootstrap.PauseUI;
         settingUI = bootstrap.SettingUI;
 
-        // hudUI = bootstrap.HudUI;
-        // clearUI = bootstrap.ClearUI;
-        // gameoverUI = bootstrap.GameoverUI;
+        boxSpawner = bootstrap.BoxSpawnManager;
+
+        if (boxSpawner != null && currentStageConfig != null)
+        {
+            boxSpawner.SetSpawnInterval(currentStageConfig.BoxSpawnInterval);
+        }
 
         if (scoreManager != null)
         {
@@ -170,37 +153,6 @@ public class GameManager : MonoBehaviour
         RegisterStageEvents();
 
         SetState(GameState.Playing, true);
-    }
-
-    public void AudioSliders(Slider bgmSlider, Slider sfxSlider)
-    {
-        float saveBGM = PlayerPrefs.GetFloat("BGMVolume", 1f);
-        float saveSFX = PlayerPrefs.GetFloat("SFXVolume", 1f);
-
-        bgmSlider.value = saveBGM;
-        sfxSlider.value = saveSFX;
-
-        SetBGMVolume(saveBGM);
-        SetSFXVolume(saveSFX);
-
-        bgmSlider.onValueChanged.AddListener(SetBGMVolume);
-        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
-    }
-
-    public void SetBGMVolume(float volume)
-    {
-        if (audioMixer != null) 
-            audioMixer.SetFloat("BGMVolume", Mathf.Log10(Mathf.Max(0.0001f, volume)) * 20);
-            
-        PlayerPrefs.SetFloat("BGMVolume", volume);
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        if (audioMixer != null) 
-            audioMixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Max(0.0001f, volume)) * 20);
-            
-        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
     
     // 스테이지마다 이벤트 연결을 담당
@@ -261,25 +213,39 @@ public class GameManager : MonoBehaviour
 
         GameState previousState = state;
 
-        //if (state == newState) return;
         state = newState;
 
         HideAllUI();
 
         switch (newState)
         {
-            // case GameState.StartMenu:
-            //     Time.timeScale = 1f;
-            //     if (startMenuUI) startMenuUI.SetActive(true);
-            //     break;
-            // case GameState.StageSelect:
-            //     if (stageSelectUI) stageSelectUI.SetActive(true);
-            //     break;
-            // case GameState.Loading:
-            //     if (loadingUI) loadingUI.SetActive(true);
-            //     break;
+            case GameState.StartMenu:
+                Time.timeScale = 1f;
+                // 로그인 화면 상태
+                // UI 패널 전환은 ChangeManager가 담당
+                break;
+
+            case GameState.StageSelect:
+                Time.timeScale = 1f;
+                // 스테이지 선택 / 리더보드 선택 상태
+                // UI 패널 전환은 ChangeManager, LeaderScene이 담당
+                break;
+            case GameState.Loading:
+                Time.timeScale = 1f;
+
+                if (BGM_Manager.instance != null)
+                {
+                    BGM_Manager.instance.PauseBGM();
+                }
+
+                break;
             case GameState.Playing:
                 Time.timeScale = 1f;
+                
+                if (BGM_Manager.instance != null)
+                {
+                    BGM_Manager.instance.PlayBGM();
+                }
 
                 if (previousState == GameState.Paused)
                 {
@@ -295,6 +261,12 @@ public class GameManager : MonoBehaviour
                 isGameEnded = false;
                 isCleared = false;
 
+                if (boxSpawner != null)
+                {
+                    boxSpawner.ResetSpawner();
+                    boxSpawner.StartSpawning();
+                }
+                
                 // 스코어 초기화
                 if (scoreManager != null)
                 {
@@ -320,7 +292,6 @@ public class GameManager : MonoBehaviour
                 {
                     uiManager.HideResultPanel();
                 }
-                // if (hudUI) hudUI.SetActive(true);
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f; 
@@ -329,12 +300,23 @@ public class GameManager : MonoBehaviour
             case GameState.Clear:
                 Time.timeScale = 1f;
                 if (timeManager) timeManager.StopTimer();
-                // if (clearUI) clearUI.SetActive(true);
+                if (boxSpawner != null)
+                {
+                    boxSpawner.StopSpawning();
+                }
+
+                if (isCleared)
+                {
+                    
+                }
                 break;
             case GameState.Gameover:
                 Time.timeScale = 1f;
                 if (timeManager) timeManager.StopTimer();
-                // if (gameoverUI) gameoverUI.SetActive(true);
+                if (boxSpawner != null)
+                {
+                    boxSpawner.StopSpawning();
+                }
                 break;
         }
     }
@@ -360,7 +342,7 @@ public class GameManager : MonoBehaviour
         }
 
         // StageSceneBootstrap이 InitializeStage()를 호출함
-        //SetState(GameState.Playing);
+        // SetState(GameState.Playing);
     }
 
     public void RestartStage()
@@ -368,22 +350,8 @@ public class GameManager : MonoBehaviour
         StartGame(); // 현재 선택된 스테이지 다시 시작
     }
 
-   /* public void BackToMain()
-    {
-        
-        SetState(GameState.StartMenu);
-    }
-    */
-
-
     private void HideAllUI()
     {
-        // if (startMenuUI) startMenuUI.SetActive(false);
-        // if (stageSelectUI) stageSelectUI.SetActive(false);
-        // if (loadingUI) loadingUI.SetActive(false);
-        // if (hudUI) hudUI.SetActive(false);
-        // if (clearUI) clearUI.SetActive(false);
-        // if (gameoverUI) gameoverUI.SetActive(false);
         if (settingUI) settingUI.SetActive(false);
         if (pauseUI) pauseUI.SetActive(false); // hjw 추가
     }

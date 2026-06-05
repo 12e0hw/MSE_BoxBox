@@ -31,9 +31,33 @@ public class BGM_Manager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         
-        ResetAudioPrefs();
         AudioListener.volume = defaultVolume;
     }
+    
+    public void PlayBGM()
+    {
+        if (bgmSource == null)
+        {
+            Debug.LogWarning("[BGM_Manager] The BGM source is not connected.");
+            return;
+        }
+
+        if (!bgmSource.isPlaying)
+        {
+            bgmSource.Play();
+        }
+    }
+
+    public void PauseBGM()
+    {
+        if (bgmSource == null)
+        {
+            return;
+        }
+
+        bgmSource.Pause();
+    }
+    
     public void PlayButtonSound()
     {
         if (buttonClickSound != null && sfxSource != null)
@@ -110,12 +134,5 @@ public class BGM_Manager : MonoBehaviour
         StopWarningSound();
 
         warningSoundCoroutine = null;
-    }
-
-    private void ResetAudioPrefs()
-    {
-        PlayerPrefs.DeleteKey("BGMVolume");
-        PlayerPrefs.DeleteKey("SFXVolume");
-        PlayerPrefs.Save();
     }
 }

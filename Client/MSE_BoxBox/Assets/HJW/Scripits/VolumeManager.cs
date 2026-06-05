@@ -11,30 +11,63 @@ public class VolumeManager : MonoBehaviour
     public Slider bgmSlider;
     public Slider sfxSlider;
 
+    private const float MinVolume = 0.0001f;
     void Start()
     {
         float bgmVol = PlayerPrefs.GetFloat("BGMVolume", 1f);
         float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
-        bgmSlider.value = bgmVol;
-        sfxSlider.value = sfxVol;
+        if (bgmSlider != null)
+        {
+            bgmSlider.SetValueWithoutNotify(bgmVol);
+            bgmSlider.onValueChanged.RemoveListener(SetBGMVolume);
+            bgmSlider.onValueChanged.AddListener(SetBGMVolume);
+        }
 
-        SetBGMVolume(bgmVol);
-        SetSFXVolume(sfxVol);
+        if (sfxSlider != null)
+        {
+            sfxSlider.SetValueWithoutNotify(sfxVol);
+            sfxSlider.onValueChanged.RemoveListener(SetSFXVolume);
+            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        }
 
-        bgmSlider.onValueChanged.AddListener(SetBGMVolume);
-        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        ApplyBGMVolume(bgmVol);
+        ApplySFXVolume(sfxVol);
     }
 
     public void SetBGMVolume(float volume)
     {
-        audioMixer.SetFloat("BGMVolume", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("BGMVolume", volume);
+        PlayerPrefs.Save();
+
+        ApplyBGMVolume(volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        audioMixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("SFXVolume", volume);
+        PlayerPrefs.Save();
+
+        ApplySFXVolume(volume);
+    }
+    
+    private void ApplyBGMVolume(float volume)
+    {
+        if (audioMixer == null)
+        {
+            return;
+        }
+
+        audioMixer.SetFloat("BGMVolume", Mathf.Log10(Mathf.Max(MinVolume, volume)) * 20f);
+    }
+
+    private void ApplySFXVolume(float volume)
+    {
+        if (audioMixer == null)
+        {
+            return;
+        }
+
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Max(MinVolume, volume)) * 20f);
     }
 }
