@@ -3874,11 +3874,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2848711442743212106, guid: c2c975764018ccf428a4c159dcfc8cf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.62211
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2848711442743212106, guid: c2c975764018ccf428a4c159dcfc8cf2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.63888
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 2848711442743212106, guid: c2c975764018ccf428a4c159dcfc8cf2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3963,11 +3963,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2329450543254964594, guid: 90bbd70e9dd931340b42e83155c2c2b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.5107825
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2329450543254964594, guid: 90bbd70e9dd931340b42e83155c2c2b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.03261
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2329450543254964594, guid: 90bbd70e9dd931340b42e83155c2c2b0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4708,7 +4708,7 @@ MonoBehaviour:
   selectStage: 1
   audioMixer: {fileID: 0}
   state: 0
-  targetScore: 100
+  targetScore: 30
   scoreManager: {fileID: 1156376101}
   timeManager: {fileID: 982501883}
   deliveryManager: {fileID: 296377143}
@@ -7298,11 +7298,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.21
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.42
+      value: -0.82
       objectReference: {fileID: 0}
     - target: {fileID: 785370421625213382, guid: f9f37896a7993f3458505f123b3dc09b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8004,13 +8004,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingWalkway
       objectReference: {fileID: 0}
+    - target: {fileID: 2990629509270823989, guid: 78b1f9dcfe6c3814dabb04406075c493, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7618939646686736250, guid: 78b1f9dcfe6c3814dabb04406075c493, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.02
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 7618939646686736250, guid: 78b1f9dcfe6c3814dabb04406075c493, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 7618939646686736250, guid: 78b1f9dcfe6c3814dabb04406075c493, type: 3}
       propertyPath: m_LocalPosition.z

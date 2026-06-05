@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Settings")]
     [SerializeField] private GameState state = GameState.StartMenu;
-    [SerializeField] private int targetScore = 100;
+    [SerializeField] private int targetScore = 30;
     
     public GameState State => state;
     public int TargetScore => targetScore;

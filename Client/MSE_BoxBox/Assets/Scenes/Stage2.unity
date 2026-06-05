@@ -910,7 +910,7 @@ MonoBehaviour:
   selectStage: 1
   audioMixer: {fileID: 0}
   state: 0
-  targetScore: 100
+  targetScore: 30
   scoreManager: {fileID: 54043222}
   timeManager: {fileID: 296245002}
   deliveryManager: {fileID: 1212666604}

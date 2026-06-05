@@ -5,7 +5,7 @@ public class WaterSlowZone : MonoBehaviour
 {
     // Slows players while they stand inside this water area.
     [SerializeField] private float slowMultiplier = 0.55f;
-    [SerializeField] private float lifeTime = 40.0f;
+    [SerializeField] private float lifeTime = 45.0f;
 
     private readonly HashSet<Player> slowedPlayers = new HashSet<Player>();
 

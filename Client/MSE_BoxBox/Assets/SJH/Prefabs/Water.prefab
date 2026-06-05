@@ -151,5 +151,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb68e79a4964ab5be5aee168c36d6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterSlowZone
-  slowMultiplier: 0.55
-  lifeTime: 40
+  slowMultiplier: 0.8
+  lifeTime: 45
