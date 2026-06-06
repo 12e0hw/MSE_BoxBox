@@ -1198,7 +1198,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1224414752}
         m_TargetAssemblyTypeName: BGM_Manager, Assembly-CSharp
         m_MethodName: PlayButtonSound
         m_Mode: 1
@@ -3843,6 +3843,7 @@ MonoBehaviour:
   warningMinAlpha: 0.25
   warningMaxAlpha: 0.6
   warningBlinkSpeed: 3
+  leaderboardSlots: []
 --- !u!1001 &1122862811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5531,7 +5532,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1224414752}
         m_TargetAssemblyTypeName: BGM_Manager, Assembly-CSharp
         m_MethodName: PlayButtonSound
         m_Mode: 1
@@ -6707,7 +6708,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1224414752}
         m_TargetAssemblyTypeName: BGM_Manager, Assembly-CSharp
         m_MethodName: PlayButtonSound
         m_Mode: 1
@@ -7962,7 +7963,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1224414752}
         m_TargetAssemblyTypeName: BGM_Manager, Assembly-CSharp
         m_MethodName: PlayButtonSound
         m_Mode: 1

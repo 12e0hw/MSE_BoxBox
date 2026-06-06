@@ -201,9 +201,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 572750618}
-        m_TargetAssemblyTypeName: ChangeManager, Assembly-CSharp
-        m_MethodName: SelectLeaderboard
+      - m_Target: {fileID: 572750617}
+        m_TargetAssemblyTypeName: LeaderScene, Assembly-CSharp
+        m_MethodName: OpenLeaderboardPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2956,13 +2956,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f492fb25b001154e949ee4f57f06987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeaderScene
-  leaderboard1Panel: {fileID: 1668486895}
-  leaderboard2Panel: {fileID: 196610809}
-  leaderboard1View: {fileID: 679037073}
-  leaderboard2View: {fileID: 1052686883}
+  leaderboardRootPanel: {fileID: 171788928}
   leaderboardApiClient: {fileID: 2053228938}
-  stage1Id: 1
-  stage2Id: 2
+  leaderboardSettings:
+  - panel: {fileID: 1668486895}
+    view: {fileID: 679037073}
+    rotatingArrow: {fileID: 1699924102}
+    useStageLeaderboard: 1
+    stageId: 1
+  - panel: {fileID: 196610809}
+    view: {fileID: 1052686883}
+    rotatingArrow: {fileID: 1914350131}
+    useStageLeaderboard: 1
+    stageId: 2
+  arrowRotateDuration: 0.5
 --- !u!114 &572750618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2988,21 +2995,7 @@ MonoBehaviour:
   CantStartGamePanel: {fileID: 1244962893}
   loadingSlider: {fileID: 472830560}
   loadingTime: 3
-  leaderboardApiClient: {fileID: 2053228938}
-  leaderboardSettings:
-  - panel: {fileID: 1668486895}
-    apiClient: {fileID: 2053228938}
-    view: {fileID: 679037073}
-    rotatingArrow: {fileID: 1699924102}
-    useStageLeaderboard: 0
-    stageId: 1
-  - panel: {fileID: 196610809}
-    apiClient: {fileID: 2053228938}
-    view: {fileID: 1052686883}
-    rotatingArrow: {fileID: 1914350131}
-    useStageLeaderboard: 0
-    stageId: 2
-  arrowRotateDuration: 1
+  leaderScene: {fileID: 572750617}
 --- !u!114 &572750619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3455,10 +3448,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 572750618}
-        m_TargetAssemblyTypeName: ChangeManager, Assembly-CSharp
-        m_MethodName: RefreshLeaderboard
-        m_Mode: 3
+      - m_Target: {fileID: 572750617}
+        m_TargetAssemblyTypeName: LeaderScene, Assembly-CSharp
+        m_MethodName: RefreshStage1Leaderboard
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6931,10 +6924,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 572750618}
-        m_TargetAssemblyTypeName: ChangeManager, Assembly-CSharp
-        m_MethodName: RefreshLeaderboard
-        m_Mode: 3
+      - m_Target: {fileID: 572750617}
+        m_TargetAssemblyTypeName: LeaderScene, Assembly-CSharp
+        m_MethodName: RefreshStage2Leaderboard
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
