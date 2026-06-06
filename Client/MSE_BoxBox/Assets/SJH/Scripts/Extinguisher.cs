@@ -8,11 +8,20 @@ public class Extinguisher : MonoBehaviour
     public Vector2 sprayPointOffset = new Vector2(0.45f, 0f);
     public Vector2 sprayEffectLocalOffset = new Vector2(0.15f, 0f);
 
+    [Header("Extinguisher Visual")]
+    public SpriteRenderer bodySpriteRenderer;
+    public bool spriteFacesRight = true;
+    
+    [Header("Sorting Layer")]
+    public string frontSortingLayerName = "Item2";
+    public string backSortingLayerName = "Default";
+    
     private Animator sprayAnimator;
 
     void Awake()
     {
         FindSprayReferences();
+        FindBodySpriteRenderer();
         SetSpraying(false, Vector2.right);
     }
 
@@ -22,6 +31,34 @@ public class Extinguisher : MonoBehaviour
         sprayPointOffset = offset;
     }
 
+    public void UpdateHeldDirection(Vector2 direction)
+    {
+        // Flip the extinguisher body to match the player's facing direction.
+        if (direction == Vector2.zero)
+        {
+            direction = Vector2.down;
+        }
+
+        direction.Normalize();
+
+        FindSprayReferences();
+        FindBodySpriteRenderer();
+
+        if (bodySpriteRenderer != null)
+        {
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                bodySpriteRenderer.flipX = spriteFacesRight ? direction.x < 0f : direction.x > 0f;
+            }
+            else
+            {
+                bodySpriteRenderer.flipX = false;
+            }
+        }
+
+        UpdateSprayPoint(direction);
+    }
+    
     public void SetSpraying(bool active, Vector2 direction)
     {
         // Toggle the spray effect and rotate it toward the aim direction.
@@ -33,7 +70,7 @@ public class Extinguisher : MonoBehaviour
         }
 
         Vector2 sprayDirection = direction == Vector2.zero ? Vector2.down : direction.normalized;
-        UpdateSprayPoint(sprayDirection);
+        UpdateHeldDirection(sprayDirection);
 
         bool changed = sprayEffect.activeSelf != active;
         if (changed)
@@ -104,6 +141,51 @@ public class Extinguisher : MonoBehaviour
         if (sprayEffect != null)
         {
             sprayEffect.transform.localPosition = sprayEffectLocalOffset;
+        }
+    }
+    
+    public void SetHeldSortingLayer(bool isBehindPlayer)
+    {
+        FindBodySpriteRenderer();
+
+        if (bodySpriteRenderer == null)
+        {
+            return;
+        }
+
+        bodySpriteRenderer.sortingLayerName = isBehindPlayer ? backSortingLayerName : frontSortingLayerName;
+    }
+
+    public void ResetSortingLayerAfterDrop()
+    {
+        FindBodySpriteRenderer();
+
+        if (bodySpriteRenderer == null)
+        {
+            return;
+        }
+
+        bodySpriteRenderer.sortingLayerName = frontSortingLayerName;
+    }
+    
+    void FindBodySpriteRenderer()
+    {
+        if (bodySpriteRenderer != null)
+        {
+            return;
+        }
+
+        SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+
+        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+        {
+            if (sprayEffect != null && spriteRenderer.transform.IsChildOf(sprayEffect.transform))
+            {
+                continue;
+            }
+
+            bodySpriteRenderer = spriteRenderer;
+            return;
         }
     }
 
