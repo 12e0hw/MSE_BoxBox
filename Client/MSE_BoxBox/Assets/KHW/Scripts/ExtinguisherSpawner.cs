@@ -52,6 +52,7 @@ public class ExtinguisherSpawner : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(weatherFromServer)) return;
 
+        // Extinguishers only spawn when the weather is clear.
         isClearWeather = (weatherFromServer.ToUpper().Trim() == "CLEAR");
     }
 
@@ -69,6 +70,7 @@ public class ExtinguisherSpawner : MonoBehaviour
         if (!isClearWeather) return;
         if (extinguisherPrefab == null) return;
 
+        // Fill empty spawn points, or place one item during interval spawns.
         for (int i = 0; i < spawnPoints.Count; i++)
         {
             if (spawnedExtinguishers[i] == null)

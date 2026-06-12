@@ -1,6 +1,5 @@
-// User Information Entities
-
 package com.boxbox.server.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +11,7 @@ import lombok.*;
 public class User {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 번호 자동 증가
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment user id.
     @Column(name = "user_id")
     private Long userId;
 

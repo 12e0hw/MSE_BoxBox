@@ -35,6 +35,7 @@ public class TruckController : MonoBehaviour
 
     private void TryDeliver(Collider2D other)
     {
+        // Handle both direct box delivery and player-carried small boxes.
         BoxController box = other.GetComponent<BoxController>();
 
         if (box == null)
@@ -112,6 +113,7 @@ public class TruckController : MonoBehaviour
 
     private void ConfigureDeliveryPhysics()
     {
+        // Let the truck receive triggers without being moved by physics.
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
         if (rb != null)
@@ -135,6 +137,7 @@ public class TruckController : MonoBehaviour
 
     private BoxColor ResolveTruckColor()
     {
+        // Prefer the color encoded in the object name when available.
         if (TryResolveTruckColorFromName(name, out BoxColor resolvedColor))
         {
             return resolvedColor;

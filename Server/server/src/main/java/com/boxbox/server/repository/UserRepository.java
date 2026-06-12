@@ -8,7 +8,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     
+    // Used to block duplicate usernames during signup.
     boolean existsByUsername(String username);
 
+    // Used for login and account lookup by username.
     Optional<User> findByUsername(String username);
 }

@@ -13,6 +13,7 @@ public class StaminaItemController : MonoBehaviour
 
             if (player != null)
             {
+                // Restore stamina once, then remove the item.
                 player.RestoreStamina(restoreAmount);
                 Destroy(gameObject);
             }

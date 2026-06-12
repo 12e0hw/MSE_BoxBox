@@ -5,7 +5,7 @@ public class BoxSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")] public GameObject[] boxPrefabs;
     public Transform spawnPoint;
-    public float interval = 5f; // 생성 간격
+    public float interval = 5f; // Seconds between box spawns.
     
     private Coroutine spawnCoroutine;
 
@@ -16,6 +16,7 @@ public class BoxSpawner : MonoBehaviour
 
     public void StartSpawning()
     {
+        // Restart the spawn routine to avoid duplicate coroutines.
         StopSpawning();
         spawnCoroutine = StartCoroutine(SpawnRoutine());
     }

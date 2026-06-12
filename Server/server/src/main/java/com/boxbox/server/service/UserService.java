@@ -14,44 +14,46 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    // Signup
+    // Create a new account after checking duplicate usernames.
     public void signup(SignupRequest dto) {
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new IllegalArgumentException("Duplicate Username");
+            throw new IllegalArgumentException("Username already exists.");
         }
 
         User user = new User(dto.getPassword(), dto.getUsername());
         userRepository.save(user);
     }
 
-    // Login
+    // Validate login credentials and return the matched user.
     public User login(LoginRequest dto) {
         User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Username does not exist"));
+                .orElseThrow(() -> new IllegalArgumentException("Username does not exist."));
 
         if (!user.getPassword().equals(dto.getPassword())) {
-            throw new IllegalArgumentException("Password Mismatch");
+            throw new IllegalArgumentException("Password does not match.");
         }
         return user;
     }
 
     @Transactional
     public void saveCharacterName(NameSave request) {
+        // Update one of the two saved character name slots.
         User user = userRepository.findById((long) request.getUserId())
-            .orElseThrow(() -> new IllegalArgumentException("Empty."));
+            .orElseThrow(() -> new IllegalArgumentException("User not found."));
 
         if (request.getIndex() == 1) {
             user.updateCharacterName1(request.getCharacterName());
         } else if (request.getIndex() == 2) {
             user.updateCharacterName2(request.getCharacterName());
         } else {
-            throw new IllegalArgumentException("index 1 or 2.");
+            throw new IllegalArgumentException("Index must be 1 or 2.");
         }
     }
 
     public NameSave loadCharacterName(int userId, int index) {
+        // Read one of the two saved character name slots.
         User user = userRepository.findById((long) userId)
-            .orElseThrow(() -> new IllegalArgumentException("Empty."));
+            .orElseThrow(() -> new IllegalArgumentException("User not found."));
 
         String loadedName = "";
 
@@ -60,7 +62,7 @@ public class UserService {
         } else if (index == 2) {
             loadedName = user.getCharacterName2();
         } else {
-            throw new IllegalArgumentException("index 1 or 2.");
+            throw new IllegalArgumentException("Index must be 1 or 2.");
         }
 
         NameSave responseDto = new NameSave();

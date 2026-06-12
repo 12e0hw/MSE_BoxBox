@@ -19,19 +19,21 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
+    // Return current weather data for the requested city.
     @GetMapping("/weather")
     public ApiResponse<WeatherResponseDto> getCurrentWeather(
             @RequestParam(defaultValue = "SUWON") String cityId
     ) {
         WeatherResponseDto response = weatherService.getCurrentWeather(cityId);
-        return ApiResponse.success("날씨 조회 성공", response);
+        return ApiResponse.success("Weather loaded successfully.", response);
     }
 
+    // Return weather data converted into game-specific effects.
     @GetMapping("/weather/game")
     public ApiResponse<GameWeatherResponseDto> getGameWeather(
             @RequestParam(defaultValue = "SUWON") String cityId
     ) {
         GameWeatherResponseDto response = weatherService.getGameWeather(cityId);
-        return ApiResponse.success("게임용 날씨 조회 성공", response);
+        return ApiResponse.success("Game weather loaded successfully.", response);
     }
 }

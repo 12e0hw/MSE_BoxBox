@@ -8,6 +8,7 @@ public class BoxDestroyer : MonoBehaviour
     {
         if ((targetLayer.value & (1 << collision.gameObject.layer)) != 0)
         {
+            // Remove objects that enter the cleanup area.
             Destroy(collision.gameObject);
         }
     }

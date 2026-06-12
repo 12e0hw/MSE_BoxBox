@@ -14,6 +14,7 @@ public class StaminaItemSpawner : MonoBehaviour
 
     private void Start()
     {
+        // Spawn stamina items repeatedly during the stage.
         StartCoroutine(SpawnStaminaItemRoutine());
     }
 
@@ -30,6 +31,7 @@ public class StaminaItemSpawner : MonoBehaviour
     {
         if (staminerItem == null) return;
 
+        // Pick a random position inside the configured spawn area.
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
         Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);

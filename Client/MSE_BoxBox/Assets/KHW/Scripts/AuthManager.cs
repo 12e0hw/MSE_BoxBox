@@ -62,11 +62,12 @@ public class AuthManager : MonoBehaviour
 
     void Update()
     {
+        // Switch focus between login fields with Tab.
         if (Keyboard.current.tabKey.wasPressedThisFrame)
-    {
-        if (usernameInput.isFocused) passwordInput.ActivateInputField();
-        else if (passwordInput.isFocused) usernameInput.ActivateInputField();
-    }
+        {
+            if (usernameInput.isFocused) passwordInput.ActivateInputField();
+            else if (passwordInput.isFocused) usernameInput.ActivateInputField();
+        }
     }
 
     public void OnClickSignUp()
@@ -81,6 +82,7 @@ public class AuthManager : MonoBehaviour
 
     private IEnumerator SendSignUp(string username, string pass)
     {
+        // Send signup data to the backend server.
         AuthRequest req = new AuthRequest { username = username, password = pass };
         string json = JsonUtility.ToJson(req);
 
@@ -99,25 +101,26 @@ public class AuthManager : MonoBehaviour
                 
                 if (response.success)
                 {
-                    Debug.Log("signup success");
+                    Debug.Log("[AuthManager] Signup succeeded.");
                     signupSuccessPanel.SetActive(true);
                 }
                 else
                 {
-                    Debug.Log(response.message);
+                    Debug.Log("[AuthManager] Signup failed: " + response.message);
                     signupFailPanel.SetActive(true);
 
                 }
             }
                 if (request.downloadHandler != null)
                 {
-                    Debug.Log("서버 상세 응답: " + request.downloadHandler.text);
+                    Debug.Log("[AuthManager] Server detail response: " + request.downloadHandler.text);
                 }
         }
     }
 
     private IEnumerator SendLogin(string username, string pass)
     {
+        // Send login data and store the returned user id.
         AuthRequest req = new AuthRequest { username = username, password = pass };
         string json = JsonUtility.ToJson(req);
 
@@ -137,14 +140,14 @@ public class AuthManager : MonoBehaviour
                 if (response.success && response.data != null)
                 {
                     LoginUserId = response.data.userId;
-                    Debug.Log($"[AuthManager] 파싱된 유저 ID 변수값: {LoginUserId}");
-                    Debug.Log("login success");
+                    Debug.Log($"[AuthManager] Parsed user ID: {LoginUserId}");
+                    Debug.Log("[AuthManager] Login succeeded.");
                     loginPanel.SetActive(false);
                     checkPanel.SetActive(true);
                 }
                 else
                 {
-                    Debug.Log(response.message);
+                    Debug.Log("[AuthManager] Login failed: " + response.message);
                     loginFailPanel.SetActive(true);
                 }
             }

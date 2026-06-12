@@ -55,8 +55,9 @@ public class ObstacleSpawner : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(weatherFromServer)) return;
 
+        // Match server weather text to the configured obstacle prefab.
         string targetWeather = weatherFromServer.ToUpper().Trim();
-        Debug.Log($" {targetWeather}");
+        Debug.Log($"Weather set to: {targetWeather}");
 
         WeatherObstacleSetting matchedSetting = weatherSettings.Find(x => x.weatherName.ToUpper() == targetWeather);
 
@@ -83,6 +84,7 @@ public class ObstacleSpawner : MonoBehaviour
     {
         if (obstaclePrefab == null) return;
 
+        // Spawn inside the configured random play area.
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
         Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);

@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public int selectStage = 1;   // 선택 스테이지 번호
+    public int selectStage = 1;   // Selected stage number.
 
     [Header("Audio Settings")]
     public AudioMixer audioMixer;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     
     public GameState State => state;
     
-    // Stage마다 Manager 연결을 담당
+    // Holds stage-specific manager references.
     private StageConfig currentStageConfig;
     
     [Header("Managers")]
@@ -46,11 +46,11 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject settingUI;
-    [SerializeField] private GameObject pauseUI; //HJW 일시정지 창 추가
+    [SerializeField] private GameObject pauseUI; // Pause menu UI.
 
-    // 게임 끝났을 때 Ture로 변경
+    // Prevents the end-game flow from running more than once.
     private bool isGameEnded;
-    // 게임 성공/실패 판단
+    // Tracks whether the target score was reached.
     private bool isCleared;
     
     private void Awake()
@@ -68,18 +68,16 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        // play화면에서 실행
-        //SetState(GameState.Playing, true);
         SetState(GameState.StartMenu, true);
     }
 
     private void Update()
     {
-        if (state == GameState.Playing) // || state == GameState.Paused 삭제 키로 변경
+        if (state == GameState.Playing)
         {
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-                PauseGame(); //TogglePause() 대신
+                PauseGame();
             }
         }
     }
@@ -90,7 +88,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Selected Stage: {selectStage}");
     } 
     
-    // Manager 연결 함수
+    // Connects stage managers and config values from the bootstrap.
     public void InitializeStage(StageSceneBootstrap bootstrap)
     {
         UnregisterStageEvents();
@@ -155,7 +153,7 @@ public class GameManager : MonoBehaviour
         SetState(GameState.Playing, true);
     }
     
-    // 스테이지마다 이벤트 연결을 담당
+    // Registers stage events after loading a stage.
     private void RegisterStageEvents()
     {
         if (scoreManager != null && uiManager != null)
@@ -175,7 +173,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // 스테이지마다 이벤트 해체를 담당
+    // Unregisters events before reconnecting managers or destroying the singleton.
     private void UnregisterStageEvents()
     {
         if (scoreManager != null && uiManager != null)
@@ -203,12 +201,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    // 테스트용으로 playing 화면에서 실행하게 바꿈
+    // Central state transition handler.
     public void SetState(GameState newState, bool force = false)
     {
         if (!force && state == newState)
         {
-            return;  // 같은 State라서 return
+            return;  // Ignore duplicate state changes.
         }
 
         GameState previousState = state;
@@ -221,14 +219,12 @@ public class GameManager : MonoBehaviour
         {
             case GameState.StartMenu:
                 Time.timeScale = 1f;
-                // 로그인 화면 상태
-                // UI 패널 전환은 ChangeManager가 담당
+                // ChangeManager handles the login screen panel.
                 break;
 
             case GameState.StageSelect:
                 Time.timeScale = 1f;
-                // 스테이지 선택 / 리더보드 선택 상태
-                // UI 패널 전환은 ChangeManager, LeaderScene이 담당
+                // ChangeManager and LeaderScene handle stage and leaderboard panels.
                 break;
             case GameState.Loading:
                 Time.timeScale = 1f;
@@ -251,7 +247,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (settingUI != null)
                     {
-                        if(pauseUI != null)pauseUI.SetActive(false); //hjw 추가
+                        if (pauseUI != null) pauseUI.SetActive(false);
                         settingUI.SetActive(false);
                     }
 
@@ -267,27 +263,27 @@ public class GameManager : MonoBehaviour
                     boxSpawner.StartSpawning();
                 }
                 
-                // 스코어 초기화
+                // Reset score data for a new run.
                 if (scoreManager != null)
                 {
                     scoreManager.SetTargetScore(targetScore);
                     scoreManager.ResetScore();
                 }
 
-                // 박스 결과 초기화
+                // Reset delivery result counts.
                 if (deliveryManager != null)
                 {
                     deliveryManager.ResetDeliveryCounts();
                 }
 
-                // 타이머 초기화
+                // Reset and start the stage timer.
                 if (timeManager != null)
                 {
                     timeManager.ResetTimer();
                     timeManager.StartTimer();
                 }
 
-                // UI 점수 초기화
+                // Hide old result UI before gameplay starts.
                 if (uiManager != null)
                 {
                     uiManager.HideResultPanel();
@@ -295,7 +291,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f; 
-                if (pauseUI) pauseUI.SetActive(true); //settingui pasueui로 변경
+                if (pauseUI) pauseUI.SetActive(true);
                 break;
             case GameState.Clear:
                 Time.timeScale = 1f;
@@ -321,10 +317,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    // 스테이지 선택 화면으로 가기
+    // Move to the stage select state.
     public void GoToStageSelect() => SetState(GameState.StageSelect);
 
-    // 실제 게임 시작 (로딩 거쳐서 이동)
+    // Start the selected stage after the loading state.
     public void StartGame()
     {
         StartCoroutine(LoadStageAsync("Stage" + selectStage));
@@ -333,27 +329,24 @@ public class GameManager : MonoBehaviour
     private IEnumerator LoadStageAsync(string sceneName)
     {
         SetState(GameState.Loading);
-        yield return new WaitForSeconds(1.0f); // 최소 로딩 연출 시간
+        yield return new WaitForSeconds(1.0f); // Minimum loading presentation time.
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         while (!op.isDone)
         {
             yield return null;
         }
-
-        // StageSceneBootstrap이 InitializeStage()를 호출함
-        // SetState(GameState.Playing);
     }
 
     public void RestartStage()
     {
-        StartGame(); // 현재 선택된 스테이지 다시 시작
+        StartGame(); // Restart the currently selected stage.
     }
 
     private void HideAllUI()
     {
         if (settingUI) settingUI.SetActive(false);
-        if (pauseUI) pauseUI.SetActive(false); // hjw 추가
+        if (pauseUI) pauseUI.SetActive(false);
     }
     
     private void HandleMaxScoreReached()
@@ -361,10 +354,10 @@ public class GameManager : MonoBehaviour
         isCleared = true;
     }
     
-    // 게임 종료 이벤트용 함수
+    // Ends the game when the timer reaches zero.
     private void HandleTimeOver()
     {
-        // 점수를 직접 확인하여 게임 종료 여부를 확인하는 방식으로 변환
+        // Check the current score directly to decide clear or game over.
         bool reachedTargetScore = scoreManager != null && scoreManager.CurrentScore >= targetScore;
 
         if (reachedTargetScore)
@@ -377,7 +370,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    // 게임 종료 시 관련 기능
+    // Runs shared end-game behavior.
     private void EndGame(GameState endState)
     {
         if (isGameEnded)
@@ -411,11 +404,11 @@ public class GameManager : MonoBehaviour
     }
     public void OpenSetting()
     {
-        if(settingUI)settingUI.SetActive(true);
+        if (settingUI) settingUI.SetActive(true);
     }
     public void CloseSetting()
     {
-        if(settingUI)settingUI.SetActive(false);
+        if (settingUI) settingUI.SetActive(false);
     }
     public void BacktoStage()
     {

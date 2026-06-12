@@ -16,12 +16,14 @@ public class ConveyorController : MonoBehaviour
 
         if (rb != null)
         {
+            // Move loose objects along the conveyor direction.
             rb.linearVelocity = direction.normalized * speed;
         }
     }
 
     private bool IsCarriedBigBoxGroup(Collider2D other)
     {
+        // Big boxes held by players should not be pushed by the conveyor.
         Player player = other.GetComponentInParent<Player>();
 
         if (player != null && player.IsHoldingBigBox)
