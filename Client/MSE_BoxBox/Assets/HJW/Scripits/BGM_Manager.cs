@@ -38,10 +38,10 @@ public class BGM_Manager : MonoBehaviour
     {
         if (bgmSource == null)
         {
-            Debug.LogWarning("[BGM_Manager] The BGM source is not connected.");
             return;
         }
 
+        // Checks if the BGM is already playing to prevent it from restarting
         if (!bgmSource.isPlaying)
         {
             bgmSource.Play();
@@ -72,6 +72,7 @@ public class BGM_Manager : MonoBehaviour
 
     public void StartExtinguisherSound()
     {
+        // Checks the clip to prevent accidentally stopping loopSfxSource when another sound is currently using it
         if (extinguisherSound && loopSfxSource)
         {
             loopSfxSource.clip = extinguisherSound;
@@ -90,6 +91,7 @@ public class BGM_Manager : MonoBehaviour
 
     public void StartWarningSound()
     {
+        // Prevents a bug where the coroutine keeps running and triggers
         if (warningSound && loopSfxSource)
         {
             loopSfxSource.clip = warningSound;
@@ -116,6 +118,7 @@ public class BGM_Manager : MonoBehaviour
     // 
     public void StartWarningSoundForSeconds(float duration)
     {
+        // Cancels the existing coroutine to prevent duplicate timers if this function is called multiple times consecutively
         if (warningSoundCoroutine != null)
         {
             StopCoroutine(warningSoundCoroutine);
@@ -127,6 +130,7 @@ public class BGM_Manager : MonoBehaviour
         warningSoundCoroutine = StartCoroutine(StopWarningSoundAfterSeconds(duration));
     }
 
+    // Internal coroutine that waits for the specified duration before stopping the warning sound
     private IEnumerator StopWarningSoundAfterSeconds(float duration)
     {
         yield return new WaitForSeconds(duration);

@@ -7,9 +7,8 @@ using UnityEngine.InputSystem;
 
 public class ChangeKey : MonoBehaviour
 {
-    public static Action OnkeyChanged; //키 설정 변경 캐릭터에게 전달
+    public static Action OnkeyChanged;
 
-    // 게임 실행 중일때만 키 임시 저장
     private static Dictionary<string, string> sessionKeys = new Dictionary<string, string>(); 
 
     [Header("ControlKey Setting")]
@@ -38,9 +37,10 @@ public class ChangeKey : MonoBehaviour
     public TMP_Text p2_runKeyText;
 
     private string currentActionName; 
+
     private Dictionary<string, Key> pendingKeys = new Dictionary<string, Key>();
 
-    //p1 can choose this keys
+    // Allowed keys for Player 1
     private Key[] p1_Keys = {
         Key.Q, Key.W, Key.E, Key.R, Key.T,
         Key.A, Key.S, Key.D, Key.F, Key.G,
@@ -48,7 +48,7 @@ public class ChangeKey : MonoBehaviour
         Key.LeftShift, Key.Space
     };
 
-    //p2 can choose this keys
+    // Allowed keys for Player 2
     private Key[] p2_Keys = {
         Key.UpArrow, Key.DownArrow, Key.LeftArrow, Key.RightArrow,
         Key.Y, Key.U, Key.I, Key.O, Key.P,
@@ -60,21 +60,20 @@ public class ChangeKey : MonoBehaviour
     private void Start()
     {
         selectKeyPanel.SetActive(false); 
-        RefreshUI(); // 시작할 때 현재 저장된 키값으로 화면 세팅
+        RefreshUI(); // Initialize the UI with the currently saved keys when the script starts
     }
 
-    // p1/p2 divide
     public void OpenPanel(string actionName)
     {
         currentActionName = actionName;      
 
-        // clear
+        // Clear previously generated buttons to prevent duplicates
         foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);
         }
 
-        // divide a p1_ p2_
+        // Generate key selection buttons dynamically based on the prefix (P1 or P2)
         if (actionName.StartsWith("P1_"))
         {
             GenerateKeyButtons(p1_Keys);
@@ -87,7 +86,7 @@ public class ChangeKey : MonoBehaviour
         selectKeyPanel.SetActive(true);      
     }
 
-    // 키들 프리팹 복사하기
+    // Instantiates button prefabs for the provided array of available keys.
     private void GenerateKeyButtons(Key[] keysToGenerate)
     {
     foreach (Key key in keysToGenerate)
@@ -100,9 +99,11 @@ public class ChangeKey : MonoBehaviour
 
     public void OnKeySelected(Key newKey)
     {
+        // Store the selection in pendingKeys so it doesn't apply immediately until saved
         pendingKeys[currentActionName] = newKey;
         string displayName = GetKeyDisplayName(newKey);
 
+        // Update the specific UI Text element to reflect the newly chosen key
         if (currentActionName == "P1_UpKey") p1_upKeyText.text = displayName;
         else if (currentActionName == "P1_DownKey") p1_downKeyText.text = displayName;
         else if (currentActionName == "P1_LeftKey") p1_leftKeyText.text = displayName;
@@ -124,6 +125,7 @@ public class ChangeKey : MonoBehaviour
 
     public void SaveSettings()
     {
+        // Transfer all pending changes to the actual session dictionary
         foreach (var kvp in pendingKeys)
         {
             sessionKeys[kvp.Key] = kvp.Value.ToString();
@@ -131,19 +133,19 @@ public class ChangeKey : MonoBehaviour
         pendingKeys.Clear(); 
         player1KeyPanel.SetActive(false);
         player2KeyPanel.SetActive(false);
-        //설정 저장시 캐릭터 바로 반영
+
         OnkeyChanged?.Invoke();
     }
 
     public void CancelSettings()
     {
         pendingKeys.Clear();
-        RefreshUI();
+        RefreshUI(); // Revert text to match sessionKeys
         player1KeyPanel.SetActive(false);
         player2KeyPanel.SetActive(false);
     }
 
-    //기본 설정 키
+ 
     private void RefreshUI()
     {
         p1_upKeyText.text = GetKeyDisplayName(GetSavedKey("P1_UpKey", Key.W));
@@ -163,7 +165,7 @@ public class ChangeKey : MonoBehaviour
         p2_runKeyText.text = GetKeyDisplayName(GetSavedKey("P2_RunKey", Key.P));
     }
 
-    //PlayerInputHandler 키를 불러갈 수 있도록 제공
+    //Retrieves the saved key for a specific action. Used by external scripts like PlayerInputHandler.
     public static Key GetSavedKey(string prefKey, Key defaultKey)
     {
         string savedValue = sessionKeys.ContainsKey(prefKey) ? sessionKeys[prefKey] : defaultKey.ToString();
@@ -175,6 +177,7 @@ public class ChangeKey : MonoBehaviour
         return defaultKey;
     }
 
+    //Converts a Key enum into a user-friendly
     private string GetKeyDisplayName(Key key)
     {
         switch (key)
@@ -191,7 +194,7 @@ public class ChangeKey : MonoBehaviour
             case Key.Comma: return ",";
             case Key.Period: return ".";
             case Key.Slash: return "/";
-            default: return key.ToString();
+            default: return key.ToString(); // Defaults to the standard enum name (e.g., "A", "B", "C")
         }
     }
 }

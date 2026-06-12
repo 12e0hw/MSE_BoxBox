@@ -6,6 +6,8 @@ using TMPro;
 
 namespace HJW.scripts
 {
+
+    // DTO used to format data into JSON when sending a save request to the server
     [System.Serializable]
     public class NameSaveData 
     { 
@@ -14,6 +16,7 @@ namespace HJW.scripts
         public string characterName; 
     }
 
+    // DTO used to parse the JSON response received from the server when loading a name
     [System.Serializable]
     public class NameLoadResponse 
     { 
@@ -35,6 +38,7 @@ namespace HJW.scripts
 
         private void Start()
         {
+            // Restrict input to alphanumeric characters only to prevent special character bugs or injection
             if (p1InputField != null)
             {
                 p1InputField.contentType = TMP_InputField.ContentType.Alphanumeric;
@@ -47,22 +51,28 @@ namespace HJW.scripts
 
         private void OnEnable()
         {
+            // If the user is playing as a guest (not logged in), default the names and skip the API call
             if (AuthManager.LoginUserId == 0) 
             {
                 p1InputField.text = "Player1";
                 p2InputField.text = "Player2";
                 return;
             }
+
+            // Set temporary defaults while fetching actual data from the server
             p1InputField.text = "Player1";
             p2InputField.text = "Player2";
 
+            // Fetch saved names from the database
             StartCoroutine(LoadName(1, p1InputField));
             StartCoroutine(LoadName(2, p2InputField));
         }
 
         public void SaveNames()
         {
+            // Do not attempt to save to the database if the user is a guest
             if (AuthManager.LoginUserId == 0) return;
+
             if (!string.IsNullOrEmpty(p1InputField.text))
             {
                 SaveSinglePlayer(1, p1InputField.text);
@@ -73,6 +83,7 @@ namespace HJW.scripts
             }
         }
 
+        // Saves the name locally, updates active player objects in the scene, and pushes to the server.
         private void SaveSinglePlayer(int index, string newName)
         {
             PlayerPrefs.SetString("Player" + index + "_Name", newName);
@@ -85,6 +96,7 @@ namespace HJW.scripts
             StartCoroutine(SaveNameToServer(index, newName));
         }
 
+        // Coroutine to handle the POST request for saving a name
         private IEnumerator SaveNameToServer(int index, string newName)
         {
             NameSaveData saveData = new NameSaveData { userId = AuthManager.LoginUserId, index = index, characterName = newName };
@@ -99,6 +111,7 @@ namespace HJW.scripts
             }
         }
 
+        // Coroutine to handle the GET request for retrieving a name
         private IEnumerator LoadName(int index, TMP_InputField inputField)
         {
             string url = $"{loadApiUrl}?userId={AuthManager.LoginUserId}&index={index}";
@@ -111,6 +124,7 @@ namespace HJW.scripts
                 {
                     NameLoadResponse res = JsonUtility.FromJson<NameLoadResponse>(req.downloadHandler.text);
                     
+                    // If valid data is returned, update the UI and cache it locally
                     if (res != null && res.data != null && !string.IsNullOrEmpty(res.data.characterName))
                     {
                         inputField.text = res.data.characterName;
@@ -118,6 +132,7 @@ namespace HJW.scripts
                     }
                     else
                     {
+                        // Fallback to default name if the player hasn't saved a custom name yet
                         string defaultName = "Player" + index;
                         inputField.text = defaultName;
                         PlayerPrefs.SetString("Player" + index + "_Name", defaultName);
@@ -127,10 +142,9 @@ namespace HJW.scripts
         }
         private void OnApplicationQuit()
         {
+            // Clear local cached names so the next session starts fresh
             PlayerPrefs.DeleteKey("Player1_Name");
             PlayerPrefs.DeleteKey("Player2_Name");
-            
-            Debug.Log("Game end.");
         }
     }
 }

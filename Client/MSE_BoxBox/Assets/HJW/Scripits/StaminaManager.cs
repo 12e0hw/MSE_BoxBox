@@ -17,6 +17,7 @@ public class StaminaManager : MonoBehaviour
 
     void Start()
     {
+        // Initialize stamina to the maximum value when the game starts
         currentStamina = maxStamina;
         staminaGauage.maxValue = maxStamina;
     }

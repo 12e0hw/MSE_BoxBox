@@ -19,6 +19,7 @@ public class ChangeManager : MonoBehaviour
     public GameObject CantStartGamePanel;
 
     [Header("Memo")]
+    // Static variables used to remember the UI state across scene transitions  
     public static bool stageSelectMemo = false;
     public static bool leaderboardMemo = false;
 
@@ -36,11 +37,13 @@ public class ChangeManager : MonoBehaviour
     {
         HideAllLeaderboardPanels();
 
+        // Ensure the GameManager recognizes the player is in the Start Menu
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetState(GameState.StartMenu, true);
         }
         
+        // Initialize all main panels to a hidden state to prevent overlapping UI
         if (LoginPanel != null) LoginPanel.SetActive(false);
         if (SettingPanel != null) SettingPanel.SetActive(false);
         if (SignupPanel != null) SignupPanel.SetActive(false);
@@ -49,6 +52,7 @@ public class ChangeManager : MonoBehaviour
         if (BacktoLoginPanel != null) BacktoLoginPanel.SetActive(false);
         if (TryAgainPanel!= null) TryAgainPanel.SetActive(false);
         if (LoginFailPanel != null) LoginFailPanel.SetActive(false);
+        // Check static memos to restore a specific UI state if returning from another scene
         if (stageSelectMemo)
         {
             if (CheckPanel != null) CheckPanel.SetActive(true); 
@@ -65,17 +69,11 @@ public class ChangeManager : MonoBehaviour
         {
             if (CheckPanel != null) CheckPanel.SetActive(false);
         }
-        /*
-        else if (leaderboardMemo)
-        {
-            SelectLeaderboard();
-            leaderboardMemo = false;
-        }
-        */
     }
 
     void Update()
     {
+        // Only process loading logic if a scene transition has been triggered
         if (!loadingOver) return;
 
         currentLoadingTime += Time.deltaTime;
@@ -85,6 +83,7 @@ public class ChangeManager : MonoBehaviour
             loadingSlider.value = currentLoadingTime / loadingTime;
         }
 
+        // Once the artificial loading time finishes, load the actual scene
         if (currentLoadingTime >= loadingTime)
         {
             loadingOver = false;
@@ -95,6 +94,7 @@ public class ChangeManager : MonoBehaviour
 
     public void StageSelect() 
     {
+        // CheckPanel active state when the user has successfully logged in
         if (CheckPanel != null && CheckPanel.activeSelf)
         {
             if (GameManager.Instance != null)
@@ -111,6 +111,7 @@ public class ChangeManager : MonoBehaviour
         }
         else
         {
+            // Show error message if the user tries to play without logging in
             if (CantStartGamePanel != null)
             {
                 CantStartGamePanel.SetActive(true);
@@ -196,6 +197,7 @@ public class ChangeManager : MonoBehaviour
         HideAllLeaderboardPanels();
     }
 
+    //Prepares the loading screen and starts the artificial loading timer.
     private void Loading(string newScene)
     {
         if (GameManager.Instance != null)
@@ -235,6 +237,7 @@ public class ChangeManager : MonoBehaviour
         Debug.Log("Stage 2 Loading...");
     }
 
+    //Safely exits the game, handling both the Unity Editor and the compiled build.
     public void ExitGame()
     {
         Debug.Log("Exit game");

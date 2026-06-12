@@ -12,8 +12,9 @@ public class NPC_move : MonoBehaviour
     private Vector2 moveDir;
     
     private float currentSpeed; 
-    
+
     private Vector2[] directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
+    
     private Coroutine moveCoroutine;
 
     void Start()
@@ -21,13 +22,16 @@ public class NPC_move : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        // Start the continuous random movement cycle
         moveCoroutine = StartCoroutine(MoveRoutine());
     }
 
+    // The main logic loop for NPC wandering. Alternates between moving in a random direction and pausing.
     IEnumerator MoveRoutine()
     {
         while (true)
         {
+            // Pick a random direction and slightly randomize the speed for more natural movement
             moveDir = directions[Random.Range(0, directions.Length)];
             currentSpeed = Random.Range(1f, 1.5f) * baseSpeed;
             SetWalking(true);
@@ -59,6 +63,7 @@ public class NPC_move : MonoBehaviour
         rb.MovePosition(rb.position + moveDir * currentSpeed * Time.fixedDeltaTime);
     }
 
+    /// Handles what happens when the NPC bumps into a wall, player, or another object.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (moveCoroutine != null)
@@ -78,7 +83,7 @@ public class NPC_move : MonoBehaviour
         moveCoroutine = StartCoroutine(MoveAfterCollision());
     }
 
-
+    // Forces the NPC to walk in the reversed direction for a short time after hitting an obstacle
     IEnumerator MoveAfterCollision()
     {
         yield return new WaitForSeconds(Random.Range(1f, 2f));

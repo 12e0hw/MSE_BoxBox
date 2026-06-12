@@ -9,19 +9,22 @@ public class ScoreManager : MonoBehaviour
     public int CurrentScore { get; private set; }
     public bool MaxClear { get; private set; }
     
-    public event Action<int> OnScoreChanged; // 점수가 바뀔 때마다 알려주는 역할
-    public event Action OnMaxScoreReached;
+    public event Action<int> OnScoreChanged; //Events that other scripts
+    public event Action OnMaxScoreReached; // Broadcasts exactly once when the player reaches the target score. 
     
     void Start()
     {
+        // the score is completely reset when the scene loads or game starts
         ResetScore();
     }
     
+    // Dynamically sets the target score required to win/clear the stage
     public void SetTargetScore(int targetScore)
     {
         maxScore = targetScore;
     }
 
+    // Resets the score and win state
     public void ResetScore()
     {
         CurrentScore = 0;
@@ -30,7 +33,7 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(CurrentScore);
     }
     
-    //
+    // Core function to increase the score
     public void AddScore(int points)
     {
         if (points <= 0)
@@ -53,7 +56,7 @@ public class ScoreManager : MonoBehaviour
         AddScore(5);
     }
 
-    //이전 Update() 함수에서 이름을 직관적으로 수정하고 클리어 점수 도달 이벤트 알림
+    // Evaluates if the current score meets or exceeds the target
     private void CheckMaxScore()
     {
         if (MaxClear)
@@ -64,20 +67,8 @@ public class ScoreManager : MonoBehaviour
         if (CurrentScore >= maxScore)
         {
             MaxClear = true;
-            Debug.Log("Game Clear");
 
             OnMaxScoreReached?.Invoke();
         }
     }
-
-    /*
-    void Update()
-    {
-        if(maxClear == false && maxScore <= currentScore)
-        {
-            maxClear = true;
-            Debug.Log("Game Clear");
-        }
-    }
-    */
 }

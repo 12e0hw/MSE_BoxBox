@@ -8,12 +8,13 @@ namespace HJW.scripts
     {
         [Header("Panels")]
         public GameObject successPanel; 
-        public GameObject failPanel;        
+        public GameObject failPanel;
+        // Used to create a screen-darkening
         public CanvasGroup dimCanvasGroup;
 
         public float delayTime = 3.0f;
 
-        // 페널 초기화
+        // Panel Reset
         void Start()
         {
             successPanel.SetActive(false);
@@ -22,12 +23,13 @@ namespace HJW.scripts
             dimCanvasGroup.alpha = 0f;
         }
 
-        // 까매지는 효과
+        // Triggers the end-game result sequence.
         public void StartResultSequence(bool isClear)
         {
             StartCoroutine(ShowResultCoroutine(isClear));
         }
 
+        // Coroutine that handles the smooth background fade-in before showing the result panel
         private IEnumerator ShowResultCoroutine(bool isClear)
         {
             dimCanvasGroup.gameObject.SetActive(true);
@@ -46,7 +48,6 @@ namespace HJW.scripts
             Time.timeScale = 0f; 
         }
 
-        // 씬 전환 버튼
         public void Stage()
         {
             

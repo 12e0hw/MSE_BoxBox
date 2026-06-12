@@ -19,6 +19,7 @@ public class SettingChangeManager : MonoBehaviour
 
     private void Awake()
     {
+        // Load the previously selected city from local storage, defaulting to Suwon if none exists
         sessionCity = PlayerPrefs.GetString("SelectedCityName", "Suwon");
         sessionCityId = PlayerPrefs.GetString("SelectedCityId", "SUWON");
     }
@@ -33,6 +34,8 @@ public class SettingChangeManager : MonoBehaviour
 
         ApplyCurrentCityUI();
     }
+
+    // Updates the main settings menu text to reflect the currently selected city.
     private void ApplyCurrentCityUI()
     {
         if (currentCityText != null)
@@ -67,7 +70,7 @@ public class SettingChangeManager : MonoBehaviour
     }
 
     
-    [Header("도시 이름 바꾸기")]
+    [Header("Change city Name")]
     public Transform contentParent;    
     public GameObject cityItemPrefab;  
     public TMP_Text currentCityText;
@@ -75,14 +78,14 @@ public class SettingChangeManager : MonoBehaviour
     [SerializeField] private List<CityOption> cityOptions = new List<CityOption>();
     public static Action<string> OnCityIdChanged; 
     
-    // 유저에게 보여주기용
+    // The display name shown to the user in the UI
     private static string sessionCity = "Suwon";
-    // API 호출용
+    // The exact ID string required by the weather API
     private static string sessionCityId = "SUWON";
 
     public void OpenCityPanel()
     {
-        // 창을 열 때 기존 버튼 클리어
+        // Clear any existing buttons first
         foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);
@@ -143,7 +146,7 @@ public class SettingChangeManager : MonoBehaviour
         
         Debug.Log("Selected City: " + sessionCity);
         Debug.Log("Selected CityId: " + sessionCityId);
-        //다른 스크립트에 전달 때 이용
+        // Notify other systems
         OnCityIdChanged?.Invoke(sessionCityId);
     }
     
@@ -165,7 +168,7 @@ public class SettingChangeManager : MonoBehaviour
         return sessionCityId;
     }
     
-    // 강제 날씨 바꾸는 이벤트
+    // Event broadcasted to force a specific weather state
     public static Action<string, string> OnWeatherOverrideRequested;
     
     [Header("Weather Test Buttons")]

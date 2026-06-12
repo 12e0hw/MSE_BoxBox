@@ -14,6 +14,7 @@ public class VolumeManager : MonoBehaviour
     private const float MinVolume = 0.0001f;
     void Start()
     {
+        // Load saved volume settings or default to maximum volume if no save exists
         float bgmVol = PlayerPrefs.GetFloat("BGMVolume", 1f);
         float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
@@ -35,6 +36,7 @@ public class VolumeManager : MonoBehaviour
         ApplySFXVolume(sfxVol);
     }
 
+    // Called automatically whenever the user drags the BGM slider.
     public void SetBGMVolume(float volume)
     {
         PlayerPrefs.SetFloat("BGMVolume", volume);
@@ -43,6 +45,7 @@ public class VolumeManager : MonoBehaviour
         ApplyBGMVolume(volume);
     }
 
+    // Called automatically whenever the user drags the SFX slider.
     public void SetSFXVolume(float volume)
     {
         PlayerPrefs.SetFloat("SFXVolume", volume);
@@ -51,6 +54,7 @@ public class VolumeManager : MonoBehaviour
         ApplySFXVolume(volume);
     }
     
+    // Converts the linear slider value to a logarithmic decibel (dB) value and applies it to the BGM exposed parameter.
     private void ApplyBGMVolume(float volume)
     {
         if (audioMixer == null)
@@ -61,6 +65,7 @@ public class VolumeManager : MonoBehaviour
         audioMixer.SetFloat("BGMVolume", Mathf.Log10(Mathf.Max(MinVolume, volume)) * 20f);
     }
 
+    // Converts the linear slider value to a logarithmic decibel (dB) value and applies it to the SFX exposed parameter
     private void ApplySFXVolume(float volume)
     {
         if (audioMixer == null)

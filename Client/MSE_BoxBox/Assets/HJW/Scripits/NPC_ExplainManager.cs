@@ -3,18 +3,18 @@ using System.Collections;
 
 public class NPC_ExplainManager : MonoBehaviour
 {
-    [Header("랜덤 패널")]
+    [Header("Random Panel")]
     public GameObject[] explainPanels;
 
     private Coroutine hideCoroutine;
 
-
+    //turned off when the scene first loads
     void Awake()
     {
         HideAllPanels();
     }
 
-    //대화창 띄우기
+    //turn on explain panel when collide with this NPC and player.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -35,6 +35,7 @@ public class NPC_ExplainManager : MonoBehaviour
         }
     }
 
+    //turn off explain panel when collides end
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -47,12 +48,14 @@ public class NPC_ExplainManager : MonoBehaviour
         }
     }
 
+    // Coroutine that waits for the specified delay time, then hides all panels
     private IEnumerator HideDelay(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
         HideAllPanels();
     }
 
+    // Helper method to iterate through all registered panels and deactivate them
     void HideAllPanels()
     {
         foreach (GameObject panel in explainPanels)
