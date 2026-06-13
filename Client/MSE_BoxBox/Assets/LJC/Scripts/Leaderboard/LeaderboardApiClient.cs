@@ -9,6 +9,7 @@ public class LeaderboardApiClient : MonoBehaviour
     [Header("Server Settings")] 
     [SerializeField] private string serverBaseUrl = "http://localhost:8080";
 
+    // Save the player's score to the server.
     public IEnumerator SaveScore(int userId, int stageId, int points, Action<bool> onFinished)
     {
         string url = $"{serverBaseUrl}/api/game/score";
@@ -56,18 +57,21 @@ public class LeaderboardApiClient : MonoBehaviour
         }
     }
 
+    // Load the overall leaderboard.
     public IEnumerator LoadAllLeaderboard(Action<LeaderboardItem[]> onSuccess, Action onFailed)
     {
         string url = $"{serverBaseUrl}/api/game/rank";
         yield return StartCoroutine(GetLeaderboard(url, onSuccess, onFailed));
     }
 
+    // Load the leaderboard for a specific stage.
     public IEnumerator LoadStageLeaderboard(int stageId, Action<LeaderboardItem[]> onSuccess, Action onFailed)
     {
         string url = $"{serverBaseUrl}/api/game/rank/{stageId}";
         yield return StartCoroutine(GetLeaderboard(url, onSuccess, onFailed));
     }
 
+    // Load the best score for a specific user.
     public IEnumerator LoadUserBestScore(int userId, Action<UserBestScoreData> onSuccess, Action onFailed)
     {
         string url = $"{serverBaseUrl}/api/game/rank/user/{userId}";
@@ -101,6 +105,7 @@ public class LeaderboardApiClient : MonoBehaviour
         }
     }
 
+    // Request leaderboard data from the given URL.
     private IEnumerator GetLeaderboard(string url, Action<LeaderboardItem[]> onSuccess, Action onFailed)
     {
         using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -132,7 +137,7 @@ public class LeaderboardApiClient : MonoBehaviour
     }
 }
 
-[Serializable]
+    [Serializable]
     public class ScoreSaveRequest
     {
         public int userId;

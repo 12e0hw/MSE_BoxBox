@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+// Response DTO returned after saving a player's score.
 public class ScoreSaveResponse {
 
     private Long recordId;

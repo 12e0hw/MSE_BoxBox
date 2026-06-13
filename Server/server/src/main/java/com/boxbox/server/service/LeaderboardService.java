@@ -22,19 +22,22 @@ public class LeaderboardService {
     private final GameRecordRepository gameRecordRepository;
     private final UserRepository userRepository;
 
+    // Get the overall leaderboard
     public List<LeaderboardItemResponse> getLeaderboard() {
         List<GameRecord> allRecords = gameRecordRepository.findAll();
         return buildLeaderboard(allRecords);
     }
 
+    // Get the leaderboard for a specific stage.
     public List<LeaderboardItemResponse> getStageLeaderboard(Integer stageId) {
         List<GameRecord> stageRecords = gameRecordRepository.findByStageId(stageId);
         return buildLeaderboard(stageRecords);
     }
 
+    // Get the best score for a specific user.
     public BestScoreResponse getUserBestScore(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 userId입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("User not found."));
 
         List<GameRecord> userRecords = gameRecordRepository.findByUserUserId(userId);
 
@@ -50,24 +53,24 @@ public class LeaderboardService {
         );
     }
 
-    // 리더보드 계산 로직
+    // Build leaderboard rows using each user's best record.
     private List<LeaderboardItemResponse> buildLeaderboard(List<GameRecord> records) {
-        // key: userId, value: 그 유저의 최고 기록
+        // key: userId, value: the user's best record
         Map<Long, GameRecord> bestRecordByUser = new LinkedHashMap<>();
 
         for (GameRecord record : records) {
             Long userId = record.getUser().getUserId();
 
-            // 유저 기록이 없으면 저장
+            // Save the first record for this user.
             if (!bestRecordByUser.containsKey(userId)) {
                 bestRecordByUser.put(userId, record);
                 continue;
             }
 
-            // 저장된 최고 기록과 비교
+            // Compare with the saved best record.
             GameRecord currentBest = bestRecordByUser.get(userId);
             
-            // 현재 기록이 높으면 교체, 점수가 같은 경우 achievedAt이 더 빠른 기록으로 교체
+            // Replace it if the score is higher, or if the same score was achieved earlier.
             if (record.getPoints() > currentBest.getPoints()) {
                 bestRecordByUser.put(userId, record);
             } else if (record.getPoints() == currentBest.getPoints()

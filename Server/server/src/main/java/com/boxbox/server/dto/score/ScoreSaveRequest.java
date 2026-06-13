@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+// Request DTO for saving a player's score.
 public class ScoreSaveRequest {
 
     private Long userId;

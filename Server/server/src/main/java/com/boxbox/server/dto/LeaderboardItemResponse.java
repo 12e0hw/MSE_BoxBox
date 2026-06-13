@@ -3,6 +3,7 @@ package com.boxbox.server.dto;
 import lombok.Getter;
 
 @Getter
+// Response DTO for one leaderboard row.
 public class LeaderboardItemResponse {
 
     private final int rank;

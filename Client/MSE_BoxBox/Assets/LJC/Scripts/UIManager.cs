@@ -1,4 +1,3 @@
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,6 +61,7 @@ public class UIManager : MonoBehaviour
         UpdateWarningPanelAlpha();
     }
     
+    // Initialize the timer text and gauge.
     public void InitializeTimer(float maxTime)
     {
         if (timeGauge != null)
@@ -74,6 +74,7 @@ public class UIManager : MonoBehaviour
         UpdateTimer(maxTime);
     }
 
+    // Update the timer text and gauge.
     public void UpdateTimer(float remainingTime)
     {
         if (timerText != null)
@@ -88,6 +89,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Update the score text.
     public void UpdateScore(int score)
     {
         if (scoreText == null)
@@ -98,6 +100,7 @@ public class UIManager : MonoBehaviour
         scoreText.text = $"{score}";
     }
 
+    // Hide the result panel and result texts.
     public void HideResultPanel()
     {
         if (resultPanel != null)
@@ -121,6 +124,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Show the result panel with final score and box counts.
     public void ShowResultPanel(
         bool isClear,
         int finalScore,
@@ -158,6 +162,7 @@ public class UIManager : MonoBehaviour
         ShowLeaderboardLoading();
     }
 
+    // Show a loading message while leaderboard data is loading.
     public void ShowLeaderboardLoading()
     {
         ClearLeaderboardSlots();
@@ -168,6 +173,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Display leaderboard data in the leaderboard slots.
     public void ShowLeaderboard(LeaderboardItem[] items)
     {
         ClearLeaderboardSlots();
@@ -192,6 +198,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Show a leaderboard loading error message.
     public void ShowLeaderboardError()
     {
         ClearLeaderboardSlots();
@@ -202,6 +209,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Show a score save error message.
     public void ShowScoreSaveError()
     {
         ClearLeaderboardSlots();
@@ -212,6 +220,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Clear all leaderboard text slots.
     private void ClearLeaderboardSlots()
     {
         if (leaderboardSlots == null)
@@ -228,6 +237,7 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    // Show the warning panel.
     public void ShowWarningPanel()
     {
         isWarningActive = true;
@@ -243,6 +253,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Hide the warning panel.
     public void HideWarningPanel()
     {
         isWarningActive = false;
@@ -258,6 +269,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Update the warning panel blink alpha.
     private void UpdateWarningPanelAlpha()
     {
         if (!isWarningActive)

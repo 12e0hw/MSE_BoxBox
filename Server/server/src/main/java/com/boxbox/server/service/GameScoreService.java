@@ -17,10 +17,11 @@ public class GameScoreService {
     private final GameRecordRepository gameRecordRepository;
     private final UserRepository userRepository;
 
+    // Save the player's score record.
     @Transactional
     public ScoreSaveResponse saveScore(ScoreSaveRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("User not found."));
 
         GameRecord gameRecord = new GameRecord();
         gameRecord.setUser(user);

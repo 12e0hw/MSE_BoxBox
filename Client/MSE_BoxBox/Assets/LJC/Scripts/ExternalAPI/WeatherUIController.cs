@@ -62,14 +62,17 @@ public class WeatherUIController : MonoBehaviour
         }
     }
 
+    // Refresh weather data using the saved city ID.
     public void RefreshWeather()
     {
         string cityId = SettingChangeManager.GetSavedCityId();
         RefreshWeatherByCityId(cityId);
     }
     
+    // Start a new weather request for the selected city.
     private void RefreshWeatherByCityId(string cityId)
     {
+        // Use Suwon as the default city if no city ID is saved.
         if (string.IsNullOrWhiteSpace(cityId))
         {
             cityId = "SUWON";
@@ -83,6 +86,7 @@ public class WeatherUIController : MonoBehaviour
         weatherCoroutine = StartCoroutine(GetGameWeather(cityId));
     }
 
+    // Get weather data from the server.
     private IEnumerator GetGameWeather(string cityId)
     {
         if (string.IsNullOrWhiteSpace(cityId))
@@ -101,7 +105,7 @@ public class WeatherUIController : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            ShowError("날씨 정보를 불러오지 못했습니다.");
+            ShowError("Failed to load weather information.");
             Debug.LogError("Weather API Error: " + request.error);
             Debug.LogError("Weather API Response: " + request.downloadHandler.text);
             yield break;
@@ -114,7 +118,7 @@ public class WeatherUIController : MonoBehaviour
 
         if (response == null || response.success == false || response.data == null)
         {
-            ShowError("날씨 응답 데이터가 올바르지 않습니다.");
+            ShowError("Invalid weather response data.");
             Debug.LogError("Invalid Weather Response: " + json);
             yield break;
         }
@@ -122,6 +126,7 @@ public class WeatherUIController : MonoBehaviour
         UpdateWeatherUI(response.data);
     }
 
+    // Update the weather UI with the received weather data.
     private void UpdateWeatherUI(GameWeatherData data)
     {
         string cityId = data.cityId;
@@ -164,7 +169,7 @@ public class WeatherUIController : MonoBehaviour
 
         if (temperatureText != null)
         {
-            temperatureText.text = data.temperature.ToString("0.0") + "°C";
+            temperatureText.text = data.temperature.ToString("0.0") + "\u00B0C";
         }
 
         if (effectText != null)
@@ -186,10 +191,11 @@ public class WeatherUIController : MonoBehaviour
             string formattedWeather = weather.ToUpper().Trim();
         
             CurrentWeather = formattedWeather;
-            OnGameWeatherRefreshed?.Invoke(weather);
+            OnGameWeatherRefreshed?.Invoke(formattedWeather);
         }
     }
 
+    // Apply the configured size to the weather image.
     private void ApplyWeatherImageSize()
     {
         if (weatherImage == null)
@@ -208,6 +214,7 @@ public class WeatherUIController : MonoBehaviour
         weatherImage.type = Image.Type.Simple;
     }
 
+    // Return the sprite that matches the weather type.
     private Sprite GetWeatherSprite(string weather)
     {
         if (weather == "RAIN")
@@ -223,6 +230,7 @@ public class WeatherUIController : MonoBehaviour
         return defaultSprite;
     }
 
+    // Convert the weather value into display text.
     private string ConvertWeatherName(string weather)
     {
         if (weather == "RAIN")
@@ -243,6 +251,7 @@ public class WeatherUIController : MonoBehaviour
         return weather;
     }
 
+    // Convert the game effect value into display text.
     private string ConvertGameEffectName(string gameEffect)
     {
         if (gameEffect == "SLIPPERY_FLOOR")
@@ -263,6 +272,7 @@ public class WeatherUIController : MonoBehaviour
         return gameEffect;
     }
 
+    // Show an error message on the weather UI.
     private void ShowError(string message)
     {
         if (cityText != null)
@@ -294,6 +304,7 @@ public class WeatherUIController : MonoBehaviour
         }
     }
     
+    // Find the city name that matches the city ID.
     private string GetCityNameByCityId(string cityId)
     {
         foreach (CityFlagOption option in cityFlagOptions)
@@ -307,6 +318,7 @@ public class WeatherUIController : MonoBehaviour
         return SettingChangeManager.GetSavedCity();
     }
     
+    // Update the country flag for the selected city.
     private void UpdateCountryFlag(string cityId)
     {
         if (countryFlagImage == null)
@@ -330,7 +342,7 @@ public class WeatherUIController : MonoBehaviour
         countryFlagImage.preserveAspect = true;
     }
     
-    // 강제 날씨 적용
+    // Apply test weather without requesting data from the server.
     private void ApplyWeatherOverride(string weather, string gameEffect)
     {
         if (weatherCoroutine != null)
@@ -403,7 +415,7 @@ public class WeatherUIController : MonoBehaviour
         public string gameEffect;
     }
     
-    [System.Serializable]
+    [Serializable]
     public class CityFlagOption
     {
         public string cityId;

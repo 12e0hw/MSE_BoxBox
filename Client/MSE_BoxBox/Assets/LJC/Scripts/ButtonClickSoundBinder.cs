@@ -18,6 +18,7 @@ public class ButtonClickSoundBinder : MonoBehaviour
         UnbindButtonSounds();
     }
 
+    // Bind button click sound events to child buttons.
     public void BindButtonSounds()
     {
         boundButtons = GetComponentsInChildren<Button>(includeInactiveButtons);
@@ -35,9 +36,10 @@ public class ButtonClickSoundBinder : MonoBehaviour
             button.onClick.AddListener(PlayButtonClickSound);
         }
 
-        Debug.Log($"[ButtonClickSoundBinder] 버튼 사운드 연결 완료: {boundButtons.Length}개");
+        Debug.Log($"[ButtonClickSoundBinder] Button sound binding completed: {boundButtons.Length} buttons");
     }
 
+    // Remove button click sound events from bound buttons.
     private void UnbindButtonSounds()
     {
         if (boundButtons == null)
@@ -58,11 +60,12 @@ public class ButtonClickSoundBinder : MonoBehaviour
         }
     }
 
+    // Play the button click sound through the BGM manager.
     private void PlayButtonClickSound()
     {
         if (BGM_Manager.instance == null)
         {
-            Debug.LogWarning("[ButtonClickSoundBinder] BGM_Manager.instance가 없습니다.");
+            Debug.LogWarning("[ButtonClickSoundBinder] BGM_Manager.instance is missing.");
             return;
         }
 

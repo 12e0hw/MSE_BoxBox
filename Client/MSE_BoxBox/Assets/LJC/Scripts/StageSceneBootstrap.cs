@@ -44,11 +44,8 @@ public class StageSceneBootstrap : MonoBehaviour
     {
         if (GameManager.Instance == null)
         {
-            Debug.LogError("[StageSceneBootstrap] GameManager Instance가 없습니다.");
-            return;
+            Debug.LogError("[StageSceneBootstrap] GameManager instance is missing.");
         }
-
-        GameManager.Instance.InitializeStage(this);
     }
     
     private void Start()
@@ -56,11 +53,12 @@ public class StageSceneBootstrap : MonoBehaviour
         InitializeStageReferences();
     }
 
+    // Initialize stage managers and test tools.
     private void InitializeStageReferences()
     {
         if (GameManager.Instance == null)
         {
-            Debug.LogError("[StageSceneBootstrap] GameManager Instance가 없어 Stage 초기화를 중단합니다.");
+            Debug.LogError("[StageSceneBootstrap] GameManager instance is missing. Stage initialization stopped.");
             return;
         }
 
@@ -72,21 +70,25 @@ public class StageSceneBootstrap : MonoBehaviour
         }
     }
 
+    // Resume the game when the resume button is clicked.
     public void OnResumeButtonClicked()
     {
         if (GameManager.Instance != null) GameManager.Instance.ResumeGame();
     }
 
+    // Open the settings panel when the settings button is clicked.
     public void OnOpenSettingsButtonClicked()
     {
         if (GameManager.Instance != null) GameManager.Instance.OpenSetting();
     }
 
+    // Close the settings panel when the close button is clicked.
     public void OnCloseSettingsButtonClicked()
     {
         if (GameManager.Instance != null) GameManager.Instance.CloseSetting();
     }
 
+    // Return from the settings panel to the stage screen.
     public void OnBackButtonClicked()
     {
         if (GameManager.Instance != null) GameManager.Instance.BacktoStage();

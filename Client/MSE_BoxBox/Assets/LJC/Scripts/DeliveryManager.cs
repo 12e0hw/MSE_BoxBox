@@ -6,8 +6,8 @@ public class DeliveryManager : MonoBehaviour
     public event Action<BoxController, TruckController> OnDeliverySuccess;
     public event Action<BoxController, TruckController> OnDeliveryFail;
 
+    // Notify listeners when total, small, and big delivery counts change.
     public event Action<int, int, int> OnDeliveryCountChanged;
-    // total, small, big
 
     private ScoreManager scoreManager;
 
@@ -15,12 +15,14 @@ public class DeliveryManager : MonoBehaviour
     public int SmallBoxDeliveredCount { get; private set; }
     public int BigBoxDeliveredCount { get; private set; }
 
+    // Set the score manager and reset delivery counts.
     public void Initialize(ScoreManager scoreManager)
     {
         this.scoreManager = scoreManager;
         ResetDeliveryCounts();
     }
 
+    // Reset all delivery count values.
     public void ResetDeliveryCounts()
     {
         TotalDeliveredCount = 0;
@@ -34,6 +36,7 @@ public class DeliveryManager : MonoBehaviour
         );
     }
 
+    // Try to deliver a box to the selected truck.
     public bool TryDeliver(BoxController box, TruckController truck)
     {
         if (box == null || truck == null)
@@ -60,7 +63,7 @@ public class DeliveryManager : MonoBehaviour
 
         AddDeliveryCount(box);
         AddScore(box);
-        InputBoxSoundPlay();
+        PlayTruckInputSound();
 
         OnDeliverySuccess?.Invoke(box, truck);
         
@@ -71,6 +74,7 @@ public class DeliveryManager : MonoBehaviour
         return true;
     }
 
+    // Increase delivery counts based on the delivered box size.
     private void AddDeliveryCount(BoxController box)
     {
         TotalDeliveredCount++;
@@ -91,6 +95,7 @@ public class DeliveryManager : MonoBehaviour
         );
     }
 
+    // Add score for the delivered box.
     private void AddScore(BoxController box)
     {
         if (scoreManager == null)
@@ -102,7 +107,8 @@ public class DeliveryManager : MonoBehaviour
         scoreManager.AddScore(box.scoreValue);
     }
 
-    private void InputBoxSoundPlay()
+    // Play the truck input sound effect.
+    private void PlayTruckInputSound()
     { 
         if (BGM_Manager.instance != null)
         {

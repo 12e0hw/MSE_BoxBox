@@ -1,7 +1,7 @@
 package com.boxbox.server.dto.weather;
 
+// Response DTO for weather data used by the game.
 public record GameWeatherResponseDto(
-        // City API 사용을 위해 cityId, cityName 추가
         String cityId,
         String cityName,
         String weather,

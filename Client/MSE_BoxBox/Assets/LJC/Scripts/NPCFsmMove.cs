@@ -110,6 +110,7 @@ public class NPCFsmMove : MonoBehaviour
         rb.MovePosition(rb.position + moveDir * currentSpeed * Time.fixedDeltaTime);
     }
 
+    // Update random movement and switch to blocking if a player is nearby.
     private void UpdateRandomMoveState()
     {
         targetPlayer = FindNearestPlayerInRange();
@@ -137,6 +138,7 @@ public class NPCFsmMove : MonoBehaviour
         }
     }
 
+    // Move toward the target player and block their path.
     private void UpdateBlockPlayerState()
     {
         stateTimer += Time.deltaTime;
@@ -175,7 +177,7 @@ public class NPCFsmMove : MonoBehaviour
         SetWalking(true);
     }
     
-
+    // Wait during cooldown before returning to random movement.
     private void UpdateCooldownState()
     {
         stateTimer += Time.deltaTime;
@@ -186,6 +188,7 @@ public class NPCFsmMove : MonoBehaviour
         }
     }
 
+    // Start moving in a random direction.
     private void StartRandomMove()
     {
         moveDir = directions[Random.Range(0, directions.Length)];
@@ -197,6 +200,7 @@ public class NPCFsmMove : MonoBehaviour
         SetWalking(true);
     }
 
+    // Stop moving for a random idle duration.
     private void StartRandomIdle()
     {
         moveDir = Vector2.zero;
@@ -207,6 +211,7 @@ public class NPCFsmMove : MonoBehaviour
         SetWalking(false);
     }
 
+    // Change the NPC state and reset state timers.
     private void ChangeState(NPCState nextState)
     {
         currentState = nextState;
@@ -229,6 +234,7 @@ public class NPCFsmMove : MonoBehaviour
         }
     }
 
+    // Find the nearest player within the detection range.
     private Transform FindNearestPlayerInRange()
     {
         Transform nearestPlayer = null;
@@ -253,6 +259,7 @@ public class NPCFsmMove : MonoBehaviour
         return nearestPlayer;
     }
 
+    // Update walking animation and sprite direction.
     private void SetWalking(bool isMoving)
     {
         if (anim != null)
@@ -298,6 +305,7 @@ public class NPCFsmMove : MonoBehaviour
         }
     }
 
+    // Convert movement direction into animation direction.
     private Vector2 GetAnimationDirection(Vector2 direction)
     {
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
@@ -313,6 +321,7 @@ public class NPCFsmMove : MonoBehaviour
         return Vector2.down;
     }
 
+    // Slow the player on collision or bounce back from obstacles.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (currentState == NPCState.Cooldown)
@@ -337,6 +346,7 @@ public class NPCFsmMove : MonoBehaviour
         BounceBack();
     }
 
+    // Reverse movement direction after hitting an obstacle.
     private void BounceBack()
     {
         moveDir = -moveDir;
@@ -350,6 +360,7 @@ public class NPCFsmMove : MonoBehaviour
         SetWalking(true);
     }
     
+    // Stop NPC movement and animation.
     private void StopMovementAndAnimation()
     {
         moveDir = Vector2.zero;
@@ -362,6 +373,7 @@ public class NPCFsmMove : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectRange);
     }
     
+    // Check whether the animator has the required parameter.
     private bool HasAnimatorParameter(string parameterName, AnimatorControllerParameterType parameterType)
     {
         if (anim == null)

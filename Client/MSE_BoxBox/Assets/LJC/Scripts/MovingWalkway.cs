@@ -10,7 +10,7 @@ public class MovingWalkway : MonoBehaviour
         Right
     }
 
-    [Header("Move Setting")]
+    [Header("Movement Settings")]
     [SerializeField] private WalkwayDirection direction = WalkwayDirection.Right;
     [SerializeField] private float moveSpeed = 1f;
 
@@ -24,6 +24,7 @@ public class MovingWalkway : MonoBehaviour
         ApplyMove(other);
     }
 
+    // Clear the player's external velocity when leaving the walkway.
     private void OnTriggerExit2D(Collider2D other)
     {
         Player player = other.GetComponentInParent<Player>();
@@ -36,6 +37,7 @@ public class MovingWalkway : MonoBehaviour
         player.ClearExternalVelocity();
     }
 
+    // Apply walkway movement to the player.
     private void ApplyMove(Collider2D other)
     {
         Player player = other.GetComponentInParent<Player>();
@@ -48,6 +50,7 @@ public class MovingWalkway : MonoBehaviour
         player.SetExternalVelocity(GetDirectionVector() * moveSpeed);
     }
 
+    // Convert the selected walkway direction into a Vector2 value.
     private Vector2 GetDirectionVector()
     {
         switch (direction)

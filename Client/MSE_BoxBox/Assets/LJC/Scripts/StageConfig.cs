@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Store stage-specific settings as a ScriptableObject.
 [CreateAssetMenu(fileName = "StageConfig", menuName = "BoxBox/Stage Config")]
 public class StageConfig : ScriptableObject
 {

@@ -17,14 +17,14 @@ import java.util.Map;
 @Service
 public class WeatherService {
 
-    // application.properties에서 lat, lon 대신 defaultCityId만 읽음.
+    // Read only the default city ID from application.properties.
     private final RestClient openWeatherRestClient;
     private final String apiKey;
     private final String units;
     private final String lang;
     private final String defaultCityId;
 
-    // 도시 추가 시 아래에 추가 cityId는 서버로 보내는 값, cityName은 화면에 보이는 이름
+    // Add new cities here. cityId is sent from Unity, and cityName is displayed in the UI.
     private final Map<String, CityInfo> cityMap = Map.ofEntries(
         Map.entry("SUWON", new CityInfo("SUWON", "Suwon", "KR")),
         Map.entry("NEW_YORK", new CityInfo("NEW_YORK", "New York", "US")),
@@ -52,10 +52,12 @@ public class WeatherService {
         this.defaultCityId = defaultCityId;
     }
 
+    // Get current weather using the default city ID.
     public WeatherResponseDto getCurrentWeather() {
         return getCurrentWeather(defaultCityId);
     }
 
+    // Get current weather for the selected city.
     public WeatherResponseDto getCurrentWeather(String cityId) {
         CityInfo cityInfo = findCityInfo(cityId);
         GeoLocationResponseDto location = fetchGeoLocation(cityInfo);
@@ -72,10 +74,12 @@ public class WeatherService {
         );
     }
 
+    // Get game weather using the default city ID.
     public GameWeatherResponseDto getGameWeather() {
         return getGameWeather(defaultCityId);
     }
 
+    // Get game weather using the default city ID.
     public GameWeatherResponseDto getGameWeather(String cityId) {
         CityInfo cityInfo = findCityInfo(cityId);
         GeoLocationResponseDto location = fetchGeoLocation(cityInfo);
@@ -102,12 +106,13 @@ public class WeatherService {
         CityInfo cityInfo = cityMap.get(cityId.toUpperCase());
 
         if (cityInfo == null) {
-            throw new IllegalArgumentException("지원하지 않는 cityId입니다: " + cityId);
+            throw new IllegalArgumentException("Unsupported cityId: " + cityId);
         }
 
         return cityInfo;
     }
 
+    // Fetch latitude and longitude from the Geocoding API.
     private GeoLocationResponseDto fetchGeoLocation(CityInfo cityInfo) {
         String query = cityInfo.cityName() + "," + cityInfo.countryCode();
 
@@ -123,26 +128,19 @@ public class WeatherService {
                 .body(GeoLocationResponseDto[].class);
 
         if (locations == null || locations.length == 0) {
-            throw new IllegalStateException("Geocoding API 결과가 없습니다: " + query);
+            throw new IllegalStateException("No Geocoding API result found: " + query);
         }
 
         GeoLocationResponseDto location = locations[0];
 
         if (location.lat() == null || location.lon() == null) {
-            throw new IllegalStateException("Geocoding API 응답에 lat/lon이 없습니다: " + query);
+            throw new IllegalStateException("Geocoding API response has no lat/lon: " + query);
         }
 
         return location;
     }
 
-    /*
-      OpenWeather 현재 날씨 API 실제 호출용 메서드
-     
-      여기서 하는 일:
-      1. 고정 좌표와 API 키로 외부 API 호출
-      2. JSON 응답을 OpenWeatherResponse DTO로 변환
-      3. 응답이 정상인지 검증
-     */
+    // Fetch current weather from the OpenWeather API.
     private OpenWeatherResponse fetchCurrentWeather(Double lat, Double lon) {
         OpenWeatherResponse response = openWeatherRestClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -164,22 +162,23 @@ public class WeatherService {
 
     private void validateResponse(OpenWeatherResponse response) {
         if (response == null) {
-            throw new IllegalStateException("OpenWeather 응답이 비어 있습니다.");
+            throw new IllegalStateException("OpenWeather response is empty.");
         }
 
         if (response.main() == null || response.main().temp() == null) {
-            throw new IllegalStateException("OpenWeather 응답에 main.temp가 없습니다.");
+            throw new IllegalStateException("OpenWeather response has no main.temp.");
         }
 
         if (response.weather() == null || response.weather().isEmpty()) {
-            throw new IllegalStateException("OpenWeather 응답에 weather 정보가 없습니다.");
+            throw new IllegalStateException("OpenWeather response has no weather data.");
         }
 
         if (response.weather().get(0).id() == null) {
-            throw new IllegalStateException("OpenWeather 응답에 weather.id가 없습니다.");
+            throw new IllegalStateException("OpenWeather response has no weather.id.");
         }
     }
 
+    // Classify OpenWeather data into simple game weather values.
     private String classifyWeather(OpenWeatherResponse response) {
         List<OpenWeatherResponse.WeatherInfo> weatherList = response.weather();
         OpenWeatherResponse.WeatherInfo primary = weatherList.get(0);
@@ -191,26 +190,28 @@ public class WeatherService {
             rain1h = response.rain().oneHour();
         }
 
-        // 실제 1시간 강수량이 있으면 우천으로 판정
+        // Treat actual 1-hour rainfall as rain.
         if (rain1h > 0) {
             return "RAIN";
         }
 
-        // 날씨 코드가 Rain/Drizzle/Thunderstorm 계열이면 우천으로 판정
+        // Treat Rain, Drizzle, and Thunderstorm codes as rain.
         if (isRainCode(weatherId)) {
             return "RAIN";
         }
 
-        // 그 외는 맑음으로 처리
+        // Treat all other weather types as clear.
         return "CLEAR";
     }
 
+    // Check whether the weather code belongs to rain-related categories.
     private boolean isRainCode(int weatherId) {
         return (weatherId >= 200 && weatherId < 300)   // Thunderstorm
                 || (weatherId >= 300 && weatherId < 400) // Drizzle
                 || (weatherId >= 500 && weatherId < 600); // Rain
     }
 
+    // Convert weather into a gameplay effect.
     private String convertToGameEffect(String weather) {
         if ("RAIN".equals(weather)) {
             return "SLIPPERY_FLOOR";

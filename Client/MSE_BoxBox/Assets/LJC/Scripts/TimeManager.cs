@@ -10,13 +10,17 @@ public class TimeManager : MonoBehaviour
     public float RemainingTime { get; private set; }
     public bool IsRunning { get; private set; }
 
+    // Notify listeners when the remaining time changes.
     public event Action<float> OnTimeChanged;
+    // Notify listeners when the timer reaches zero.
     public event Action OnTimeOver;
     
     private bool hasTimeOverTriggered;
     private bool hasWarningTriggered;
     
+    // Notify listeners when the warning state starts.
     public event Action OnWarningStarted;
+    // Notify listeners when the warning state stops.
     public event Action OnWarningStopped;
 
     private void Awake()
@@ -51,6 +55,7 @@ public class TimeManager : MonoBehaviour
         }
     }
     
+    // Start the warning state and warning sound.
     private void StartWarning()
     {
         if (hasWarningTriggered)
@@ -68,6 +73,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    // Start counting down the timer.
     public void StartTimer()
     {
         IsRunning = true;
@@ -76,6 +82,7 @@ public class TimeManager : MonoBehaviour
         OnTimeChanged?.Invoke(RemainingTime);
     }
 
+    // Stop the timer and warning sound.
     public void StopTimer()
     {
         IsRunning = false;
@@ -85,6 +92,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    // Reset the timer to the start time.
     public void ResetTimer()
     {
         RemainingTime = startTime;
@@ -95,11 +103,13 @@ public class TimeManager : MonoBehaviour
         OnTimeChanged?.Invoke(RemainingTime);
     }
     
+    // Set the timer start value.
     public void SetStartTime(float timeLimit)
     {
         startTime = Mathf.Max(0f, timeLimit);
     }
     
+    // Add time to the remaining time.
     public void AddTime(float seconds)
     {
         if (seconds <= 0f)
@@ -113,6 +123,7 @@ public class TimeManager : MonoBehaviour
         OnTimeChanged?.Invoke(RemainingTime);
     }
 
+    // Subtract time from the remaining time.
     public void SubtractTime(float seconds)
     {
         if (seconds <= 0f)
@@ -135,6 +146,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    // Stop the warning state and warning sound.
     private void StopWarning()
     {
         if (!hasWarningTriggered)
@@ -152,6 +164,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    // Trigger the time-over event once.
     private void TriggerTimeOver()
     {
         if (hasTimeOverTriggered)
@@ -167,6 +180,7 @@ public class TimeManager : MonoBehaviour
         OnTimeOver?.Invoke();
     }
 
+    // Stop the warning state if enough time remains.
     private void CheckWarningReset()
     {
         if (RemainingTime > warningStartTime)

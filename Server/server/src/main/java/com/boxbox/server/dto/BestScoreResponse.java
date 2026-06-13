@@ -3,6 +3,7 @@ package com.boxbox.server.dto;
 import lombok.Getter;
 
 @Getter
+// Response DTO for a user's best score.
 public class BestScoreResponse {
 
     private final Long userId;

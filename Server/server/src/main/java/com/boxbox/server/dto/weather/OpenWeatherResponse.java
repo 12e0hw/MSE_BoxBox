@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-// OpenWeather 응답에 정의하지 않은 필드가 더 있어도 무시
+// Ignore unused fields in the OpenWeather API response.
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record OpenWeatherResponse(
         List<WeatherInfo> weather,
@@ -26,7 +26,7 @@ public record OpenWeatherResponse(
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record RainInfo(
-            // JSON의 "1h" 값을 oneHour 필드에 매핑
+            // Map the JSON "1h" value to the oneHour field.
             @JsonProperty("1h")
             Double oneHour  
     ) {}

@@ -6,6 +6,7 @@ public class LeaderboardView : MonoBehaviour
     [Header("Leaderboard Slots")]
     [SerializeField] private TMP_Text[] leaderboardSlots;
 
+    // Show a loading message while leaderboard data is being loaded.
     public void ShowLoading()
     {
         ClearSlots();
@@ -16,6 +17,7 @@ public class LeaderboardView : MonoBehaviour
         }
     }
 
+    // Display leaderboard data in the connected text slots.
     public void ShowLeaderboard(LeaderboardItem[] items)
     {
         ClearSlots();
@@ -41,6 +43,7 @@ public class LeaderboardView : MonoBehaviour
         }
     }
 
+    // Show an error message in the first leaderboard slot.
     public void ShowError(string message)
     {
         ClearSlots();
@@ -51,6 +54,7 @@ public class LeaderboardView : MonoBehaviour
         }
     }
 
+    // Clear all leaderboard text slots.
     public void ClearSlots()
     {
         if (leaderboardSlots == null)
