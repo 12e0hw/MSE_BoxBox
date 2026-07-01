@@ -1,4 +1,4 @@
-# MSE_BoxBox
+# BoxBox
 2026-1 Media Software Engineering Team Project
 
 Unity로 제작한 2D 탑다운 로컬 협동 물류 게임입니다.
